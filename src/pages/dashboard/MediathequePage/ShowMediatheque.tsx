@@ -63,7 +63,7 @@ const ShowMediatheque = () => {
         </div>
       )}
       <div className="bg-slate-50 p-4   rounded-3xl">
-        <Link to="/dashboard/mediatheque">
+        <Link to="/mediatheque">
           <Button Text={"Retour"}></Button>
         </Link>
       </div>
