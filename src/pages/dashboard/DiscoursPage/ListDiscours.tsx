@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchDiscours, handleDelete } from "src/api/discours";
+import { fetchDiscours, handleDelete } from "../../../api/discours";
 import {
   BreadCrumb,
   Loading,
   Success,
   Error,
-  Pagination,
   TitlePage,
   Button,
 } from "../../../components/common";
 import { htmlToText } from "html-to-text";
-import { Discours } from "src/api/types";
-import { formatDate } from "src/helper/utils";
+import { Discours } from "../../../api/types";
+import { formatDate } from "../../../helper/utils";
 
 const ListDiscours = () => {
   const [discours, setDiscours] = useState([] as Discours[]);
@@ -48,7 +47,7 @@ const ListDiscours = () => {
 
       <TitlePage title="Accueil Discours" />
       <div className="flex justify-end">
-        <Link to="/dashboard/discours/create">
+        <Link to="/discours/create">
           <Button
             Text="
 Ajouter un discours

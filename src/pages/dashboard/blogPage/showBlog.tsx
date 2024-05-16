@@ -4,8 +4,8 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { BreadCrumb, Loading } from "../../../components/common";
-import { fetchArticle } from "src/api/blog";
-import { Article } from "src/api/types";
+import { fetchArticle } from "../../../api/blog";
+import { Article } from "../../../api/types";
 export const ShowBlog = () => {
   const REACT_APP_API_HOME = import.meta.env.VITE_REACT_APP_API_HOME;
   const { id } = useParams();
@@ -13,14 +13,14 @@ export const ShowBlog = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchArticle(id);
+        const data = await fetchArticle(id as string);
         setPost(data);
       } catch (error) {
         console.error("Error:", error);
       }
     };
     fetchData();
-  }, []);
+  }, [id]);
 
   return (
     <div>
@@ -53,12 +53,6 @@ export const ShowBlog = () => {
               editor={ClassicEditor}
               data={post.content}
               disabled={true}
-              onReady={(editor) => {
-                // You can store the "editor" and use when it is needed.
-              }}
-              onChange={(event) => {}}
-              onBlur={(event, editor) => {}}
-              onFocus={(event, editor) => {}}
             />
           </div>
 
@@ -73,10 +67,6 @@ export const ShowBlog = () => {
                 },
               }}
               disabled={true}
-              onReady={(editor) => {}}
-              onChange={(event) => {}}
-              onBlur={(event, editor) => {}}
-              onFocus={(event, editor) => {}}
             />
           </div>
         </div>

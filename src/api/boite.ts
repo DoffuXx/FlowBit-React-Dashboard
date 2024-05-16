@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { AxiosError } from "axios";
 const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
-import { Contact, ContactProps, Contacts } from "./types";
+import { Contacts } from "./types";
 export const deleteMessage = async (
   id: string,
   setLoading: (value: boolean) => void,

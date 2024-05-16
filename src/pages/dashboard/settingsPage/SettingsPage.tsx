@@ -1,8 +1,4 @@
-import React from "react";
-
-type Props = {};
-
-const SettingsPage = (props: Props) => {
+const SettingsPage = () => {
   return <div>SettingsPage</div>;
 };
 export default SettingsPage;

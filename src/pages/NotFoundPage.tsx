@@ -1,5 +1,4 @@
-import React from "react";
-import notfound from "src/assets/404/notfound.svg";
+import notfound from "../assets/404/notfound.svg";
 
 const NotFoundPage = () => {
   return (

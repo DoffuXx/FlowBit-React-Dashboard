@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { Dropzone, FileMosaic } from "@files-ui/react";
-import { handleSubmit } from "src/api/mediatheque";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
+import { handleSubmit } from "../../../api/mediatheque";
 
 import {
   BreadCrumb,
-  Loading,
   Label,
   Button,
   Success,
@@ -13,7 +12,6 @@ import {
 const UpdateMediatheque = () => {
   const [Mediatitle, setMediaTitle] = useState("");
   const [MediaType, setMediaType] = useState("Image");
-  const [loading, setLoading] = useState(false);
   const [Files, setFiles] = useState([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -28,7 +26,7 @@ const UpdateMediatheque = () => {
     Files.map((file) => form.append("files[]", file));
     console.log(Files);
     console.log(form);
-    await handleSubmit(form, setSuccess, setError, setLoading);
+    await handleSubmit(form, setSuccess, setError);
   };
   const handleChnageFiles = (e: any) => {
     const file = e.target.files;
@@ -46,7 +44,7 @@ const UpdateMediatheque = () => {
       <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div className="mt-2">
           {success && <Success success={success} />}
-          {error && <Error error={error} />}
+          {error && <Error error={{ error: error }} />}
         </div>
         <p className="max-w-lg mt-4 text-3xl font-semibold leading-loose text-gray-900 ">
           Modifer le Media
@@ -86,10 +84,7 @@ const UpdateMediatheque = () => {
                 </div>
                 {/* UploadFiles */}
                 <div className="col-start-2 row-start-1 p-6">
-                  <label
-                    class="block mb-2 text-sm font-medium font-bold text-gray-900 dark:text-white"
-                    for="multiple_files"
-                  >
+                  <label className="block mb-2 text-sm font-bold text-gray-900 dark:text-white">
                     Télécharger plusieurs fichiers
                   </label>
                   <input

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleSubmit } from "../../../api/blog";
 
@@ -49,7 +49,9 @@ const CreateBlog = () => {
     form.append("content", content);
     form.append("titreArabe", titreArabe);
     form.append("contenuArabe", contenuArabe);
-    form.append("coverImage", coverImage);
+    if (coverImage !== null) {
+      form.append("coverImage", coverImage);
+    }
 
     await handleSubmit(
       e,
@@ -74,7 +76,13 @@ const CreateBlog = () => {
       <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div className="mt-2">
           {success && <Success success={success} />}
-          {error && <Error error={error} />}
+          {error && (
+            <Error
+              error={{
+                error: error,
+              }}
+            />
+          )}
         </div>
         <p className="max-w-lg mt-4 text-3xl font-semibold leading-loose text-gray-900 ">
           Ajouter un nouvel article
@@ -123,19 +131,10 @@ const CreateBlog = () => {
                   <CKEditor
                     editor={ClassicEditor}
                     data={content}
-                    onInit={(editor) => {
-                      // console.log("Editor is ready to use!", editor);
-                    }}
                     onChange={(event, editor) => {
                       const data = editor.getData();
                       setContent(data);
                       console.log({ event, editor, data });
-                    }}
-                    onBlur={(event, editor) => {
-                      console.log("Blur.", editor);
-                    }}
-                    onFocus={(event, editor) => {
-                      console.log("Focus.", editor);
                     }}
                   />
                 </div>
@@ -147,19 +146,10 @@ const CreateBlog = () => {
                   <CKEditor
                     editor={ClassicEditor}
                     data={contenuArabe}
-                    onInit={(editor) => {
-                      // console.log("Editor is ready to use!", editor);
-                    }}
                     onChange={(event, editor) => {
                       const data = editor.getData();
                       setContenuArabe(data);
                       console.log({ event, editor, data });
-                    }}
-                    onBlur={(event, editor) => {
-                      console.log("Blur.", editor);
-                    }}
-                    onFocus={(event, editor) => {
-                      console.log("Focus.", editor);
                     }}
                   />
                 </div>
@@ -244,7 +234,6 @@ const CreateBlog = () => {
                     variant="primary"
                     Text="Ajouter"
                     role="submit"
-                    className="p-3 bg-blue-500 text-white hover:bg-blue-400"
                     onClick={handleSubmitForm}
                   ></Button>
                 </div>

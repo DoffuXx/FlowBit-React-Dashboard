@@ -1,38 +1,27 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchMediatheques, deleteMediatheque } from "src/api/mediatheque";
+import { deleteMediatheque, fetchMediatheques } from "../../../api/mediatheque";
 
 import {
   BreadCrumb,
   Loading,
   Success,
   Button,
-  Error,
-  Pagination,
   TitlePage,
 } from "../../../components/common";
-import { Media } from "src/api/types";
+import { Media } from "../../../api/types";
 
 const ListMediatheque = () => {
   const REACT_APP_API_URL = import.meta.env.VITE_REACT_APP_API_HOME;
   const [loading, setLoading] = useState(false);
   const [medias, setMedias] = useState<Media[]>([]);
   const [success, setSuccess] = useState("");
-  const [error, setError] = useState({ error: "" });
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(1);
   useEffect(() => {
     fetchMediatheques(setMedias);
   }, []);
   const handleDelete = async (id: number) => {
-    await deleteMediatheque(
-      id,
-      setSuccess,
-      setError,
-      setLoading,
-      setMedias,
-      medias,
-    );
+    await deleteMediatheque(id, setSuccess, setLoading, setMedias);
   };
   return (
     <>
@@ -46,7 +35,7 @@ const ListMediatheque = () => {
 
       <TitlePage title="Accueil des Mediatheque" />
       <div className="flex justify-end">
-        <Link to="/dashboard/mediatheque/create">
+        <Link to="/mediatheque/create">
           <Button Text="             Ajouter un Mediatheque"></Button>
         </Link>
       </div>
@@ -76,7 +65,7 @@ const ListMediatheque = () => {
                     <div className="grid grid-cols-2 gap-2">
                       {media.files.map((file: any) => (
                         <img
-                          className="h-16 h-16 rounded-md transition duration-500 ease-in-out hover:scale-[2.5] hover:translate-x-28"
+                          className="h-16 rounded-md transition duration-500 ease-in-out hover:scale-[2.5] hover:translate-x-28"
                           src={`${REACT_APP_API_URL}/Media/${file.fileName}`}
                           alt=""
                         />

@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import SideMenu from "./sideMenu";
 import Header from "./Header";

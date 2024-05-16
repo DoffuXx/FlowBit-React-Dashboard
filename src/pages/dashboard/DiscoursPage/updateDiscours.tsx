@@ -1,21 +1,21 @@
-import React, { SyntheticEvent } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { SyntheticEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { fetchDiscoursById, handleUpdate } from "src/api/discours";
+import { fetchDiscoursById, handleUpdate } from "../../../api/discours";
 
 import {
   BreadCrumb,
   Button,
-  CKEditorComponent,
   Loading,
   Success,
   Error,
 } from "../../../components/common";
-import { Discours } from "src/api/types";
+import { Discours } from "../../../api/types";
 const UpdateDiscours = () => {
   const idParm = useParams();
   const id = idParm.id;
@@ -26,7 +26,7 @@ const UpdateDiscours = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await fetchDiscoursById(id);
+        const data = await fetchDiscoursById(id as string);
         setDiscours({
           ...discours,
           title: data.title || "",
@@ -54,12 +54,12 @@ const UpdateDiscours = () => {
   const [success, setSuccess] = useState("");
   const [discours, setDiscours] = useState({} as Discours);
 
-  const handleInputChangeContent = (e: any, editor) => {
+  const handleInputChangeContent = (_e: any, editor: any) => {
     const data = editor.getData();
     setDiscours({ ...discours, content: data });
   };
 
-  const handleInputChangeContentArabe = (e: any, editor) => {
+  const handleInputChangeContentArabe = (_e: any, editor: any) => {
     const data = editor.getData();
     setDiscours({ ...discours, contenuArabe: data });
   };
@@ -72,7 +72,7 @@ const UpdateDiscours = () => {
     try {
       setSuccess("Discours modifié avec succès");
       setLoading(false);
-      await handleUpdate(id, discours);
+      await handleUpdate(id as string, discours);
       setTimeout(() => {
         navigate("/dashboard/discours");
       }, 500);
@@ -154,17 +154,7 @@ const UpdateDiscours = () => {
                   <CKEditor
                     editor={ClassicEditor}
                     data={contenuCopy ? contenuCopy : ""}
-                    onInit={(editor) => {
-                      // You can store the "editor" and use when it is needed.
-                      console.log("Editor is ready to use!", editor);
-                    }}
                     onChange={handleInputChangeContent}
-                    onBlur={(event, editor) => {
-                      console.log("Blur.", editor);
-                    }}
-                    onFocus={(event, editor) => {
-                      console.log("Focus.", editor);
-                    }}
                   />
                 </div>
 
@@ -174,10 +164,6 @@ const UpdateDiscours = () => {
                   </label>
                   <CKEditor
                     editor={ClassicEditor}
-                    onInit={(editor) => {
-                      // You can store the "editor" and use when it is needed.
-                      console.log("Editor is ready to use!", editor);
-                    }}
                     config={{
                       language: {
                         ui: "ar",
@@ -186,12 +172,6 @@ const UpdateDiscours = () => {
                     }}
                     data={contenuArabeCopy ? contenuArabeCopy : ""}
                     onChange={handleInputChangeContentArabe}
-                    onBlur={(event, editor) => {
-                      console.log("Blur.", editor);
-                    }}
-                    onFocus={(event, editor) => {
-                      console.log("Focus.", editor);
-                    }}
                   />
                 </div>
                 <div className="flex p-1 space-x-5">

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 const toLowerCase = (str: string) => {
   return str.toLowerCase();
@@ -15,7 +14,7 @@ const BreadCrumb = ({ layer1, layer2 }: BreadCrumbProps) => {
       <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
         <li className="inline-flex items-center">
           <a
-            href="/dashboard"
+            href="/"
             className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600"
           >
             <svg
@@ -48,7 +47,7 @@ const BreadCrumb = ({ layer1, layer2 }: BreadCrumbProps) => {
               />
             </svg>
             <Link
-              to={"/dashboard/" + toLowerCase(layer1)}
+              to={"/" + toLowerCase(layer1)}
               className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 "
             >
               {layer1}
@@ -74,7 +73,10 @@ const BreadCrumb = ({ layer1, layer2 }: BreadCrumbProps) => {
                 />
               </svg>
               <span className="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">
-                <Link className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 ">
+                <Link
+                  className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 "
+                  to={""}
+                >
                   {layer2}
                 </Link>
               </span>

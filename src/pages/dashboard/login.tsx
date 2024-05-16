@@ -1,5 +1,3 @@
-import React from "react";
-
 const Login = () => {
   return (
     <div>
@@ -32,7 +30,6 @@ const Login = () => {
                     id="email"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                     placeholder="exemple@domain.com"
-                    required=""
                   />
                 </div>
                 <div>
@@ -48,7 +45,6 @@ const Login = () => {
                     id="password"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                    required=""
                   />
                 </div>
                 <div className="flex items-center justify-between">
@@ -59,7 +55,6 @@ const Login = () => {
                         aria-describedby="remember"
                         type="checkbox"
                         className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 "
-                        required=""
                       />
                     </div>
                     <div className="ml-3 text-sm">

@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { AxiosError } from "axios";
 const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
-import { Article, Articles, ArticleProps } from "./types";
+import { Article, Articles } from "./types";
 
 export const deleteArticle = async (
   id: number,
@@ -73,7 +74,7 @@ export const handleSubmit = async (
   setError("");
   setSuccess("");
   try {
-    const response = await axios.post(`${BASE_URL}/post`, form, {
+    await axios.post(`${BASE_URL}/post`, form, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -95,7 +96,7 @@ export const handleSubmit = async (
   }
 };
 
-export const handleUpdate = async (id: number, article: Article) => {
+export const handleUpdate = async (id: string, article: Article) => {
   try {
     const response = await axios.put(
       `${BASE_URL}/post/${id}`,

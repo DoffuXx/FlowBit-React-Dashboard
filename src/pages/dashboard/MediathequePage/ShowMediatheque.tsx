@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { fetchMediatheque } from "src/api/mediatheque";
-import { Media } from "src/api/types";
-import { Button, Label } from "src/components/common";
+import { fetchMediatheque } from "../../../api/mediatheque";
+import { Media } from "../../../api/types";
+import { Button, Label } from "../../../components/common";
 
 const ShowMediatheque = () => {
   const REACT_APP_API_HOME = import.meta.env.VITE_REACT_APP_API_HOME;
   const { id } = useParams();
   const [media, setMedia] = useState({} as Media);
   useEffect(() => {
-    fetchMediatheque(id, setMedia);
-  }, []);
+    fetchMediatheque(id as string, setMedia);
+  }, [id]);
   return (
     <div className="col-span-3">
       <div className="bg-slate-50 p-4   rounded-3xl">
@@ -40,7 +41,7 @@ const ShowMediatheque = () => {
             {media.files &&
               media.files.map((file: any) => (
                 <img
-                  className="h-28 h-28 rounded-md transition duration-500 ease-in-out hover:scale-[2.5] hover:translate-x-full "
+                  className="h-28  rounded-md transition duration-500 ease-in-out hover:scale-[2.5] hover:translate-x-full "
                   src={`${REACT_APP_API_HOME}/Media/${file.fileName}`}
                   alt=""
                 />

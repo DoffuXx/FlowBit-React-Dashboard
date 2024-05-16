@@ -1,22 +1,15 @@
-import { Link, NavLink } from "react-router-dom";
-import {
-  FaAddressBook,
-  FaBlog,
-  FaHome,
-  FaInbox,
-  FaNotesMedical,
-  FaUserMd,
-} from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import { FaAddressBook, FaBlog, FaHome, FaInbox } from "react-icons/fa";
 import { RiFilePaperFill } from "react-icons/ri";
 
 import { MdPermMedia } from "react-icons/md";
 const navLinks = [
-  { path: "/dashboard", icon: FaHome, text: "Tableau de bord" },
-  { path: "/dashboard/articles", icon: FaBlog, text: "Articles" },
-  { path: "/dashboard/discours", icon: RiFilePaperFill, text: "Discours" },
-  { path: "/dashboard/mediatheque", icon: MdPermMedia, text: "Mediatheque" },
-  { path: "/dashboard/coordonnées", icon: FaAddressBook, text: "Coordonnées" },
-  { path: "/dashboard/messages", icon: FaInbox, text: "Boîte de réception" },
+  { path: "/", icon: FaHome, text: "Tableau de bord" },
+  { path: "/articles", icon: FaBlog, text: "Articles" },
+  { path: "/discours", icon: RiFilePaperFill, text: "Discours" },
+  { path: "/mediatheque", icon: MdPermMedia, text: "Mediatheque" },
+  { path: "/coordonnées", icon: FaAddressBook, text: "Coordonnées" },
+  { path: "/messages", icon: FaInbox, text: "Boîte de réception" },
 ];
 const SideMenu = () => {
   return (
@@ -35,7 +28,7 @@ const SideMenu = () => {
                 className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group 
                  hover:scale-105 transform transition duration-500 ease-out 
                 "
-                style={({ isActive, isPending }) => ({
+                style={({ isActive }) => ({
                   borderLeft: isActive
                     ? "2px solid rgba(31, 34, 65, 0.5)"
                     : "none",

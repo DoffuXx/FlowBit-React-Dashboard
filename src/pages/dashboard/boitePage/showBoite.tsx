@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Contact } from "../../../api/types";
 
 import { BreadCrumb, Loading } from "../../../components/common";
 const ShowBoite = () => {
   const { id } = useParams();
-  const [contact, setContact] = useState({});
+  const [contact, setContact] = useState({} as Contact);
 
   useEffect(() => {
     fetch("http://localhost:8000/api/contact/" + id)
@@ -15,7 +16,7 @@ const ShowBoite = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
-  }, []);
+  }, [id]);
 
   return (
     <div>
@@ -42,7 +43,7 @@ const ShowBoite = () => {
           </h5>
           <label
             htmlFor="message"
-            className="block text-xl mb-2 text-sm font-medium text-gray-900 "
+            className="block  mb-2 text-sm font-medium text-gray-900 "
           >
             Message :
           </label>
@@ -50,7 +51,6 @@ const ShowBoite = () => {
             id="message"
             value={contact.message}
             disabled={true}
-            rows="4"
             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
           ></textarea>
         </div>

@@ -1,18 +1,13 @@
-import React, { useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { handleSubmit } from "src/api/discours";
+import { handleSubmit } from "../../../api/discours";
 
 import { useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-import {
-  BreadCrumb,
-  Loading,
-  Button,
-  Success,
-  Error,
-} from "../../../components/common";
+import { BreadCrumb, Button, Success, Error } from "../../../components/common";
 
 const CreateDiscours = () => {
   const navigate = useNavigate();
@@ -25,7 +20,7 @@ const CreateDiscours = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [name, setName] = useState("");
-  const handleChangeCoverImage = (e) => {
+  const handleChangeCoverImage = (e: any) => {
     setCoverImage(null);
     setLoading({ status: true, progress: 0 });
     const file = e.target.files[0];
@@ -49,13 +44,15 @@ const CreateDiscours = () => {
       setLoading({ status: false, progress: 0 });
     }
   }, [loading.progress]);
-  const handleSubmitForm = async (e) => {
+  const handleSubmitForm = async (e: any) => {
     const form = new FormData();
     form.append("title", title);
     form.append("content", content);
     form.append("titreArabe", titreArabe);
     form.append("contenuArabe", contenuArabe);
-    form.append("coverImage", coverImage);
+    if (coverImage !== null) {
+      form.append("coverImage", coverImage);
+    }
     console.log("form", form);
     handleSubmit(e, form, setLoading, setError, setSuccess, navigate);
   };
@@ -69,7 +66,13 @@ const CreateDiscours = () => {
       <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div className="mt-2">
           {success && <Success success={success} />}
-          {error && <Error error={error} />}
+          {error && (
+            <Error
+              error={{
+                error: error,
+              }}
+            />
+          )}
         </div>
         <p className="max-w-lg mt-4 text-3xl font-semibold leading-loose text-gray-900 ">
           Ajouter un nouveau discours
@@ -118,19 +121,10 @@ const CreateDiscours = () => {
                   <CKEditor
                     editor={ClassicEditor}
                     data={content}
-                    onInit={(editor) => {
-                      // console.log("Editor is ready to use!", editor);
-                    }}
                     onChange={(event, editor) => {
                       const data = editor.getData();
                       setContent(data);
                       console.log({ event, editor, data });
-                    }}
-                    onBlur={(event, editor) => {
-                      console.log("Blur.", editor);
-                    }}
-                    onFocus={(event, editor) => {
-                      console.log("Focus.", editor);
                     }}
                   />
                 </div>
@@ -142,19 +136,10 @@ const CreateDiscours = () => {
                   <CKEditor
                     editor={ClassicEditor}
                     data={contenuArabe}
-                    onInit={(editor) => {
-                      // console.log("Editor is ready to use!", editor);
-                    }}
                     onChange={(event, editor) => {
                       const data = editor.getData();
                       setContenuArabe(data);
                       console.log({ event, editor, data });
-                    }}
-                    onBlur={(event, editor) => {
-                      console.log("Blur.", editor);
-                    }}
-                    onFocus={(event, editor) => {
-                      console.log("Focus.", editor);
                     }}
                   />
                 </div>
@@ -239,7 +224,6 @@ const CreateDiscours = () => {
                     variant="primary"
                     Text="Ajouter"
                     role="submit"
-                    className="p-3 bg-blue-500 text-white hover:bg-blue-400"
                     onClick={handleSubmitForm}
                   ></Button>
                 </div>

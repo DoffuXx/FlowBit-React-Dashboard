@@ -1,12 +1,11 @@
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
-import { CoordonneeProps, Coordonnee } from "./types";
+import { Coordonnee } from "./types";
 
 export const fetchCoordonnee = async (
   setCoordonnee: (value: Coordonnee) => void,
   setLoading: (value: boolean) => void,
   setError: (value: string) => void,
-  setSuccess: (value: string) => void,
 ) => {
   try {
     setLoading(true);
@@ -45,8 +44,6 @@ export const updateCoordonne = async (Coordonnee: Coordonnee) => {
     return response.data;
   } catch (error) {
     console.error(error);
-    throw new Error(
-      error.response.data.message || "Quelque chose s'est mal passé !",
-    );
+    throw new Error("Quelque chose s'est mal passé !");
   }
 };

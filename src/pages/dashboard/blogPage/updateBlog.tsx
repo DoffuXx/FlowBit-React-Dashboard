@@ -1,4 +1,5 @@
-import React, { SyntheticEvent } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { SyntheticEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -13,8 +14,8 @@ import {
   Success,
   Error,
 } from "../../../components/common";
-import { handleUpdate, handleSubmit, fetchArticle } from "../../../api/blog";
-import { Articles, Article } from "@/api/types";
+import { handleUpdate, fetchArticle } from "../../../api/blog";
+import { Article } from "../../../api/types";
 const UpdateBlog = () => {
   const idParm = useParams();
   const id = idParm.id;
@@ -34,7 +35,7 @@ const UpdateBlog = () => {
         setLoading(false);
       } catch (error) {
         console.error("Error:", error);
-        setError(error.message || "Quelque chose s'est mal passé !");
+        setError("Quelque chose s'est mal passé !");
         setSuccess("");
         setLoading(false);
       }
@@ -47,12 +48,12 @@ const UpdateBlog = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [article, setArticle] = useState({} as Article);
-  const handleInputChangeContent = (e: SyntheticEvent, editor) => {
+  const handleInputChangeContent = (_e: any, editor: any) => {
     const data = editor.getData();
     setArticle({ ...article, content: data });
   };
 
-  const handleInputChangeContentArabe = (e: SyntheticEvent, editor) => {
+  const handleInputChangeContentArabe = (_e: any, editor: any) => {
     const data = editor.getData();
     setArticle({ ...article, contenuArabe: data });
   };
@@ -72,7 +73,7 @@ const UpdateBlog = () => {
     setError("");
     setSuccess("");
     try {
-      await handleUpdate(id, article);
+      await handleUpdate(id as string, article);
       setSuccess("Article modifié avec succès");
       setLoading(false);
       setTimeout(() => {
@@ -102,7 +103,13 @@ const UpdateBlog = () => {
           <div className="mt-4">
             {loading && <Loading />}
             {success && <Success success={success} />}
-            {error && <Error error={error} />}
+            {error && (
+              <Error
+                error={{
+                  error: error,
+                }}
+              />
+            )}
           </div>
           <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div className="p-6 bg-white border-b border-gray-200">
@@ -151,17 +158,7 @@ const UpdateBlog = () => {
                   <CKEditor
                     editor={ClassicEditor}
                     data={article.content}
-                    onInit={(editor) => {
-                      // You can store the "editor" and use when it is needed.
-                      console.log("Editor is ready to use!", editor);
-                    }}
                     onChange={handleInputChangeContent}
-                    onBlur={(event, editor) => {
-                      console.log("Blur.", editor);
-                    }}
-                    onFocus={(event, editor) => {
-                      console.log("Focus.", editor);
-                    }}
                   />
                 </div>
 
@@ -171,10 +168,6 @@ const UpdateBlog = () => {
                   </label>
                   <CKEditor
                     editor={ClassicEditor}
-                    onInit={(editor) => {
-                      // You can store the "editor" and use when it is needed.
-                      console.log("Editor is ready to use!", editor);
-                    }}
                     config={{
                       language: {
                         ui: "ar",
@@ -183,12 +176,6 @@ const UpdateBlog = () => {
                     }}
                     data={article.contentArabe ? article.contentArabe : ""}
                     onChange={handleInputChangeContentArabe}
-                    onBlur={(event, editor) => {
-                      console.log("Blur.", editor);
-                    }}
-                    onFocus={(event, editor) => {
-                      console.log("Focus.", editor);
-                    }}
                   />
                 </div>
 

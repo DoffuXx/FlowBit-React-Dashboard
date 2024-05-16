@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 // Api
-import { deleteMessage } from "src/api/boite";
+import { deleteMessage } from "../../../api/boite";
 // Components
 import {
   BreadCrumb,
@@ -11,13 +11,13 @@ import {
   Error,
 } from "../../../components/common";
 import { fetchMessages } from "../../../api/boite";
-import { ContactProps, Contact } from "@/api/types";
+import { Contact } from "../../../api/types";
 const ListBoite = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [contacts, setContacts] = useState([]);
-  const deleteContact = async (id: number) => {
+  const deleteContact = async (id: string) => {
     await deleteMessage(id, setLoading, setError, setSuccess, setContacts);
   };
   useEffect(() => {
@@ -32,7 +32,13 @@ const ListBoite = () => {
       <div className="mt-4">
         {loading && <Loading />}
         {success && <Success success={success} />}
-        {error && <Error error={error} />}
+        {error && (
+          <Error
+            error={{
+              error: error,
+            }}
+          />
+        )}
       </div>
 
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">

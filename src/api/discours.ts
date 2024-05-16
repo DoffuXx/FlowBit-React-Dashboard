@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { AxiosError } from "axios";
-import { DiscoursProps, Discours, Discourss } from "./types";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { Discours, Discourss } from "./types";
 const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 export const fetchDiscours = async (setDiscours: (value: any) => void) => {
@@ -20,7 +21,7 @@ export const handleSubmit = async (
   // content,
   // coverImage,
   form: FormData,
-  setLoading: (value: boolean) => void,
+  setLoading: (value: any) => void,
   setError: (value: string) => void,
   setSuccess: (value: string) => void,
   navigate: (value: string) => void,
@@ -30,7 +31,7 @@ export const handleSubmit = async (
   setSuccess("");
   setError("");
   try {
-    const response = await axios.post(`${BASE_URL}/discoursPost`, form, {
+    await axios.post(`${BASE_URL}/discoursPost`, form, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

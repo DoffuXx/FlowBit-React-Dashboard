@@ -1,7 +1,5 @@
 import { Dropdown } from "flowbite-react";
-import React, { useState, useRef, useEffect } from "react";
 import logo from "src/assets/logo/logo.jpeg";
-import { FaUserEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Header = () => {

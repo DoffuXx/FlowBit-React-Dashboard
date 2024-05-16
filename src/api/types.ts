@@ -1,7 +1,6 @@
-import { ExtFile } from "@files-ui/react";
-import { Dispatch } from "react";
-import { SetStateAction } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface Article {
+  contentArabe: any;
   id: number;
   title: string;
   content: string;

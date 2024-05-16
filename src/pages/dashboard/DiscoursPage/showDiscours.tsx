@@ -4,8 +4,8 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { BreadCrumb, Loading } from "../../../components/common";
-import { fetchDiscoursById } from "src/api/discours";
-import { Discours } from "src/api/types";
+import { fetchDiscoursById } from "../../../api/discours";
+import { Discours } from "../../../api/types";
 const ShowDiscours = () => {
   const REACT_APP_API_HOME = import.meta.env.VITE_REACT_APP_API_HOME;
   const { id } = useParams();
@@ -13,7 +13,7 @@ const ShowDiscours = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchDiscoursById(id);
+        const data = await fetchDiscoursById(id as string);
         setDiscours({
           ...discours,
           title: data.title,
@@ -60,12 +60,6 @@ const ShowDiscours = () => {
               editor={ClassicEditor}
               data={discours.content}
               disabled={true}
-              onReady={(editor) => {
-                // You can store the "editor" and use when it is needed.
-              }}
-              onChange={(event) => {}}
-              onBlur={(event, editor) => {}}
-              onFocus={(event, editor) => {}}
             />
           </div>
 
@@ -80,10 +74,6 @@ const ShowDiscours = () => {
                 },
               }}
               disabled={true}
-              onReady={(editor) => {}}
-              onChange={(event) => {}}
-              onBlur={(event, editor) => {}}
-              onFocus={(event, editor) => {}}
             />
           </div>
         </div>

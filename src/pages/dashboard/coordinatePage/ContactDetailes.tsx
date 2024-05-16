@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { FaPhone } from "react-icons/fa";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import { fetchCoordonnee, updateCoordonne } from "../../../api/coordonnee";
 import { Coordonnee } from "../../../api/types";
 
@@ -39,7 +39,7 @@ const ContactDetailes = () => {
   };
 
   useEffect(() => {
-    fetchCoordonnee(setCoordonnee, setLoading, setError, setSuccess);
+    fetchCoordonnee(setCoordonnee, setLoading, setError);
   }, []);
 
   return (
@@ -51,7 +51,13 @@ const ContactDetailes = () => {
         <div className="mt-4">
           {loading && <Loading />}
           {success && <Success success={success} />}
-          {error && <Error error={error} />}
+          {error && (
+            <Error
+              error={{
+                error: error,
+              }}
+            />
+          )}
         </div>
 
         <TitlePage title="Modifier les Coordonnées" />

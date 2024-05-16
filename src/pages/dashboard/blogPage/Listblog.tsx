@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteArticle, fetchArticles } from "../../../api/blog";
 import { Article, Articles } from "../../../api/types";
@@ -45,7 +45,7 @@ const ListBlog = () => {
 
       <TitlePage title="Accueil des Blogs" />
       <div className="flex justify-end">
-        <Link to="/dashboard/articles/create">
+        <Link to="/articles/create">
           <Button
             Text="Ajouter un Article
 "
