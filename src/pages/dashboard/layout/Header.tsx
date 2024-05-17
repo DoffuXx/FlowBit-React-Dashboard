@@ -30,13 +30,13 @@ const Header = () => {
                 ></path>
               </svg>
             </button>
-            <a href="/dashboard" className="flex ms-2 md:me-24">
+            <a href="/" className="flex ms-2 md:me-24">
               <img
-                src={logo}
+                src="https://ccpmfiguig.ma/assets/A-PRIM-qdR7wAJ4.png"
                 className="h-8 me-3"
                 alt="Maison Médicale Jubilé"
               />
-              <span className="self-center font-medium text-xl rounded-lg   sm:text-2xl whitespace-nowrap  ">
+              <span className="self-center font-medium text-sm rounded-lg invisible sm:visible   sm:text-2xl whitespace-nowrap  ">
                 <span className="text-primaryColor">PRIM</span> Tableau de bord
               </span>
             </a>
