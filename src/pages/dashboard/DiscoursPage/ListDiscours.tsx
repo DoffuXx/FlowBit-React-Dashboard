@@ -23,7 +23,7 @@ const ListDiscours = () => {
   };
   useEffect(() => {
     const fetchDiscoursData = async () => {
-      fetchDiscours(setDiscours);
+      fetchDiscours(setDiscours, setLoading);
     };
     fetchDiscoursData();
   }, []);

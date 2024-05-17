@@ -5,13 +5,19 @@ import { AxiosError } from "axios";
 import { Discours, Discourss } from "./types";
 const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
-export const fetchDiscours = async (setDiscours: (value: any) => void) => {
+export const fetchDiscours = async (
+  setDiscours: (value: any) => void,
+  setLoading: (value: boolean) => void,
+) => {
   try {
+    setLoading(true);
     const response = await axios.get(`${BASE_URL}/discours`);
     const discours = response.data["hydra:member"];
     setDiscours(discours);
+    setLoading(false);
   } catch (error) {
     console.error(error);
+    setLoading(false);
   }
 };
 
@@ -40,7 +46,7 @@ export const handleSubmit = async (
     setLoading(false);
     setError("");
     setTimeout(() => {
-      navigate("/dashboard/discours");
+      navigate("/discours");
     }, 500);
   } catch (error) {
     console.error(error);

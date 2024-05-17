@@ -187,7 +187,7 @@ const UpdateBlog = () => {
                     onClick={handleUpdateForm}
                   ></Button>
 
-                  <Link to="/dashboard/articles">
+                  <Link to="/articles">
                     <Button Text="Annuler" role="submit"></Button>
                   </Link>
                 </div>

@@ -23,7 +23,7 @@ const ListBlog = () => {
   };
 
   useEffect(() => {
-    fetchArticles(setArticles);
+    fetchArticles(setArticles, setLoading);
   }, []);
 
   return (

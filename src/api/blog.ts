@@ -24,27 +24,30 @@ export const deleteArticle = async (
       articles.filter((article) => article.id !== id),
     );
   } catch (error) {
-    setError("Failed to delete article");
+    setError("Echec de la suppression de l'article");
     setLoading(false);
     setSuccess("");
   }
 };
 
-export const fetchArticles = async (setArticles: (value: any) => void) => {
+export const fetchArticles = async (
+  setArticles: (value: any) => void,
+  setLoading: (value: boolean) => void,
+) => {
   try {
+    setLoading(true);
     const response = await axios.get(`${BASE_URL}/posts`);
     const articles = response.data["hydra:member"];
     setArticles(articles);
+    setLoading(false);
   } catch (error) {
     console.error(error);
+    setLoading(false);
   }
 };
 
 export const handleSubmit = async (
   e: any,
-  // title,
-  // content,
-  // coverImage,
   form: FormData,
   setError: (value: string) => void,
   setSuccess: (value: string) => void,
@@ -56,11 +59,6 @@ export const handleSubmit = async (
   navigate: (value: string) => void,
 ) => {
   e.preventDefault();
-  // console.log(title, content, coverImage);
-  // if (!title || !content || !coverImage) {
-  //   setError("Veuillez remplir tous les champs ");
-  //   return;
-  // }
   if (
     !form.get("title") ||
     !form.get("content") ||
@@ -79,7 +77,7 @@ export const handleSubmit = async (
         "Content-Type": "multipart/form-data",
       },
     });
-    setSuccess("Article created successfully");
+    setSuccess("Article ajouté avec succès");
     setError("");
     setTitle("");
     setTitreArabe("");
@@ -87,11 +85,11 @@ export const handleSubmit = async (
     setContent("");
     setCoverImage(null);
     setTimeout(() => {
-      navigate("/dashboard/articles");
+      navigate("/articles");
     }, 500);
   } catch (error) {
     console.error(error);
-    setError("Failed to create article");
+    setError("Echec de l'ajout de l'article");
     setSuccess("");
   }
 };

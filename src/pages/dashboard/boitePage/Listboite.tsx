@@ -21,7 +21,7 @@ const ListBoite = () => {
     await deleteMessage(id, setLoading, setError, setSuccess, setContacts);
   };
   useEffect(() => {
-    fetchMessages(setContacts);
+    fetchMessages(setContacts, setLoading);
   }, []);
 
   return (
@@ -29,7 +29,7 @@ const ListBoite = () => {
       <div className="">
         <BreadCrumb layer1="Messages" />
       </div>
-      <div className="mt-4">
+      <div className="mt-4 mb-2">
         {loading && <Loading />}
         {success && <Success success={success} />}
         {error && (
@@ -66,38 +66,48 @@ const ListBoite = () => {
             </tr>
           </thead>
           <tbody>
-            {contacts.map((contact: Contact) => (
-              <tr key={contact.id}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {contact.prenom}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">{contact.nom}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{contact.email}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {contact.telephone}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {contact.message}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <Link to={`${contact.id}`}>
-                    <button
-                      type="button"
-                      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none "
-                    >
-                      Voir
-                    </button>
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => deleteContact(contact.id)}
-                    className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-80 focus:outline-none "
-                  >
-                    Supprimer
-                  </button>
+            {contacts.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="text-center py-4">
+                  Aucun message
                 </td>
               </tr>
-            ))}
+            ) : (
+              contacts.map((contact: Contact) => (
+                <tr key={contact.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {contact.prenom}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">{contact.nom}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {contact.email}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {contact.telephone}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {contact.message}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <Link to={`${contact.id}`}>
+                      <button
+                        type="button"
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none "
+                      >
+                        Voir
+                      </button>
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => deleteContact(contact.id)}
+                      className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-80 focus:outline-none "
+                    >
+                      Supprimer
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

@@ -18,7 +18,7 @@ const ListMediatheque = () => {
   const [medias, setMedias] = useState<Media[]>([]);
   const [success, setSuccess] = useState("");
   useEffect(() => {
-    fetchMediatheques(setMedias);
+    fetchMediatheques(setMedias, setLoading);
   }, []);
   const handleDelete = async (id: number) => {
     await deleteMediatheque(id, setSuccess, setLoading, setMedias);

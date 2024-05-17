@@ -26,14 +26,19 @@ export const handleSubmit = async (
   }
 };
 
-export const fetchMediatheques = async (setMedias: (value: any) => void) => {
+export const fetchMediatheques = async (
+  setMedias: (value: any) => void,
+  setLoading: (value: boolean) => void,
+) => {
   try {
+    setLoading(true);
     const response = await axios.get(`${BASE_URL}/media`);
     const medias = response.data["hydra:member"];
-    console.log(medias);
     setMedias(medias);
+    setLoading(false);
   } catch (error) {
     console.log(error);
+    setLoading(false);
   }
 };
 

@@ -29,13 +29,19 @@ export const deleteMessage = async (
   }
 };
 
-export const fetchMessages = async (setContacts: (value: any) => void) => {
+export const fetchMessages = async (
+  setContacts: (value: any) => void,
+  setLoading: (value: boolean) => void,
+) => {
   try {
+    setLoading(true);
     const response = await axios.get(`${BASE_URL}/contacts`);
     setContacts(response.data["hydra:member"]);
+    setLoading(false);
   } catch (error: unknown) {
     if (error instanceof AxiosError && error.response) {
       console.error(error);
+      setLoading(false);
       throw new Error(
         error.response.data.message || "Quelque chose s'est mal passé !",
       );
