@@ -182,7 +182,7 @@ const UpdateDiscours = () => {
                     onClick={handleUpdateForm}
                   ></Button>
 
-                  <Link to="/dashboard/discours">
+                  <Link to="/discours">
                     <Button Text="Annuler" role="submit"></Button>
                   </Link>
                 </div>
