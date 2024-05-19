@@ -1,10 +1,9 @@
 import { Dropdown } from "flowbite-react";
-import logo from "src/assets/logo/logo.jpeg";
 import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <nav className="fixed top-0 z-50 w-full bg-white  hover:bg-[#F7F7F7] border-b border-gray-200 ">
+    <nav className="fixed top-0 z-50 w-full border-b  border-gray-200 bg-white hover:bg-[#F7F7F7] ">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start rtl:justify-end">
@@ -13,11 +12,11 @@ const Header = () => {
               data-drawer-toggle="logo-sidebar"
               aria-controls="logo-sidebar"
               type="button"
-              className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
+              className="inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 sm:hidden "
             >
               <span className="sr-only">Open sidebar</span>
               <svg
-                className="w-6 h-6"
+                className="h-6 w-6"
                 aria-hidden="true"
                 fill="currentColor"
                 viewBox="0 0 20 20"
@@ -30,32 +29,32 @@ const Header = () => {
                 ></path>
               </svg>
             </button>
-            <a href="/" className="flex ms-2 md:me-24">
+            <a href="/" className="ms-2 flex md:me-24">
               <img
                 src="https://ccpmfiguig.ma/assets/A-PRIM-qdR7wAJ4.png"
-                className="h-8 me-3"
+                className="me-3 h-8"
                 alt="Maison Médicale Jubilé"
               />
-              <span className="self-center font-medium text-sm rounded-lg invisible sm:visible   sm:text-2xl whitespace-nowrap  ">
+              <span className="invisible self-center whitespace-nowrap rounded-lg text-sm font-medium   sm:visible sm:text-2xl  ">
                 <span className="text-primaryColor">PRIM</span> Tableau de bord
               </span>
             </a>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="transition hover:ease-out hover:-translate-y-1 hover:scale-110 duration-300">
+            <div className="transition duration-300 hover:-translate-y-1 hover:scale-110 hover:ease-out">
               <img
-                className="w-10 h-10 rounded-full"
+                className="h-10 w-10 rounded-full"
                 src="https://xsgames.co/randomusers/avatar.php?g=male"
                 alt="Rounded avatar"
               />
             </div>
-            <button className="transition hover:ease-out hover:-translate-y-1 hover:scale-110 duration-300">
+            <button className="transition duration-300 hover:-translate-y-1 hover:scale-110 hover:ease-out">
               <Dropdown
                 label=""
                 renderTrigger={() => (
                   <svg
-                    className="w-3 h-3 me-2.5"
+                    className="me-2.5 h-3 w-3"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
