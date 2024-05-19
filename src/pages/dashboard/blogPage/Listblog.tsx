@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { deleteArticle, fetchArticles } from "../../../api/blog";
-import { Article, Articles } from "../../../api/types";
+import { deleteArticle, fetchArticles } from "@/api/blog";
+import { Article, Articles } from "@/api/types";
 import { htmlToText } from "html-to-text";
-import { formatDate } from "../../../helper/utils";
+import { formatDate } from "@/helper/utils";
 
 import {
   BreadCrumb,
@@ -12,7 +12,7 @@ import {
   Error,
   TitlePage,
   Button,
-} from "../../../components/common";
+} from "@components/common";
 const ListBlog = () => {
   const [articles, setArticles] = useState<Articles>([]);
   const [loading, setLoading] = useState(false);
@@ -53,8 +53,8 @@ const ListBlog = () => {
         </Link>
       </div>
       <div className="relative  overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+        <table className="w-full text-left text-sm text-gray-500 rtl:text-right ">
+          <thead className="bg-gray-50 text-xs uppercase text-gray-700 ">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Titre
@@ -81,29 +81,29 @@ const ListBlog = () => {
           <tbody>
             {!articles ? (
               <tr>
-                <td colSpan={6} className="text-center py-4 ">
+                <td colSpan={6} className="py-4 text-center ">
                   Aucun article trouvé
                 </td>
               </tr>
             ) : (
               articles.map((article: Article) => (
                 <tr key={article.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     {article.title.substring(0, 50)}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     {article.titreArabe.substring(0, 50)}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     {htmlToText(article.content.substring(0, 50))}...
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     {htmlToText(article.contenuArabe.substring(0, 50))}...
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     {formatDate(article.createdAt)}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     <Link to={`${article.id}`}>
                       <Button Text="Voir" variant="primary"></Button>
                     </Link>
@@ -124,7 +124,7 @@ const ListBlog = () => {
         </table>
       </div>
       {/* Pagniation */}
-      <div className="flex justify-center mt-4"></div>
+      <div className="mt-4 flex justify-center"></div>
     </>
   );
 };

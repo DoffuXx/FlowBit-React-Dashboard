@@ -1,27 +1,27 @@
-import notfound from "../assets/404/notfound.svg";
+import notfound from "@/assets/404/notfound.svg";
 
 const NotFoundPage = () => {
   return (
     <div>
-      <div className=" bg-gray-50 flex  items-center justify-center h-screen">
-        <div className="rounded-lg flex flex-col   text-center items-center  drop-shadow-x hover:drop-shadow-xl">
+      <div className=" flex h-screen  items-center justify-center bg-gray-50">
+        <div className="drop-shadow-x flex flex-col   items-center rounded-lg  text-center hover:drop-shadow-xl">
           <img src={notfound} alt="404 Not Found" width={200} height={200} />
-          <h1 className="text-4xl font-bold mb-4">404 - Pas trouvé</h1>
+          <h1 className="mb-4 text-4xl font-bold">404 - Pas trouvé</h1>
           <p className="text-gray-600">
             Désolé, la page que vous recherchez n'existe pas.
           </p>
 
           <div className="mt-4 text-center">
-            <p className="text-gray-600 mb-3">
+            <p className="mb-3 text-gray-600">
               Ou bien, vous voudrez peut-être explorer :
             </p>
             <a href="/" className="text-blue-500 hover:underline">
               Home
             </a>
-            <a href="/blog" className="text-blue-500 hover:underline ml-2">
+            <a href="/blog" className="ml-2 text-blue-500 hover:underline">
               Blog
             </a>
-            <a href="/contact" className="text-blue-500 hover:underline ml-2">
+            <a href="/contact" className="ml-2 text-blue-500 hover:underline">
               Contact
             </a>
           </div>

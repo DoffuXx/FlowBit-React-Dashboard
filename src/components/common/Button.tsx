@@ -6,6 +6,7 @@ type Props = {
   variant?: "primary" | "secondary" | "danger";
   requried?: boolean;
   role?: string;
+  type?: "submit" | "button" | "reset";
 };
 
 const Button = (props: Props) => {
@@ -26,9 +27,9 @@ const Button = (props: Props) => {
   return (
     <button
       role={props.role}
-      type="button"
       onClick={props.onClick}
       className={getButtonClasses()}
+      type={props.type}
     >
       {props.Text}
     </button>
