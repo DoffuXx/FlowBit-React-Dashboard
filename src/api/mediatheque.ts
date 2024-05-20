@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
+import { AxiosError } from "axios";
 import { Media } from "./types";
 
 export const handleSubmit = async (
@@ -55,8 +56,29 @@ export const fetchMediatheque = async (
   }
 };
 
+export const updateMediatheque = async (id: string, formData: FormDate) => {
+  try {
+    const response = await axios.put(
+      `${BASE_URL}/mediaUpdate/${id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError && error.response) {
+      throw new Error(
+        error.response.data.message || "Quelque chose s'est mal passé !",
+      );
+    }
+  }
+};
+
 export const deleteMediatheque = async (
-  id: number,
+  id: string,
   setSuccess: (value: string) => void,
   setLoading: (value: boolean) => void,
   setMedias: (value: any) => void,
