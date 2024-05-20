@@ -1,23 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { updateMediatheque, fetchMediatheque } from "@/api/mediatheque";
 
 import { BreadCrumb, Label, Button, Success, Error } from "@components/common";
 import { useParams } from "react-router-dom";
 import { Media } from "@/api/types";
 const UpdateMediatheque = () => {
+  const REACT_APP_API_HOME = import.meta.env.VITE_REACT_APP_API_HOME;
   const [Mediatitle, setMediaTitle] = useState("");
   const [MediaType, setMediaType] = useState("Image");
-  const [Files, setFiles] = useState([]);
+  const [Files, setFiles] = useState<File[]>([]);
   const [media, setMedia] = useState({} as Media);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const idParm = useParams();
   const id = idParm.id;
-  useState(() => {
+  useEffect(() => {
     const fetchMediathequeData = async () => {
       try {
         await fetchMediatheque(id as string, setMedia);
+        console.log(media);
       } catch (error) {
         console.error("Error:", error);
         setError("Quelque chose s'est mal passé !");
@@ -26,21 +27,22 @@ const UpdateMediatheque = () => {
     };
     fetchMediathequeData();
   }, [id]);
-  const handleUpdateForm = async (e: any) => {
+  const handleUpdateForm = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
     const form = new FormData();
-    form.append("title", Mediatitle);
-    form.append("type", MediaType);
+    form.append("name", Mediatitle);
+    form.append("mediaType", MediaType);
     Files.map((file) => form.append("files[]", file));
     console.log(Files);
     console.log(form);
     await updateMediatheque(id as string, form);
   };
-  const handleChangeFiles = (e: any) => {
-    const file = e.target.files;
+  const handleChangeFiles = (e: React.ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    const file = target.files;
     console.log(file);
     if (file) {
-      setFiles(Array.from(file));
+      setFiles(Array.from(file) as File[]);
     }
   };
   return (
@@ -93,10 +95,27 @@ const UpdateMediatheque = () => {
                     </select>
                   </form>
                 </div>
+                <div className="">
+                  {media.mediaType === "Image" ? (
+                    <div className="bg-slate-50 grid grid-cols-3 gap-4 rounded-3xl  p-4">
+                      {media.files.map((file) => (
+                        <div>
+                          <img
+                            src={`${REACT_APP_API_HOME}/Media/${file.fileName}`}
+                            key={file.id}
+                            alt="Media Files"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
                 {/* UploadFiles */}
                 <div className="col-start-2 row-start-1 p-6">
                   <label className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">
-                    Télécharger plusieurs fichiers
+                    Modifer les fichiers
                   </label>
                   <input
                     className="
@@ -113,7 +132,7 @@ const UpdateMediatheque = () => {
                     <Button
                       onClick={handleUpdateForm}
                       variant="primary"
-                      Text="Ajouter"
+                      Text="Modifer"
                       role="submit"
                     ></Button>
                   </div>

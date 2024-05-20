@@ -68,7 +68,7 @@ export interface Media {
   id: number;
   name: string;
   mediaType: string;
-  files: [fileName: string, id: number, media: string];
+  files: { fileName: string; id: string; media: string }[];
 }
 export interface Coordonnee {
   id: number;

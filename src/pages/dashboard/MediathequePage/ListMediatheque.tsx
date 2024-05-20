@@ -20,7 +20,7 @@ const ListMediatheque = () => {
   useEffect(() => {
     fetchMediatheques(setMedias, setLoading);
   }, []);
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     await deleteMediatheque(id, setSuccess, setLoading, setMedias);
   };
   return (
@@ -40,8 +40,8 @@ const ListMediatheque = () => {
         </Link>
       </div>
       <div className="relative  overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+        <table className="w-full text-left text-sm text-gray-500 rtl:text-right ">
+          <thead className="bg-gray-50 text-xs uppercase text-gray-700 ">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Media
@@ -60,12 +60,12 @@ const ListMediatheque = () => {
           <tbody>
             {medias.map((media: any) => (
               <tr key={media.id}>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="whitespace-nowrap px-6 py-4">
                   <div className="flex items-center">
                     <div className="grid grid-cols-2 gap-2">
                       {media.files.map((file: any) => (
                         <img
-                          className="h-16 rounded-md transition duration-500 ease-in-out hover:scale-[2.5] hover:translate-x-28"
+                          className="h-16 rounded-md transition duration-500 ease-in-out hover:translate-x-28 hover:scale-[2.5]"
                           src={`${REACT_APP_API_URL}/Media/${file.fileName}`}
                           alt=""
                         />
@@ -73,11 +73,11 @@ const ListMediatheque = () => {
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{media.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="whitespace-nowrap px-6 py-4">{media.name}</td>
+                <td className="whitespace-nowrap px-6 py-4">
                   {media.mediaType}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="whitespace-nowrap px-6 py-4">
                   <Link to={`${media.id}`}>
                     <Button Text="Voir" variant="primary"></Button>
                   </Link>
@@ -96,7 +96,7 @@ const ListMediatheque = () => {
           </tbody>
         </table>
       </div>
-      <div className="flex justify-center mt-4"></div>
+      <div className="mt-4 flex justify-center"></div>
     </>
   );
 };

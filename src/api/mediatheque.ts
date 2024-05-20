@@ -56,7 +56,7 @@ export const fetchMediatheque = async (
   }
 };
 
-export const updateMediatheque = async (id: string, formData: FormDate) => {
+export const updateMediatheque = async (id: string, formData: FormData) => {
   try {
     const response = await axios.put(
       `${BASE_URL}/mediaUpdate/${id}`,

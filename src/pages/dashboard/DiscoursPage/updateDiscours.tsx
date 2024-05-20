@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import type { EventInfo } from "@ckeditor/ckeditor5-utils";
 import { fetchDiscoursById, handleUpdate } from "../../../api/discours";
 
 import {
@@ -54,12 +55,15 @@ const UpdateDiscours = () => {
   const [success, setSuccess] = useState("");
   const [discours, setDiscours] = useState({} as Discours);
 
-  const handleInputChangeContent = (_e: any, editor: any) => {
+  const handleInputChangeContent = (_e: EventInfo, editor: ClassicEditor) => {
     const data = editor.getData();
     setDiscours({ ...discours, content: data });
   };
 
-  const handleInputChangeContentArabe = (_e: any, editor: any) => {
+  const handleInputChangeContentArabe = (
+    _e: EventInfo,
+    editor: ClassicEditor,
+  ) => {
     const data = editor.getData();
     setDiscours({ ...discours, contenuArabe: data });
   };
@@ -91,11 +95,11 @@ const UpdateDiscours = () => {
       </div>
 
       {!discours ? (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex h-screen items-center justify-center">
           <Loading />
         </div>
       ) : (
-        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="mt-4">
             {loading && <Loading />}
             {success && <Success success={success} />}
@@ -107,8 +111,8 @@ const UpdateDiscours = () => {
               />
             )}
           </div>
-          <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div className="p-6 bg-white border-b border-gray-200">
+          <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+            <div className="border-b border-gray-200 bg-white p-6">
               <form>
                 <div className="mb-4">
                   <label className="text-xl text-gray-600">
@@ -117,7 +121,7 @@ const UpdateDiscours = () => {
                   <br />
                   <input
                     type="text"
-                    className="border-2 border-gray-300 p-2 w-full"
+                    className="w-full border-2 border-gray-300 p-2"
                     name="title"
                     id="title"
                     value={discours.title}
@@ -136,7 +140,7 @@ const UpdateDiscours = () => {
                   <input
                     dir="rtl"
                     type="text"
-                    className="border-2 border-gray-300 p-2 w-full"
+                    className="w-full border-2 border-gray-300 p-2"
                     name="title"
                     id="title"
                     value={discours.titreArabe}
@@ -174,7 +178,7 @@ const UpdateDiscours = () => {
                     onChange={handleInputChangeContentArabe}
                   />
                 </div>
-                <div className="flex p-1 space-x-5">
+                <div className="flex space-x-5 p-1">
                   <Button
                     Text="Modifier"
                     variant="secondary"
