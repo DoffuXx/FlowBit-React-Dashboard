@@ -46,10 +46,12 @@ export const fetchMediatheques = async (
 export const fetchMediatheque = async (
   id: string,
   setMedia: (value: Media) => void,
+  setMediaTitle: (value: string) => void,
 ) => {
   try {
     const response = await axios.get(`${BASE_URL}/media/${id}`);
     const media = response.data;
+    setMediaTitle(media.name);
     setMedia(media);
   } catch (error) {
     console.log(error);
@@ -58,16 +60,12 @@ export const fetchMediatheque = async (
 
 export const updateMediatheque = async (id: string, formData: FormData) => {
   try {
-    const response = await axios.put(
-      `${BASE_URL}/mediaUpdate/${id}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+    console.log("formData", formData);
+    await axios.post(`${BASE_URL}/mediaUpdate/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
       },
-    );
-    return response.data;
+    });
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
       throw new Error(

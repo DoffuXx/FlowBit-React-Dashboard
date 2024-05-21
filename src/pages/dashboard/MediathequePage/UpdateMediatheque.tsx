@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { updateMediatheque, fetchMediatheque } from "@/api/mediatheque";
 
 import { BreadCrumb, Label, Button, Success, Error } from "@components/common";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Media } from "@/api/types";
 const UpdateMediatheque = () => {
   const REACT_APP_API_HOME = import.meta.env.VITE_REACT_APP_API_HOME;
   const [Mediatitle, setMediaTitle] = useState("");
   const [MediaType, setMediaType] = useState("Image");
-  const [Files, setFiles] = useState<File[]>([]);
+  const [Files, setFiles] = useState([] as File[]);
   const [media, setMedia] = useState({} as Media);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -17,7 +17,7 @@ const UpdateMediatheque = () => {
   useEffect(() => {
     const fetchMediathequeData = async () => {
       try {
-        await fetchMediatheque(id as string, setMedia);
+        await fetchMediatheque(id as string, setMedia, setMediaTitle);
         console.log(media);
       } catch (error) {
         console.error("Error:", error);
@@ -39,16 +39,16 @@ const UpdateMediatheque = () => {
   };
   const handleChangeFiles = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
-    const file = target.files;
-    console.log(file);
-    if (file) {
-      setFiles(Array.from(file) as File[]);
+    const files = target.files;
+    if (files) {
+      console.log(files);
+      setFiles(Array.from(files));
     }
   };
   return (
     <div className="">
       <div className="">
-        <BreadCrumb layer1="Mediatheque" layer2="Ajouter" />
+        <BreadCrumb layer1="Mediatheque" layer2="Modifer" />
       </div>
 
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -72,7 +72,7 @@ const UpdateMediatheque = () => {
                     className="w-full border-2 border-gray-300 p-2"
                     name="title"
                     id="title"
-                    value={media.name}
+                    value={Mediatitle}
                     onChange={(e) => setMediaTitle(e.target.value)}
                     required
                   />
@@ -90,11 +90,14 @@ const UpdateMediatheque = () => {
                           Image
                         </option>
                       ) : (
-                        <option value="Video">Video</option>
+                        <option selected value="Video">
+                          Video
+                        </option>
                       )}
                     </select>
                   </form>
                 </div>
+                {/* Affichage des images */}
                 <div className="">
                   {media.mediaType === "Image" ? (
                     <div className="bg-slate-50 grid grid-cols-3 gap-4 rounded-3xl  p-4">
@@ -131,10 +134,13 @@ const UpdateMediatheque = () => {
                   <div className="flex p-1">
                     <Button
                       onClick={handleUpdateForm}
-                      variant="primary"
+                      variant="secondary"
                       Text="Modifer"
                       role="submit"
                     ></Button>
+                    <Link to="/mediatheque">
+                      <Button variant="primary" Text="Annuler"></Button>
+                    </Link>
                   </div>
                 </div>
               </div>

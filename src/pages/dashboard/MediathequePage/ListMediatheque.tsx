@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteMediatheque, fetchMediatheques } from "../../../api/mediatheque";
+import ReactPlayer from "react-player";
 
 import {
   BreadCrumb,
@@ -58,18 +59,27 @@ const ListMediatheque = () => {
             </tr>
           </thead>
           <tbody>
-            {medias.map((media: any) => (
+            {medias.map((media: Media) => (
               <tr key={media.id}>
                 <td className="whitespace-nowrap px-6 py-4">
                   <div className="flex items-center">
                     <div className="grid grid-cols-2 gap-2">
-                      {media.files.map((file: any) => (
-                        <img
-                          className="h-16 rounded-md transition duration-500 ease-in-out hover:translate-x-28 hover:scale-[2.5]"
-                          src={`${REACT_APP_API_URL}/Media/${file.fileName}`}
-                          alt=""
-                        />
-                      ))}
+                      {media.mediaType === "Image"
+                        ? media.files.map((file: any) => (
+                            <img
+                              className="h-16 rounded-md transition duration-500 ease-in-out hover:translate-x-28 hover:scale-[2.5]"
+                              src={`${REACT_APP_API_URL}/Media/${file.fileName}`}
+                              alt=""
+                            />
+                          ))
+                        : media.files?.map((file: any) => (
+                            <ReactPlayer
+                              url={`${REACT_APP_API_URL}/Media/${file.fileName}`}
+                              controls={true}
+                              width="250px"
+                              height="250px"
+                            />
+                          ))}
                     </div>
                   </div>
                 </td>
