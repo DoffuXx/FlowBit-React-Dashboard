@@ -12,3 +12,8 @@ export interface InputEvent extends Event {
 }
 
 export type editor = typeof ClassicEditor;
+
+export type FormEvent = React.FormEvent<HTMLFormElement>;
+export type MouseEvent = React.MouseEvent<HTMLButtonElement>;
+export type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
+export type FormSubmitHandler = React.FormEventHandler<HTMLFormElement>;

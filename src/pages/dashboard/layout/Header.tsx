@@ -1,4 +1,6 @@
+import { ProgressContext } from "@/provider/ProgressProvider";
 import { Dropdown } from "flowbite-react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Header = () => {

@@ -23,7 +23,6 @@ import SettingsPage from "@/pages/dashboard/settingsPage/SettingsPage";
 import Login from "@/pages/dashboard/login";
 import NotFoundPage from "@/pages/NotFoundPage";
 import Layout from "@/pages/dashboard/layout/layout";
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>

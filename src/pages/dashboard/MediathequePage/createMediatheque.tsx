@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { handleSubmit } from "@/api/mediatheque";
-
 import { BreadCrumb, Label, Button, Success, Error } from "@components/common";
 import { useNavigate } from "react-router-dom";
+import { ChangeEvent, MouseEvent } from "@/helper/types";
+
 const CreateMediatheque = () => {
   const navigate = useNavigate();
   const [Mediatitle, setMediaTitle] = useState("");
@@ -10,7 +11,7 @@ const CreateMediatheque = () => {
   const [Files, setFiles] = useState([] as File[]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const handleSubmitForm = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmitForm = async (e: MouseEvent) => {
     e.preventDefault();
     const form = new FormData();
     form.append("title", Mediatitle);
@@ -18,7 +19,7 @@ const CreateMediatheque = () => {
     Files.map((file) => form.append("files[]", file));
     await handleSubmit(form, setSuccess, setError, navigate);
   };
-  const handleChnageFiles = (e: React.ChangeEvent) => {
+  const handleChangeFiles = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
     const file = target.files;
     if (file) {
@@ -89,7 +90,7 @@ const CreateMediatheque = () => {
                     type="file"
                     accept="{MediaType === 'Image' ? 'image/*' : 'video/*'}"
                     multiple
-                    onChange={handleChnageFiles}
+                    onChange={handleChangeFiles}
                   />
                 </div>
                 {/* Ajouter */}

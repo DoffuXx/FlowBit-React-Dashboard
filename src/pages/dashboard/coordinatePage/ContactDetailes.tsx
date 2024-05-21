@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { fetchCoordonnee, updateCoordonne } from "../../../api/coordonnee";
 import { Coordonnee } from "../../../api/types";
 
@@ -11,7 +11,9 @@ import {
   Error,
   TitlePage,
 } from "../../../components/common";
+import { ProgressContext } from "@/provider/ProgressProvider";
 const ContactDetailes = () => {
+  const { setProgress } = useContext(ProgressContext);
   const [coordonnee, setCoordonnee] = useState({} as Coordonnee);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -39,7 +41,11 @@ const ContactDetailes = () => {
   };
 
   useEffect(() => {
+    setProgress(100);
     fetchCoordonnee(setCoordonnee, setLoading, setError);
+    return () => {
+      setProgress(0);
+    };
   }, []);
 
   return (
@@ -61,13 +67,13 @@ const ContactDetailes = () => {
         </div>
 
         <TitlePage title="Modifier les Coordonnées" />
-        <div className="block  p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 ">
-          <div className="relative z-0 w-full mb-5 group">
+        <div className="block  rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100 ">
+          <div className="group relative z-0 mb-5 w-full">
             <input
               type="email"
               name="floating_email"
               id="floating_email"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none    focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm    text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0"
               value={coordonnee.numero}
               onChange={(e) =>
                 setCoordonnee({ ...coordonnee, numero: e.target.value })
@@ -77,17 +83,17 @@ const ContactDetailes = () => {
 
             <label
               htmlFor="floating_email"
-              className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus: peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              className="peer-focus: absolute top-3 -z-10  origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-600 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
             >
               Numéro de téléphone{" "}
             </label>
           </div>
-          <div className="relative z-0 w-full mb-5 group">
+          <div className="group relative z-0 mb-5 w-full">
             <input
               type="email"
               name="floating_email"
               id="floating_email"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none    focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm    text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0"
               value={coordonnee.email}
               onChange={(e) =>
                 setCoordonnee({ ...coordonnee, email: e.target.value })
@@ -96,17 +102,17 @@ const ContactDetailes = () => {
             />
             <label
               htmlFor="floating_email"
-              className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              className="absolute top-3 -z-10 origin-[0]  -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75  peer-focus:font-medium peer-focus:text-blue-600 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
             >
               Email
             </label>
           </div>
-          <div className="relative z-0 w-full mb-5 group">
+          <div className="group relative z-0 mb-5 w-full">
             <input
               type="text"
               name="floating_localisation"
               id="floating_localisation"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm  text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0"
               value={coordonnee.localisation}
               onChange={(e) =>
                 setCoordonnee({
@@ -118,17 +124,17 @@ const ContactDetailes = () => {
             />
             <label
               htmlFor="floating_localisation"
-              className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              className="absolute top-3 -z-10 origin-[0]  -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75  peer-focus:font-medium peer-focus:text-blue-600 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
             >
               Localisation
             </label>
           </div>
-          <div className="relative z-0 w-full mb-5 group">
+          <div className="group relative z-0 mb-5 w-full">
             <input
               type="Facebook"
               name="floating_facebook"
               id="floating_facebook"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm  text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0"
               value={coordonnee.facebook}
               onChange={(e) =>
                 setCoordonnee({
@@ -140,18 +146,18 @@ const ContactDetailes = () => {
             />
             <label
               htmlFor="floating_facebook"
-              className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              className="absolute top-3 -z-10 origin-[0]  -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75  peer-focus:font-medium peer-focus:text-blue-600 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
             >
               Facebook
             </label>
           </div>
 
-          <div className="relative z-0 w-full mb-5 group">
+          <div className="group relative z-0 mb-5 w-full">
             <input
               type="text"
               name="floating_instagram"
               id="floating_instagram"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm  text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0"
               value={coordonnee.instagram}
               onChange={(e) =>
                 setCoordonnee({
@@ -163,18 +169,18 @@ const ContactDetailes = () => {
             />
             <label
               htmlFor="floating_instagram"
-              className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              className="absolute top-3 -z-10 origin-[0]  -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75  peer-focus:font-medium peer-focus:text-blue-600 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
             >
               Instagram
             </label>
           </div>
 
-          <div className="relative z-0 w-full mb-5 group">
+          <div className="group relative z-0 mb-5 w-full">
             <input
               type="text"
               name="floating_twitter"
               id="floating_twitter"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              className="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm  text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0"
               value={coordonnee.twitter}
               onChange={(e) =>
                 setCoordonnee({
@@ -186,7 +192,7 @@ const ContactDetailes = () => {
             />
             <label
               htmlFor="floating_twitter"
-              className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              className="absolute top-3 -z-10 origin-[0]  -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75  peer-focus:font-medium peer-focus:text-blue-600 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4"
             >
               Twitter
             </label>

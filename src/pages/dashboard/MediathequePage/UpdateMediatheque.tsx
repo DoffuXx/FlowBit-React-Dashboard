@@ -7,7 +7,7 @@ import { Media } from "@/api/types";
 const UpdateMediatheque = () => {
   const REACT_APP_API_HOME = import.meta.env.VITE_REACT_APP_API_HOME;
   const [Mediatitle, setMediaTitle] = useState("");
-  const [MediaType, setMediaType] = useState("Image");
+  const [MediaType, setMediaType] = useState("");
   const [Files, setFiles] = useState([] as File[]);
   const [media, setMedia] = useState({} as Media);
   const [error, setError] = useState("");

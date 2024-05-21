@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchDiscours, handleDelete } from "../../../api/discours";
+import { fetchDiscours, handleDelete } from "@/api/discours";
 import {
   BreadCrumb,
   Loading,
@@ -8,12 +8,14 @@ import {
   Error,
   TitlePage,
   Button,
-} from "../../../components/common";
+} from "@components/common";
 import { htmlToText } from "html-to-text";
-import { Discours } from "../../../api/types";
-import { formatDate } from "../../../helper/utils";
+import { Discours } from "@/api/types";
+import { formatDate } from "@/helper/utils";
+import { ProgressContext } from "@/provider/ProgressProvider";
 
 const ListDiscours = () => {
+  const { setProgress } = useContext(ProgressContext);
   const [discours, setDiscours] = useState([] as Discours[]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -22,10 +24,15 @@ const ListDiscours = () => {
     await handleDelete(id, setLoading, setSuccess, setError, setDiscours);
   };
   useEffect(() => {
+    setProgress(100);
     const fetchDiscoursData = async () => {
       fetchDiscours(setDiscours, setLoading);
     };
     fetchDiscoursData();
+
+    return () => {
+      setProgress(0);
+    };
   }, []);
 
   return (
@@ -56,8 +63,8 @@ Ajouter un discours
         </Link>
       </div>
       <div className="relative  overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+        <table className="w-full text-left text-sm text-gray-500 rtl:text-right ">
+          <thead className="bg-gray-50 text-xs uppercase text-gray-700 ">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Titre
@@ -84,29 +91,29 @@ Ajouter un discours
           <tbody>
             {!discours ? (
               <tr>
-                <td colSpan={6} className="text-center py-4 ">
+                <td colSpan={6} className="py-4 text-center ">
                   Aucune donnée disponible
                 </td>
               </tr>
             ) : (
               discours.map((discour) => (
                 <tr key={discour.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     {discour.title.substring(0, 50)}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     {discour.titreArabe.substring(0, 50)}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     {htmlToText(discour.content.substring(0, 50))}...
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     {htmlToText(discour.contenuArabe.substring(0, 50))}...
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     {formatDate(discour.createdAt)}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     <Link to={`${discour.id}`}>
                       <Button Text="Voir" />
                     </Link>

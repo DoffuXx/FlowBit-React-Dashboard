@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -13,10 +13,12 @@ import {
   Loading,
   Success,
   Error,
-} from "../../../components/common";
-import { handleUpdate, fetchArticle } from "../../../api/blog";
-import { Article } from "../../../api/types";
+} from "@/components/common";
+import { handleUpdate, fetchArticle } from "@/api/blog";
+import { Article } from "@/api/types";
+import { ProgressContext } from "@/provider/ProgressProvider";
 const UpdateBlog = () => {
+  const { setProgress } = useContext(ProgressContext);
   const idParm = useParams();
   const id = idParm.id;
   useEffect(() => {
@@ -33,6 +35,7 @@ const UpdateBlog = () => {
           contentArabe: data.contenuArabe,
         });
         setLoading(false);
+        setProgress(100);
       } catch (error) {
         console.error("Error:", error);
         setError("Quelque chose s'est mal passé !");
@@ -41,6 +44,9 @@ const UpdateBlog = () => {
       }
     };
     fetchData();
+    return () => {
+      setProgress(0);
+    };
   }, [id]);
   const navigate = useNavigate();
 
@@ -95,11 +101,11 @@ const UpdateBlog = () => {
       </div>
 
       {!article ? (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex h-screen items-center justify-center">
           <Loading />
         </div>
       ) : (
-        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="mt-4">
             {loading && <Loading />}
             {success && <Success success={success} />}
@@ -111,8 +117,8 @@ const UpdateBlog = () => {
               />
             )}
           </div>
-          <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div className="p-6 bg-white border-b border-gray-200">
+          <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+            <div className="border-b border-gray-200 bg-white p-6">
               <form>
                 <div className="mb-4">
                   <label className="text-xl text-gray-600">
@@ -121,7 +127,7 @@ const UpdateBlog = () => {
                   <br />
                   <input
                     type="text"
-                    className="border-2 border-gray-300 p-2 w-full"
+                    className="w-full border-2 border-gray-300 p-2"
                     name="title"
                     id="title"
                     value={article.title}
@@ -140,7 +146,7 @@ const UpdateBlog = () => {
                   <input
                     dir="rtl"
                     type="text"
-                    className="border-2 border-gray-300 p-2 w-full"
+                    className="w-full border-2 border-gray-300 p-2"
                     name="title"
                     id="title"
                     value={article.titreArabe}
@@ -179,7 +185,7 @@ const UpdateBlog = () => {
                   />
                 </div>
 
-                <div className="flex p-1 space-x-5">
+                <div className="flex space-x-5 p-1">
                   <Button
                     Text="Modifier"
                     variant="secondary"

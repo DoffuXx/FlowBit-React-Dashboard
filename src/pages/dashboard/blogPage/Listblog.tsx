@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteArticle, fetchArticles } from "@/api/blog";
 import { Article, Articles } from "@/api/types";
@@ -13,7 +13,15 @@ import {
   TitlePage,
   Button,
 } from "@components/common";
+import { ProgressContext } from "@/provider/ProgressProvider";
 const ListBlog = () => {
+  const { setProgress } = useContext(ProgressContext);
+  useEffect(() => {
+    setProgress(100);
+    return () => {
+      setProgress(0);
+    };
+  }, [setProgress]);
   const [articles, setArticles] = useState<Articles>([]);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
@@ -107,15 +115,15 @@ const ListBlog = () => {
                     <Link to={`${article.id}`}>
                       <Button Text="Voir" variant="primary"></Button>
                     </Link>
+
+                    <Link to={`${article.id}/edit`}>
+                      <Button variant="secondary" Text="Modifer"></Button>
+                    </Link>
                     <Button
                       Text="Supprimer"
                       variant="danger"
                       onClick={() => handleDelete(article.id)}
                     ></Button>
-
-                    <Link to={`${article.id}/edit`}>
-                      <Button variant="secondary" Text="Modifer"></Button>
-                    </Link>
                   </td>
                 </tr>
               ))

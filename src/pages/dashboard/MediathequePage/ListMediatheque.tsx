@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { deleteMediatheque, fetchMediatheques } from "../../../api/mediatheque";
-import ReactPlayer from "react-player";
+import { deleteMediatheque, fetchMediatheques } from "@/api/mediatheque";
 
 import {
   BreadCrumb,
@@ -10,16 +9,22 @@ import {
   Success,
   Button,
   TitlePage,
-} from "../../../components/common";
-import { Media } from "../../../api/types";
+} from "@components/common";
+import { Media } from "@/api/types";
+import { ProgressContext } from "@/provider/ProgressProvider";
 
 const ListMediatheque = () => {
+  const { setProgress } = useContext(ProgressContext);
   const REACT_APP_API_URL = import.meta.env.VITE_REACT_APP_API_HOME;
   const [loading, setLoading] = useState(false);
   const [medias, setMedias] = useState<Media[]>([]);
   const [success, setSuccess] = useState("");
   useEffect(() => {
+    setProgress(100);
     fetchMediatheques(setMedias, setLoading);
+    return () => {
+      setProgress(0);
+    };
   }, []);
   const handleDelete = async (id: string) => {
     await deleteMediatheque(id, setSuccess, setLoading, setMedias);
@@ -65,19 +70,20 @@ const ListMediatheque = () => {
                   <div className="flex items-center">
                     <div className="grid grid-cols-2 gap-2">
                       {media.mediaType === "Image"
-                        ? media.files.map((file: any) => (
+                        ? media.files.map((file) => (
                             <img
                               className="h-16 rounded-md transition duration-500 ease-in-out hover:translate-x-28 hover:scale-[2.5]"
                               src={`${REACT_APP_API_URL}/Media/${file.fileName}`}
+                              key={file.id}
                               alt=""
                             />
                           ))
-                        : media.files?.map((file: any) => (
-                            <ReactPlayer
-                              url={`${REACT_APP_API_URL}/Media/${file.fileName}`}
-                              controls={true}
-                              width="250px"
-                              height="250px"
+                        : media.files?.map((file) => (
+                            <video
+                              src={`${REACT_APP_API_URL}/Media/${file.fileName}`}
+                              controls
+                              key={file.id}
+                              className="h-44 w-44 rounded-md"
                             />
                           ))}
                     </div>

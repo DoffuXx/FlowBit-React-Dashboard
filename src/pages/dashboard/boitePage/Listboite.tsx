@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 // Api
-import { deleteMessage } from "../../../api/boite";
+import { deleteMessage } from "@/api/boite";
 // Components
 import {
   BreadCrumb,
@@ -10,9 +10,11 @@ import {
   Success,
   Error,
 } from "../../../components/common";
-import { fetchMessages } from "../../../api/boite";
-import { Contact } from "../../../api/types";
+import { fetchMessages } from "@/api/boite";
+import { Contact } from "@/api/types";
+import { ProgressContext } from "@/provider/ProgressProvider";
 const ListBoite = () => {
+  const { setProgress } = useContext(ProgressContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -21,7 +23,11 @@ const ListBoite = () => {
     await deleteMessage(id, setLoading, setError, setSuccess, setContacts);
   };
   useEffect(() => {
+    setProgress(100);
     fetchMessages(setContacts, setLoading);
+    return () => {
+      setProgress(0);
+    };
   }, []);
 
   return (
@@ -29,7 +35,7 @@ const ListBoite = () => {
       <div className="">
         <BreadCrumb layer1="Messages" />
       </div>
-      <div className="mt-4 mb-2">
+      <div className="mb-2 mt-4">
         {loading && <Loading />}
         {success && <Success success={success} />}
         {error && (
@@ -42,8 +48,8 @@ const ListBoite = () => {
       </div>
 
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+        <table className="w-full text-left text-sm text-gray-500 rtl:text-right ">
+          <thead className="bg-gray-50 text-xs uppercase text-gray-700 ">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Prenom
@@ -68,31 +74,31 @@ const ListBoite = () => {
           <tbody>
             {contacts.length === 0 ? (
               <tr>
-                <td colSpan={6} className="text-center py-4">
+                <td colSpan={6} className="py-4 text-center">
                   Aucun message
                 </td>
               </tr>
             ) : (
               contacts.map((contact: Contact) => (
                 <tr key={contact.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     {contact.prenom}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">{contact.nom}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">{contact.nom}</td>
+                  <td className="whitespace-nowrap px-6 py-4">
                     {contact.email}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     {contact.telephone}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     {contact.message}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     <Link to={`${contact.id}`}>
                       <button
                         type="button"
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none "
+                        className="mb-2 me-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4  focus:ring-blue-300 "
                       >
                         Voir
                       </button>
@@ -100,7 +106,7 @@ const ListBoite = () => {
                     <button
                       type="button"
                       onClick={() => deleteContact(contact.id)}
-                      className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-80 focus:outline-none "
+                      className="dark:focus:ring-red-80 mb-2 me-2 rounded-lg bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 "
                     >
                       Supprimer
                     </button>
