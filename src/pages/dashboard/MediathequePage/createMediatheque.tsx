@@ -1,37 +1,26 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
-import { handleSubmit } from "../../../api/mediatheque";
+import { handleSubmit } from "@/api/mediatheque";
 
-import {
-  BreadCrumb,
-  Label,
-  Button,
-  Success,
-  Error,
-} from "../../../components/common";
+import { BreadCrumb, Label, Button, Success, Error } from "@components/common";
+import { useNavigate } from "react-router-dom";
 const CreateMediatheque = () => {
+  const navigate = useNavigate();
   const [Mediatitle, setMediaTitle] = useState("");
   const [MediaType, setMediaType] = useState("Image");
-  const [Files, setFiles] = useState([]);
+  const [Files, setFiles] = useState([] as File[]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  // const handleChangeFiles = (incommingFiles: []) => {
-  //   setFiles(incommingFiles);
-  // };
-  const handleSubmitForm = async (e: any) => {
+  const handleSubmitForm = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const form = new FormData();
     form.append("title", Mediatitle);
     form.append("type", MediaType);
     Files.map((file) => form.append("files[]", file));
-    console.log(Files);
-    console.log(form);
-    await handleSubmit(form, setSuccess, setError);
+    await handleSubmit(form, setSuccess, setError, navigate);
   };
-  const handleChnageFiles = (e: any) => {
-    const file = e.target.files;
-    console.log(file);
+  const handleChnageFiles = (e: React.ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    const file = target.files;
     if (file) {
       setFiles(Array.from(file));
     }
@@ -42,7 +31,7 @@ const CreateMediatheque = () => {
         <BreadCrumb layer1="Mediatheque" layer2="Ajouter" />
       </div>
 
-      <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="mt-2">
           {success && <Success success={success} />}
           {error && (
@@ -53,20 +42,20 @@ const CreateMediatheque = () => {
             />
           )}
         </div>
-        <p className="max-w-lg mt-4 text-3xl font-semibold leading-loose text-gray-900 ">
+        <p className="mt-4 max-w-lg text-3xl font-semibold leading-loose text-gray-900 ">
           Ajouter un Media
         </p>
-        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <div className="p-6 bg-white border-b border-gray-200">
-            <form className=" grid grid-cols-3 auto-rows-auto  gap-1">
+        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+          <div className="border-b border-gray-200 bg-white p-6">
+            <form className=" grid auto-rows-auto grid-cols-3  gap-1">
               {/* Titre */}
               <div className="col-span-2">
-                <div className="bg-slate-50 p-4   rounded-3xl">
+                <div className="bg-slate-50 rounded-3xl   p-4">
                   <Label>Titre</Label>
                   <br />
                   <input
                     type="text"
-                    className="border-2 border-gray-300 p-2 w-full"
+                    className="w-full border-2 border-gray-300 p-2"
                     name="title"
                     id="title"
                     value={Mediatitle}
@@ -74,13 +63,13 @@ const CreateMediatheque = () => {
                     required
                   />
                 </div>
-                <div className="bg-slate-50 p-4   rounded-3xl">
+                <div className="bg-slate-50 rounded-3xl   p-4">
                   <Label>Choisir le type de media </Label>
-                  <form className="max-w-sm mt-2">
+                  <form className="mt-2 max-w-sm">
                     <select
                       id="countries"
                       onChange={(e) => setMediaType(e.target.value)}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     >
                       <option selected value="Image">
                         Image
@@ -91,12 +80,12 @@ const CreateMediatheque = () => {
                 </div>
                 {/* UploadFiles */}
                 <div className="col-start-2 row-start-1 p-6">
-                  <label className="block mb-2 text-sm  font-bold text-gray-900 dark:text-white">
+                  <label className="mb-2 block text-sm  font-bold text-gray-900 dark:text-white">
                     Télécharger plusieurs fichiers
                   </label>
                   <input
                     className="
-                    block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none   "
+                    block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900  focus:outline-none   "
                     type="file"
                     accept="{MediaType === 'Image' ? 'image/*' : 'video/*'}"
                     multiple

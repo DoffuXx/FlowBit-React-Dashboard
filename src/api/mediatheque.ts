@@ -4,26 +4,31 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 import { AxiosError } from "axios";
 import { Media } from "./types";
+const DURATION = 2000;
 
 export const handleSubmit = async (
   form: FormData,
   setSuccess: (value: string) => void,
   setError: (value: string) => void,
+  navigate: (value: string) => void,
 ) => {
+  setSuccess("");
+  setError("");
   try {
-    const response = await axios.post(`${BASE_URL}/mediaPost`, form, {
+    await axios.post(`${BASE_URL}/mediaPost`, form, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    if (response.status === 201) {
-      setSuccess("Votre média a bien été ajouté");
-    } else {
-      setError("Une erreur est survenue");
-      setSuccess("");
-    }
+    setSuccess("Votre média a bien été ajouté");
+    setError("");
+    setTimeout(() => {
+      navigate("/mediatheque");
+    }, DURATION);
   } catch (error) {
     console.error(error);
+    setError("Quelque chose s'est mal passé !");
+    setSuccess("");
   }
 };
 
@@ -58,16 +63,30 @@ export const fetchMediatheque = async (
   }
 };
 
-export const updateMediatheque = async (id: string, formData: FormData) => {
+export const updateMediatheque = async (
+  id: string,
+  formData: FormData,
+  setSuccess: (value: string) => void,
+  setError: (value: string) => void,
+  navigate: (value: string) => void,
+) => {
+  setSuccess("");
+  setError("");
   try {
-    console.log("formData", formData);
     await axios.post(`${BASE_URL}/mediaUpdate/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
+    setSuccess("Votre média a bien été modifié");
+    setError("");
+    setTimeout(() => {
+      navigate("/mediatheque");
+    }, DURATION);
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
+      setSuccess("");
+      setError("Quelque chose s'est mal passé !");
       throw new Error(
         error.response.data.message || "Quelque chose s'est mal passé !",
       );

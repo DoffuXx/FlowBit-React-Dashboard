@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { updateMediatheque, fetchMediatheque } from "@/api/mediatheque";
 
 import { BreadCrumb, Label, Button, Success, Error } from "@components/common";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Media } from "@/api/types";
 const UpdateMediatheque = () => {
   const REACT_APP_API_HOME = import.meta.env.VITE_REACT_APP_API_HOME;
@@ -12,6 +12,7 @@ const UpdateMediatheque = () => {
   const [media, setMedia] = useState({} as Media);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
   const idParm = useParams();
   const id = idParm.id;
   useEffect(() => {
@@ -35,7 +36,7 @@ const UpdateMediatheque = () => {
     Files.map((file) => form.append("files[]", file));
     console.log(Files);
     console.log(form);
-    await updateMediatheque(id as string, form);
+    await updateMediatheque(id as string, form, setSuccess, setError, navigate);
   };
   const handleChangeFiles = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
@@ -85,7 +86,7 @@ const UpdateMediatheque = () => {
                       onChange={(e) => setMediaType(e.target.value)}
                       className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     >
-                      {MediaType === "Image" ? (
+                      {media.mediaType === "Image" ? (
                         <option selected value="Image">
                           Image
                         </option>
@@ -112,7 +113,18 @@ const UpdateMediatheque = () => {
                       ))}
                     </div>
                   ) : (
-                    <div></div>
+                    <div className="bg-slate-50 rounded-3xl   p-4">
+                      <div className="flex-col space-y-4 md:flex-row">
+                        <Label>Media</Label>
+                        {media.files?.map((file: any) => (
+                          <video
+                            src={`${REACT_APP_API_HOME}/Media/${file.fileName}`}
+                            controls
+                            className="h-48 w-48"
+                          />
+                        ))}
+                      </div>
+                    </div>
                   )}
                 </div>
                 {/* UploadFiles */}
@@ -124,7 +136,7 @@ const UpdateMediatheque = () => {
                     className="
                     block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900  focus:outline-none   "
                     type="file"
-                    accept="{MediaType === 'Image' ? 'image/*' : 'video/*'}"
+                    accept={media.mediaType === "Image" ? "image/*" : "video/*"}
                     multiple
                     onChange={handleChangeFiles}
                   />
