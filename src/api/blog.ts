@@ -4,7 +4,7 @@ import axios from "axios";
 import { AxiosError } from "axios";
 const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
-import { Article, Articles } from "./types";
+import { Article, Articles, PageInfo } from "./types";
 
 export const deleteArticle = async (
   id: number,
@@ -33,16 +33,34 @@ export const deleteArticle = async (
 export const fetchArticles = async (
   setArticles: (value: any) => void,
   setLoading: (value: boolean) => void,
+  setError: (value: string) => void,
+  pageInfoCurrent: number,
+  setPageInfo: ({
+    currentPage,
+    totalItems,
+    nextPage,
+    prevPage,
+  }: PageInfo) => void,
 ) => {
   try {
     setLoading(true);
-    const response = await axios.get(`${BASE_URL}/posts`);
+    const response = await axios.get(
+      `${BASE_URL}/posts?page=${pageInfoCurrent}`,
+    );
     const articles = response.data["hydra:member"];
     setArticles(articles);
+    setPageInfo({
+      currentPage: pageInfoCurrent,
+      totalItems: response.data["hydra:totalItems"],
+      nextPage: response.data["hydra:view"]["hydra:next"],
+      prevPage: response.data["hydra:view"]["hydra:previous"],
+    });
     setLoading(false);
+    setError("");
   } catch (error) {
     console.error(error);
     setLoading(false);
+    setError("Une erreur s'est produite");
   }
 };
 

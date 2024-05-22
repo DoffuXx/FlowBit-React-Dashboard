@@ -6,3 +6,4 @@ export { default as TitlePage } from "./TitlePage";
 export { default as Button } from "./Button";
 export { default as Label } from "./Label";
 export { default as CKEditorComponent } from "./CkEditorComponante";
+export { default as Pagination } from "./Pagination";

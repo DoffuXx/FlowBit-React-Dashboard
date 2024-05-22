@@ -18,7 +18,12 @@ const UpdateMediatheque = () => {
   useEffect(() => {
     const fetchMediathequeData = async () => {
       try {
-        await fetchMediatheque(id as string, setMedia, setMediaTitle);
+        await fetchMediatheque(
+          id as string,
+          setMedia,
+          setMediaTitle,
+          setMediaType,
+        );
         console.log(media);
       } catch (error) {
         console.error("Error:", error);
@@ -116,7 +121,7 @@ const UpdateMediatheque = () => {
                     <div className="bg-slate-50 rounded-3xl   p-4">
                       <div className="flex-col space-y-4 md:flex-row">
                         <Label>Media</Label>
-                        {media.files?.map((file: any) => (
+                        {media.files?.map((file) => (
                           <video
                             src={`${REACT_APP_API_HOME}/Media/${file.fileName}`}
                             controls

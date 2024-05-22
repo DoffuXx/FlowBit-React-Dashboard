@@ -10,6 +10,13 @@ export interface Article {
   createdAt: Date;
 }
 
+export interface PageInfo {
+  currentPage: number;
+  totalItems: number;
+  nextPage: string | null;
+  prevPage: string | null;
+}
+
 export interface Discours {
   id: string;
   title: string;

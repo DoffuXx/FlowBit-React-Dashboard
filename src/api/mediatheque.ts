@@ -52,11 +52,13 @@ export const fetchMediatheque = async (
   id: string,
   setMedia: (value: Media) => void,
   setMediaTitle: (value: string) => void,
+  setMediaType: (value: string) => void,
 ) => {
   try {
     const response = await axios.get(`${BASE_URL}/media/${id}`);
     const media = response.data;
     setMediaTitle(media.name);
+    setMediaType(media.mediaType);
     setMedia(media);
   } catch (error) {
     console.log(error);

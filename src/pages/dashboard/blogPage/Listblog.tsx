@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteArticle, fetchArticles } from "@/api/blog";
-import { Article, Articles } from "@/api/types";
+import { Article, Articles, PageInfo } from "@/api/types";
 import { htmlToText } from "html-to-text";
 import { formatDate } from "@/helper/utils";
 
@@ -12,16 +12,11 @@ import {
   Error,
   TitlePage,
   Button,
+  Pagination,
 } from "@components/common";
 import { ProgressContext } from "@/provider/ProgressProvider";
 const ListBlog = () => {
   const { setProgress } = useContext(ProgressContext);
-  useEffect(() => {
-    setProgress(100);
-    return () => {
-      setProgress(0);
-    };
-  }, [setProgress]);
   const [articles, setArticles] = useState<Articles>([]);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
@@ -29,10 +24,50 @@ const ListBlog = () => {
   const handleDelete = async (id: number) => {
     await deleteArticle(id, setLoading, setError, setSuccess, setArticles);
   };
+  const [pageInfo, setPageInfo] = useState<PageInfo>({
+    currentPage: 1,
+    totalItems: 0,
+    nextPage: null,
+    prevPage: null,
+  });
 
   useEffect(() => {
-    fetchArticles(setArticles, setLoading);
-  }, []);
+    setProgress(100);
+    fetchArticles(
+      setArticles,
+      setLoading,
+      setError,
+      pageInfo.currentPage,
+      setPageInfo,
+    );
+    return () => {
+      setProgress(0);
+    };
+  }, [setProgress, pageInfo.currentPage]);
+
+  const nextPage = async () => {
+    if (pageInfo.nextPage) {
+      fetchArticles(
+        setArticles,
+        setLoading,
+        setError,
+        pageInfo.currentPage + 1,
+        setPageInfo,
+      );
+    }
+  };
+
+  const prevPage = async () => {
+    if (pageInfo.prevPage) {
+      fetchArticles(
+        setArticles,
+        setLoading,
+        setError,
+        pageInfo.currentPage - 1,
+        setPageInfo,
+      );
+    }
+  };
 
   return (
     <>
@@ -103,10 +138,10 @@ const ListBlog = () => {
                     {article.titreArabe.substring(0, 50)}
                   </td>
                   <td className="whitespace-nowrap px-6 py-4">
-                    {htmlToText(article.content.substring(0, 50))}...
+                    {htmlToText(article.content?.substring(0, 50))}
                   </td>
                   <td className="whitespace-nowrap px-6 py-4">
-                    {htmlToText(article.contenuArabe.substring(0, 50))}...
+                    {htmlToText(article.contenuArabe?.substring(0, 50))}
                   </td>
                   <td className="whitespace-nowrap px-6 py-4">
                     {formatDate(article.createdAt)}
@@ -132,7 +167,17 @@ const ListBlog = () => {
         </table>
       </div>
       {/* Pagniation */}
-      <div className="mt-4 flex justify-center"></div>
+      <div className="mt-4 flex justify-center">
+        {articles.length > 0 && (
+          <Pagination
+            nextPage={nextPage}
+            prevPage={prevPage}
+            totalItems={pageInfo.totalItems}
+            currentPage={pageInfo.currentPage}
+            listofItems={articles.length}
+          />
+        )}
+      </div>
     </>
   );
 };
