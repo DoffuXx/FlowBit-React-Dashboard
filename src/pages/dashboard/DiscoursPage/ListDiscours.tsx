@@ -117,15 +117,15 @@ Ajouter un discours
                     <Link to={`${discour.id}`}>
                       <Button Text="Voir" />
                     </Link>
+
+                    <Link to={`${discour.id}/edit`}>
+                      <Button variant="secondary" Text="Modifier"></Button>
+                    </Link>
                     <Button
                       Text="Supprimer"
                       onClick={() => handleDeleteButton(discour.id)}
                       variant="danger"
                     />
-
-                    <Link to={`${discour.id}/edit`}>
-                      <Button variant="secondary" Text="Modifer"></Button>
-                    </Link>
                   </td>
                 </tr>
               ))

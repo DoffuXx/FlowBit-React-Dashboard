@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface Article {
-  contentArabe: any;
+  contentArabe: string;
   id: number;
   title: string;
   content: string;
@@ -13,8 +13,8 @@ export interface Article {
 export interface PageInfo {
   currentPage: number;
   totalItems: number;
-  nextPage: string | null;
-  prevPage: string | null;
+  nextPage?: string | null;
+  prevPage?: string | null;
 }
 
 export interface Discours {
@@ -72,7 +72,7 @@ export interface MediathequeProps {
   setSuccess: (value: string) => void;
 }
 export interface Media {
-  id: number;
+  id: string;
   name: string;
   mediaType: string;
   files: { fileName: string; id: string; media: string }[];

@@ -152,7 +152,7 @@ const ListBlog = () => {
                     </Link>
 
                     <Link to={`${article.id}/edit`}>
-                      <Button variant="secondary" Text="Modifer"></Button>
+                      <Button variant="secondary" Text="Modifier"></Button>
                     </Link>
                     <Button
                       Text="Supprimer"

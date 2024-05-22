@@ -97,15 +97,15 @@ const ListMediatheque = () => {
                   <Link to={`${media.id}`}>
                     <Button Text="Voir" variant="primary"></Button>
                   </Link>
+
+                  <Link to={`${media.id}/edit`}>
+                    <Button variant="secondary" Text="Modifier"></Button>
+                  </Link>
                   <Button
                     Text="Supprimer"
                     variant="danger"
                     onClick={() => handleDelete(media.id)}
                   ></Button>
-
-                  <Link to={`${media.id}/edit`}>
-                    <Button variant="secondary" Text="Modifer"></Button>
-                  </Link>
                 </td>
               </tr>
             ))}

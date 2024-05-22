@@ -1,29 +1,27 @@
-import notfound from "@/assets/404/notfound.svg";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/common";
 
 const NotFoundPage = () => {
+  const navigate = useNavigate();
   return (
     <div>
-      <div className=" flex h-screen  items-center justify-center bg-gray-50">
-        <div className="drop-shadow-x flex flex-col   items-center rounded-lg  text-center hover:drop-shadow-xl">
-          <img src={notfound} alt="404 Not Found" width={200} height={200} />
-          <h1 className="mb-4 text-4xl font-bold">404 - Pas trouvé</h1>
-          <p className="text-gray-600">
-            Désolé, la page que vous recherchez n'existe pas.
-          </p>
+      <div className="grid h-screen place-content-center bg-white px-4">
+        <div className="flex flex-col  justify-center text-center">
+          <img
+            src="https://ccpmfiguig.ma/assets/A-PRIM-qdR7wAJ4.png"
+            className=""
+            alt="Maison Médicale Jubilé"
+          />
 
-          <div className="mt-4 text-center">
-            <p className="mb-3 text-gray-600">
-              Ou bien, vous voudrez peut-être explorer :
-            </p>
-            <a href="/" className="text-blue-500 hover:underline">
-              Home
-            </a>
-            <a href="/blog" className="ml-2 text-blue-500 hover:underline">
-              Blog
-            </a>
-            <a href="/contact" className="ml-2 text-blue-500 hover:underline">
-              Contact
-            </a>
+          <h1 className="mt-6 text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Uh-oPss!
+          </h1>
+
+          <p className="mt-4 text-gray-500">
+            Nous ne trouvons pas cette page .
+          </p>
+          <div className="mt-4">
+            <Button Text="Retourner" onClick={() => navigate(-1)}></Button>
           </div>
         </div>
       </div>

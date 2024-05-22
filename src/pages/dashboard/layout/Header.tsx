@@ -38,7 +38,7 @@ const Header = () => {
                 alt="Maison Médicale Jubilé"
               />
               <span className="invisible self-center whitespace-nowrap rounded-lg text-sm font-medium   sm:visible sm:text-2xl  ">
-                <span className="text-primaryColor">PRIM</span> Tableau de bord
+                Tableau de bord
               </span>
             </a>
           </div>

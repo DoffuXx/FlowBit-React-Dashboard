@@ -52,8 +52,8 @@ export const fetchArticles = async (
     setPageInfo({
       currentPage: pageInfoCurrent,
       totalItems: response.data["hydra:totalItems"],
-      nextPage: response.data["hydra:view"]["hydra:next"],
-      prevPage: response.data["hydra:view"]["hydra:previous"],
+      nextPage: response.data["hydra:view"]?.["hydra:next"] || null,
+      prevPage: response.data["hydra:view"]?.["hydra:previous"] || null,
     });
     setLoading(false);
     setError("");

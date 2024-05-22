@@ -10,7 +10,12 @@ const ShowMediatheque = () => {
   const { id } = useParams();
   const [media, setMedia] = useState({} as Media);
   useEffect(() => {
-    fetchMediatheque(id as string, setMedia, (_) => {});
+    fetchMediatheque(
+      id as string,
+      setMedia,
+      (_) => {},
+      (_) => {},
+    );
   }, [id]);
   return (
     <div className="col-span-3">
