@@ -15,6 +15,7 @@ import {
   Button,
   Pagination,
   Search,
+  Line,
 } from "@components/common";
 import { ProgressContext } from "@/provider/ProgressProvider";
 const ListBlog = () => {
@@ -125,6 +126,7 @@ const ListBlog = () => {
         <div className="mb-2">
           <Search handleSearch={handleSearch} />
         </div>
+        <Line variant="default" />
         <div className="mb-4 grid grid-cols-2 gap-5">
           <div>
             <h3>Date Avant :</h3>
