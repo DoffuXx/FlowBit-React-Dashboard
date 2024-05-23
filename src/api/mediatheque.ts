@@ -3,7 +3,7 @@
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 import { AxiosError } from "axios";
-import { Media } from "./types";
+import { Media, PageInfo } from "./types";
 const DURATION = 2000;
 
 export const handleSubmit = async (
@@ -35,16 +35,34 @@ export const handleSubmit = async (
 export const fetchMediatheques = async (
   setMedias: (value: any) => void,
   setLoading: (value: boolean) => void,
+  setError: (value: string) => void,
+  pageInfoCurrent: number,
+  setPageInfo: ({
+    currentPage,
+    totalItems,
+    nextPage,
+    prevPage,
+  }: PageInfo) => void,
 ) => {
   try {
     setLoading(true);
-    const response = await axios.get(`${BASE_URL}/media`);
+    const response = await axios.get(
+      `${BASE_URL}/media?page=${pageInfoCurrent}`,
+    );
     const medias = response.data["hydra:member"];
     setMedias(medias);
+    setPageInfo({
+      currentPage: pageInfoCurrent,
+      totalItems: response.data["hydra:totalItems"],
+      nextPage: response.data["hydra:view"]?.["hydra:next"] || null,
+      prevPage: response.data["hydra:view"]?.["hydra:previous"] || null,
+    });
     setLoading(false);
+    setError("");
   } catch (error) {
     console.log(error);
     setLoading(false);
+    setError("Quelque chose s'est mal passé");
   }
 };
 

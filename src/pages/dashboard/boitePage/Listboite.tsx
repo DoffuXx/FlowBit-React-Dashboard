@@ -9,9 +9,10 @@ import {
   Loading,
   Success,
   Error,
-} from "../../../components/common";
+  Pagination,
+} from "@components/common";
 import { fetchMessages } from "@/api/boite";
-import { Contact } from "@/api/types";
+import { Contact, PageInfo } from "@/api/types";
 import { ProgressContext } from "@/provider/ProgressProvider";
 const ListBoite = () => {
   const { setProgress } = useContext(ProgressContext);
@@ -22,13 +23,50 @@ const ListBoite = () => {
   const deleteContact = async (id: string) => {
     await deleteMessage(id, setLoading, setError, setSuccess, setContacts);
   };
+
+  const [pageInfo, setPageInfo] = useState<PageInfo>({
+    currentPage: 1,
+    totalItems: 0,
+    nextPage: null,
+    prevPage: null,
+  });
   useEffect(() => {
     setProgress(100);
-    fetchMessages(setContacts, setLoading);
+    fetchMessages(
+      setContacts,
+      setLoading,
+      setError,
+      pageInfo.currentPage,
+      setPageInfo,
+    );
     return () => {
       setProgress(0);
     };
   }, []);
+
+  const nextPage = async () => {
+    if (pageInfo.nextPage) {
+      fetchMessages(
+        setContacts,
+        setLoading,
+        setError,
+        pageInfo.currentPage + 1,
+        setPageInfo,
+      );
+    }
+  };
+
+  const prevPage = async () => {
+    if (pageInfo.prevPage) {
+      fetchMessages(
+        setContacts,
+        setLoading,
+        setError,
+        pageInfo.currentPage - 1,
+        setPageInfo,
+      );
+    }
+  };
 
   return (
     <>
@@ -116,6 +154,19 @@ const ListBoite = () => {
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagniation */}
+      <div className="mt-4 flex justify-center">
+        {contacts.length > 0 && (
+          <Pagination
+            nextPage={nextPage}
+            prevPage={prevPage}
+            totalItems={pageInfo.totalItems}
+            currentPage={pageInfo.currentPage}
+            listofItems={contacts.length}
+          />
+        )}
       </div>
     </>
   );

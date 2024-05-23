@@ -9,8 +9,10 @@ import {
   Success,
   Button,
   TitlePage,
+  Pagination,
+  Error,
 } from "@components/common";
-import { Media } from "@/api/types";
+import { Media, PageInfo } from "@/api/types";
 import { ProgressContext } from "@/provider/ProgressProvider";
 
 const ListMediatheque = () => {
@@ -19,16 +21,53 @@ const ListMediatheque = () => {
   const [loading, setLoading] = useState(false);
   const [medias, setMedias] = useState<Media[]>([]);
   const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+  const [pageInfo, setPageInfo] = useState<PageInfo>({
+    currentPage: 1,
+    totalItems: 0,
+    nextPage: null,
+    prevPage: null,
+  });
   useEffect(() => {
     setProgress(100);
-    fetchMediatheques(setMedias, setLoading);
+    fetchMediatheques(
+      setMedias,
+      setLoading,
+      setSuccess,
+      pageInfo.currentPage,
+      setPageInfo,
+    );
     return () => {
       setProgress(0);
     };
-  }, []);
+  }, [setProgress, pageInfo.currentPage]);
   const handleDelete = async (id: string) => {
     await deleteMediatheque(id, setSuccess, setLoading, setMedias);
   };
+  const nextPage = async () => {
+    if (pageInfo.nextPage) {
+      fetchMediatheques(
+        setMedias,
+        setLoading,
+        setError,
+        pageInfo.currentPage + 1,
+        setPageInfo,
+      );
+    }
+  };
+
+  const prevPage = async () => {
+    if (pageInfo.prevPage) {
+      fetchMediatheques(
+        setMedias,
+        setLoading,
+        setError,
+        pageInfo.currentPage - 1,
+        setPageInfo,
+      );
+    }
+  };
+
   return (
     <>
       <div className="">
@@ -37,6 +76,13 @@ const ListMediatheque = () => {
       <div className="mt-4">
         {loading && <Loading />}
         {success && <Success success={success} />}
+        {error && (
+          <Error
+            error={{
+              error: error,
+            }}
+          />
+        )}
       </div>
 
       <TitlePage title="Accueil des Mediatheque" />
@@ -113,6 +159,18 @@ const ListMediatheque = () => {
         </table>
       </div>
       <div className="mt-4 flex justify-center"></div>
+      {/* Pagniation */}
+      <div className="mt-4 flex justify-center">
+        {medias.length > 0 && (
+          <Pagination
+            nextPage={nextPage}
+            prevPage={prevPage}
+            totalItems={pageInfo.totalItems}
+            currentPage={pageInfo.currentPage}
+            listofItems={medias.length}
+          />
+        )}
+      </div>
     </>
   );
 };

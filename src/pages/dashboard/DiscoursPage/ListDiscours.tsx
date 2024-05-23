@@ -8,9 +8,10 @@ import {
   Error,
   TitlePage,
   Button,
+  Pagination,
 } from "@components/common";
 import { htmlToText } from "html-to-text";
-import { Discours } from "@/api/types";
+import { Discours, PageInfo } from "@/api/types";
 import { formatDate } from "@/helper/utils";
 import { ProgressContext } from "@/provider/ProgressProvider";
 
@@ -23,10 +24,24 @@ const ListDiscours = () => {
   const handleDeleteButton = async (id: string) => {
     await handleDelete(id, setLoading, setSuccess, setError, setDiscours);
   };
+
+  const [pageInfo, setPageInfo] = useState<PageInfo>({
+    currentPage: 1,
+    totalItems: 0,
+    nextPage: null,
+    prevPage: null,
+  });
+
   useEffect(() => {
     setProgress(100);
     const fetchDiscoursData = async () => {
-      fetchDiscours(setDiscours, setLoading);
+      fetchDiscours(
+        setDiscours,
+        setLoading,
+        setError,
+        pageInfo.currentPage,
+        setPageInfo,
+      );
     };
     fetchDiscoursData();
 
@@ -34,6 +49,30 @@ const ListDiscours = () => {
       setProgress(0);
     };
   }, []);
+
+  const nextPage = async () => {
+    if (pageInfo.nextPage) {
+      fetchDiscours(
+        setDiscours,
+        setLoading,
+        setError,
+        pageInfo.currentPage + 1,
+        setPageInfo,
+      );
+    }
+  };
+
+  const prevPage = async () => {
+    if (pageInfo.prevPage) {
+      fetchDiscours(
+        setDiscours,
+        setLoading,
+        setError,
+        pageInfo.currentPage - 1,
+        setPageInfo,
+      );
+    }
+  };
 
   return (
     <>
@@ -132,6 +171,18 @@ Ajouter un discours
             )}
           </tbody>
         </table>
+      </div>
+      {/* Pagniation */}
+      <div className="mt-4 flex justify-center">
+        {discours.length > 0 && (
+          <Pagination
+            nextPage={nextPage}
+            prevPage={prevPage}
+            totalItems={pageInfo.totalItems}
+            currentPage={pageInfo.currentPage}
+            listofItems={discours.length}
+          />
+        )}
       </div>
     </>
   );

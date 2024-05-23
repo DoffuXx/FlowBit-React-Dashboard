@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useContext, useEffect, useState } from "react";
-import { fetchCoordonnee, updateCoordonne } from "../../../api/coordonnee";
-import { Coordonnee } from "../../../api/types";
+import { fetchCoordonnee, updateCoordonne } from "@/api/coordonnee";
+import { Coordonnee } from "@/api/types";
 
 import {
   BreadCrumb,
@@ -10,7 +10,7 @@ import {
   Success,
   Error,
   TitlePage,
-} from "../../../components/common";
+} from "@components/common";
 import { ProgressContext } from "@/provider/ProgressProvider";
 const ContactDetailes = () => {
   const { setProgress } = useContext(ProgressContext);
