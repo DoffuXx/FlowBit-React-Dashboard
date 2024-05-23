@@ -41,10 +41,20 @@ const ListBlog = () => {
     );
   };
   const handleChangeDateBefore = (date: Date) => {
-    setBeforeDate(formatDateforApi(date));
+    const formatedDate = formatDateforApi(date);
+    if (afterDate && formatedDate < afterDate) {
+      setError("La date avant doit être supérieure à la date après");
+    } else {
+      setBeforeDate(formatedDate);
+    }
   };
   const handleChangeDateAfter = (date: Date) => {
-    setAfterDate(formatDateforApi(date));
+    const formatedDate = formatDateforApi(date);
+    if (beforeDate && beforeDate < formatedDate) {
+      setError("La date avant doit être supérieure à la date après");
+    } else {
+      setAfterDate(formatedDate);
+    }
   };
   const handleDelete = async (id: number) => {
     await deleteArticle(id, setLoading, setError, setSuccess, setArticles);
