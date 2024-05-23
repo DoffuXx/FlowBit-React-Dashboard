@@ -88,7 +88,7 @@ const CreateMediatheque = () => {
                     className="
                     block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900  focus:outline-none   "
                     type="file"
-                    accept="{MediaType === 'Image' ? 'image/*' : 'video/*'}"
+                    accept={MediaType === "Image" ? "image/*" : "video/*"}
                     multiple
                     onChange={handleChangeFiles}
                   />
