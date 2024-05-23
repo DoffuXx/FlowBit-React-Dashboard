@@ -35,11 +35,8 @@ const Header = () => {
               <img
                 src="https://ccpmfiguig.ma/assets/A-PRIM-qdR7wAJ4.png"
                 className="me-3 h-8"
-                alt="Maison Médicale Jubilé"
+                alt="PRIM"
               />
-              <span className="invisible self-center whitespace-nowrap rounded-lg text-sm font-medium   sm:visible sm:text-2xl  ">
-                Tableau de bord
-              </span>
             </a>
           </div>
 
