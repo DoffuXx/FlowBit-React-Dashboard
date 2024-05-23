@@ -28,7 +28,6 @@ export const ProgressProvider: React.FC<ProgressProviderProps> = ({
       window.removeEventListener("beforeunload", handleProgress);
     };
   }, []);
-  console.log(progress);
   return (
     <ProgressContext.Provider value={{ progress, setProgress }}>
       <LoadingBar
