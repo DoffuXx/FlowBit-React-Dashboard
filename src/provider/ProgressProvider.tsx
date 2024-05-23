@@ -31,7 +31,7 @@ export const ProgressProvider: React.FC<ProgressProviderProps> = ({
   return (
     <ProgressContext.Provider value={{ progress, setProgress }}>
       <LoadingBar
-        color="#f11946"
+        color="#1e5eff"
         progress={progress}
         onLoaderFinished={() => setProgress(0)}
       />
