@@ -1,7 +1,11 @@
 import React from "react";
 
 interface SearchProps {
-  handleSearch: (e: React.MouseEvent, search: string) => void;
+  handleSearch: (
+    e: React.MouseEvent,
+    search: string,
+    setSearch: React.Dispatch<React.SetStateAction<string>>,
+  ) => void;
 }
 const Search: React.FC<SearchProps> = ({ handleSearch }) => {
   const [search, setSearch] = React.useState("");
@@ -40,7 +44,7 @@ const Search: React.FC<SearchProps> = ({ handleSearch }) => {
         <button
           type="submit"
           className="absolute bottom-2.5 end-2.5 rounded-lg bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 "
-          onClick={(e) => handleSearch(e, search)}
+          onClick={(e) => handleSearch(e, search, setSearch)}
         >
           Recherche
         </button>

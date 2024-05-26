@@ -84,10 +84,10 @@ const ListMediatheque = () => {
         )}
       </div>
 
-      <TitlePage title="Accueil des Mediatheque" />
+      <TitlePage title="Accueil des Médiathèque" />
       <div className="flex justify-end">
         <Link to="/mediatheque/create">
-          <Button Text="             Ajouter un Mediatheque"></Button>
+          <Button Text="             Ajouter un Médiathèque"></Button>
         </Link>
       </div>
       <div className="relative  overflow-x-auto shadow-md sm:rounded-lg">
@@ -113,11 +113,11 @@ const ListMediatheque = () => {
               <tr key={media.id}>
                 <td className="whitespace-nowrap px-6 py-4">
                   <div className="flex items-center">
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="flex flex-col gap-2 md:flex-row">
                       {media.mediaType === "Image"
                         ? media.files.map((file) => (
                             <img
-                              className="h-16 rounded-md transition duration-500 ease-in-out hover:translate-x-28 hover:scale-[2.5]"
+                              className=" rounded-md transition duration-500 ease-in-out hover:translate-x-28 hover:scale-[2.5] sm:h-16 "
                               src={`${REACT_APP_API_URL}/Media/${file.fileName}`}
                               key={file.id}
                               alt=""

@@ -9,3 +9,4 @@ export { default as CKEditorComponent } from "./CkEditorComponante";
 export { default as Pagination } from "./Pagination";
 export { default as Search } from "./search";
 export { default as Line } from "./line";
+export { default as FilterComponent } from "./filterComponent";

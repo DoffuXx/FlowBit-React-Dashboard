@@ -4,7 +4,6 @@ import { deleteArticle, fetchArticles } from "@/api/blog";
 import { Article, Articles, PageInfo } from "@/api/types";
 import { htmlToText } from "html-to-text";
 import { formatDate, formatDateforApi } from "@/helper/utils";
-import { Datepicker } from "flowbite-react";
 
 import {
   BreadCrumb,
@@ -14,8 +13,7 @@ import {
   TitlePage,
   Button,
   Pagination,
-  Search,
-  Line,
+  FilterComponent,
 } from "@components/common";
 import { ProgressContext } from "@/provider/ProgressProvider";
 const ListBlog = () => {
@@ -26,6 +24,7 @@ const ListBlog = () => {
   const [beforeDate, setBeforeDate] = useState<string>("");
   const [afterDate, setAfterDate] = useState<string>("");
   const [error, setError] = useState("");
+  const [isTimepickerToggle, setIsTimepickerToggle] = useState(false);
   const fetch = async (
     currentPage: number = pageInfo.currentPage,
     search?: string,
@@ -47,6 +46,7 @@ const ListBlog = () => {
       setError("La date avant doit être supérieure à la date après");
     } else {
       setBeforeDate(formatedDate);
+      setIsTimepickerToggle(true);
     }
   };
   const handleChangeDateAfter = (date: Date) => {
@@ -55,6 +55,7 @@ const ListBlog = () => {
       setError("La date avant doit être supérieure à la date après");
     } else {
       setAfterDate(formatedDate);
+      setIsTimepickerToggle(true);
     }
   };
   const handleDelete = async (id: number) => {
@@ -98,9 +99,14 @@ const ListBlog = () => {
     }
   };
 
-  const handleSearch = async (e: React.MouseEvent, search: string) => {
+  const handleSearch = async (
+    e: React.MouseEvent,
+    search: string,
+    setSearch: React.Dispatch<React.SetStateAction<string>>,
+  ) => {
     e.preventDefault();
     fetch(1, search);
+    setSearch("");
   };
 
   return (
@@ -122,31 +128,14 @@ const ListBlog = () => {
 
       <TitlePage title="Accueil des Blogs" />
 
-      <div className="block  rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100 ">
-        <div className="mb-2">
-          <Search handleSearch={handleSearch} />
-        </div>
-        <Line variant="default" />
-        <div className="mb-4 grid grid-cols-2 gap-5">
-          <div>
-            <h3>Date Avant :</h3>
-            <Datepicker
-              value={beforeDate}
-              onSelectedDateChanged={handleChangeDateBefore}
-            />
-          </div>
-          <div>
-            <h3>Date Après :</h3>
-            <Datepicker
-              value={afterDate}
-              onSelectedDateChanged={handleChangeDateAfter}
-            />
-          </div>
-          <div>
-            <Button onClick={handleDeleteFilter} Text="Annuler" />
-          </div>
-        </div>
-      </div>
+      <FilterComponent
+        handleSearch={handleSearch}
+        beforeDate={beforeDate}
+        afterDate={afterDate}
+        handleChangeDateBefore={handleChangeDateBefore}
+        handleChangeDateAfter={handleChangeDateAfter}
+        handleDeleteFilter={handleDeleteFilter}
+      />
       <div className="mt-4 flex justify-end">
         <Link to="/articles/create">
           <Button
