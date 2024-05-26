@@ -1,6 +1,22 @@
+import { useState } from "react";
 import { Button } from "../../components/common";
+import { login } from "@/api/auth";
 
 const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e.preventDefault();
+    if (!username || !password)
+      return alert("Veuillez remplir tous les champs");
+    console.log({
+      username,
+      password,
+    });
+    await login(username, password);
+  };
   return (
     <div>
       <section className="bg-gray-50 ">
@@ -18,18 +34,14 @@ const Login = () => {
               </h1>
               <form className="space-y-4 md:space-y-6" action="#">
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="mb-2 block text-sm font-medium text-gray-900 "
-                  >
-                    votre email
+                  <label className="mb-2 block text-sm font-medium text-gray-900 ">
+                    votre username
                   </label>
                   <input
-                    type="email"
-                    name="email"
-                    id="email"
+                    type="text"
                     className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm "
-                    placeholder="exemple@domain.com"
+                    placeholder="admin"
+                    onChange={(e) => setUsername(e.target.value)}
                   />
                 </div>
                 <div>
@@ -45,6 +57,7 @@ const Login = () => {
                     id="password"
                     placeholder="••••••••"
                     className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm "
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <div className="flex items-center justify-between">
@@ -71,7 +84,11 @@ const Login = () => {
                   </a>
                 </div>
                 <div className="text-center">
-                  <Button type="submit" Text="se Connecter"></Button>
+                  <Button
+                    type="submit"
+                    Text="se Connecter"
+                    onClick={handleSubmit}
+                  ></Button>
                 </div>
               </form>
             </div>

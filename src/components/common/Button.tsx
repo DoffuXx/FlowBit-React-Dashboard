@@ -2,7 +2,9 @@ import React from "react";
 
 type Props = {
   Text: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (
+    e: React.MouseEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>,
+  ) => void;
   variant?: "primary" | "secondary" | "danger";
   requried?: boolean;
   role?: string;
