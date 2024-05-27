@@ -1,21 +1,32 @@
+import { authService } from "@/redux/authService";
 import { useState } from "react";
-import { Button } from "../../components/common";
-import { login } from "@/api/auth";
+import { Button, Loading, Error } from "../../components/common";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault();
-    if (!username || !password)
-      return alert("Veuillez remplir tous les champs");
-    console.log({
-      username,
-      password,
-    });
-    await login(username, password);
+    if (!username || !password) setError("Veuillez remplir tous les champs");
+    try {
+      const loginData = {
+        username: username,
+        password: password,
+      };
+      console.log(loginData);
+      await authService.login(loginData);
+      if (await authService.isAuthenticated()) {
+        window.location.replace("/");
+      }
+    } catch (error) {
+      console.log(error);
+      setError("Nom d'utilisateur ou mot de passe incorrect");
+    }
   };
   return (
     <div>
@@ -29,6 +40,17 @@ const Login = () => {
                   alt="PRIM"
                 />
               </a>
+
+              <div className="mt-4">
+                {loading && <Loading />}
+                {error && (
+                  <Error
+                    error={{
+                      error: error,
+                    }}
+                  />
+                )}
+              </div>
               <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                 Se Connecter
               </h1>

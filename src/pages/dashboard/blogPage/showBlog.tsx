@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-import { BreadCrumb, Loading } from "../../../components/common";
+import { BreadCrumb, Button, Loading } from "../../../components/common";
 import { fetchArticle } from "../../../api/blog";
 import { Article } from "../../../api/types";
 import { ProgressContext } from "@/provider/ProgressProvider";
@@ -77,6 +77,10 @@ export const ShowBlog = () => {
           </div>
         </div>
       )}
+
+      <Link to="/articles">
+        <Button Text="Retour" role="submit"></Button>
+      </Link>
     </div>
   );
 };

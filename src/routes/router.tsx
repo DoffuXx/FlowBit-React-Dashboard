@@ -23,41 +23,44 @@ import SettingsPage from "@/pages/dashboard/settingsPage/SettingsPage";
 import Login from "@/pages/dashboard/login";
 import NotFoundPage from "@/pages/NotFoundPage";
 import Layout from "@/pages/dashboard/layout/layout";
+import PrivateRoutes from "@/utils/privateRoutes";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        {/* Blog Route */}
-        <Route path="articles">
-          <Route index element={<ListBlog />} />
-          <Route path="create" element={<CreateBlog />} />
-          <Route path=":id" element={<ShowBlog />} />
-          <Route path=":id/edit" element={<UpdateBlog />} />
+      <Route element={<PrivateRoutes />}>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          {/* Blog Route */}
+          <Route path="articles">
+            <Route index element={<ListBlog />} />
+            <Route path="create" element={<CreateBlog />} />
+            <Route path=":id" element={<ShowBlog />} />
+            <Route path=":id/edit" element={<UpdateBlog />} />
+          </Route>
+          {/* Boite Route */}
+          <Route path="messages">
+            <Route index element={<ListBoite />} />
+            <Route path=":id" element={<ShowBoite />} />
+          </Route>
+          <Route path="coordonnées">
+            <Route index element={<ContactDetailes />} />
+          </Route>
+          <Route path="mediatheque">
+            <Route index element={<ListMediatheque />} />
+            <Route path="create" element={<CreateMediatheque />} />
+            <Route path=":id" element={<ShowMediatheque />} />
+            <Route path=":id/edit" element={<UpdateMediatheque />} />
+          </Route>
+          <Route path="discours">
+            <Route index element={<ListDiscours />} />
+            <Route path="create" element={<CreateDiscours />} />
+            <Route path=":id" element={<ShowDiscours />} />
+            <Route path=":id/edit" element={<UpdateDiscours />} />
+          </Route>
+          {/* Settings Page */}
+          <Route path="settings" element={<SettingsPage />} />
+          {/* Login Page */}
         </Route>
-        {/* Boite Route */}
-        <Route path="messages">
-          <Route index element={<ListBoite />} />
-          <Route path=":id" element={<ShowBoite />} />
-        </Route>
-        <Route path="coordonnées">
-          <Route index element={<ContactDetailes />} />
-        </Route>
-        <Route path="mediatheque">
-          <Route index element={<ListMediatheque />} />
-          <Route path="create" element={<CreateMediatheque />} />
-          <Route path=":id" element={<ShowMediatheque />} />
-          <Route path=":id/edit" element={<UpdateMediatheque />} />
-        </Route>
-        <Route path="discours">
-          <Route index element={<ListDiscours />} />
-          <Route path="create" element={<CreateDiscours />} />
-          <Route path=":id" element={<ShowDiscours />} />
-          <Route path=":id/edit" element={<UpdateDiscours />} />
-        </Route>
-        {/* Settings Page */}
-        <Route path="settings" element={<SettingsPage />} />
-        {/* Login Page */}
       </Route>
       <Route path="/login" element={<Login />} />
       {/* Not Found Page */}

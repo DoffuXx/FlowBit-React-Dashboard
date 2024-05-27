@@ -1,4 +1,5 @@
 import { Dropdown } from "flowbite-react";
+import { authService } from "@/redux/authService";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -9,6 +10,10 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const handleLogOut = () => {
+    authService.logout();
+    navigate("/login");
+  };
   useEffect(() => {
     const handler = (event: MouseEvent) => {
       if (
@@ -24,6 +29,9 @@ const Header: React.FC = () => {
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, [isMenuOpen]);
+
+  const auth = localStorage.getItem("auth");
+  const user = JSON.parse(auth!);
   return (
     <nav className="fixed top-0 z-50 w-full border-b  border-gray-200 bg-white hover:bg-[#F7F7F7] ">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -116,12 +124,12 @@ const Header: React.FC = () => {
           <div className="flex items-center gap-4">
             <div className="transition duration-300 hover:-translate-y-1 hover:scale-110 hover:ease-out">
               <img
-                className="h-10 w-10 rounded-full"
-                src="https://xsgames.co/randomusers/avatar.php?g=male"
+                className="h-10 w-20 rounded-full"
+                src="https://www.akwacommunication.ma/img/logo.PNG"
                 alt="Rounded avatar"
               />
             </div>
-            <button className="transition duration-300 hover:-translate-y-1 hover:scale-110 hover:ease-out">
+            <button className="transition duration-300  hover:scale-110 hover:ease-out">
               <Dropdown
                 label=""
                 renderTrigger={() => (
@@ -143,10 +151,9 @@ const Header: React.FC = () => {
                 )}
               >
                 <Dropdown.Header>
-                  <span className="block text-sm">Admin</span>
-                  <span className="block truncate text-sm font-medium">
-                    admin@fcpo.com
-                  </span>
+                  {" "}
+                  <div>{user && user.username}</div>
+                  <div class="truncate font-medium">akwacommunication.ma</div>
                 </Dropdown.Header>
                 <Dropdown.Item
                   onClick={() => {
@@ -160,10 +167,12 @@ const Header: React.FC = () => {
                     navigate("/settings");
                   }}
                 >
-                  Settings
+                  Paramètres
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item>Sign out</Dropdown.Item>
+                <Dropdown.Item onClick={handleLogOut}>
+                  Se Déconnecter
+                </Dropdown.Item>
               </Dropdown>
             </button>
           </div>

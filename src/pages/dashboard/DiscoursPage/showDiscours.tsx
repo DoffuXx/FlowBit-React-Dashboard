@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-import { BreadCrumb, Loading } from "../../../components/common";
+import { BreadCrumb, Button, Loading } from "../../../components/common";
 import { fetchDiscoursById } from "../../../api/discours";
 import { Discours } from "../../../api/types";
 const ShowDiscours = () => {
@@ -35,19 +35,19 @@ const ShowDiscours = () => {
         <BreadCrumb layer1="Discours" layer2="Afficher" />
       </div>
       {!discours.title && !discours.content ? (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex h-screen items-center justify-center">
           <Loading />
         </div>
       ) : (
         <div className="p-8">
-          <div className="w-full rounded-lg overflow-hidden">
+          <div className="w-full overflow-hidden rounded-lg">
             <img
-              className="w-full h-80 object-cover"
+              className="h-80 w-full object-cover"
               src={`${REACT_APP_API_HOME}/images/blogs/${discours.coverImage}`}
               alt=""
             />
           </div>
-          <hr className="w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 " />
+          <hr className="mx-auto my-4 h-1 w-48 rounded border-0 bg-gray-100 md:my-10 " />
           <h5 className="text-xl ">
             Titre : <span className="font-bold">{discours.title}</span>
           </h5>
@@ -78,6 +78,10 @@ const ShowDiscours = () => {
           </div>
         </div>
       )}
+
+      <Link to="/discours">
+        <Button Text="Retour" role="submit"></Button>
+      </Link>
     </div>
   );
 };
