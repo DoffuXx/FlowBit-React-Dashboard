@@ -11,7 +11,7 @@ const SettingsPage = () => {
       <TitlePage title="Page de Paramètre" />
       <div className="flex justify-between">
         <div>
-          <div className="uppercase">{user && user.username}</div>
+          <div className="uppercase">{user && user.user.username}</div>
           <div className="text-sm text-gray-500 dark:text-gray-400">
             Joined in August 2014
           </div>

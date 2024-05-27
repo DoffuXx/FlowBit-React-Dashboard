@@ -152,7 +152,7 @@ const Header: React.FC = () => {
               >
                 <Dropdown.Header>
                   {" "}
-                  <div>{user && user.username}</div>
+                  <div>{user && user.user.username}</div>
                   <div class="truncate font-medium">akwacommunication.ma</div>
                 </Dropdown.Header>
                 <Dropdown.Item

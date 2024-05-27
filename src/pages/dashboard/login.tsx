@@ -5,6 +5,7 @@ import { Button, Loading, Error } from "../../components/common";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -15,19 +16,26 @@ const Login = () => {
     if (!username || !password) setError("Veuillez remplir tous les champs");
     try {
       const loginData = {
-        username: username,
-        password: password,
+        username,
+        password,
+        rememberMe: rememberMe,
       };
-      console.log(loginData);
+      setLoading(true);
       await authService.login(loginData);
       if (await authService.isAuthenticated()) {
         window.location.replace("/");
       }
+      setLoading(false);
     } catch (error) {
-      console.log(error);
       setError("Nom d'utilisateur ou mot de passe incorrect");
+      setLoading(false);
     }
   };
+  useState(() => {
+    if (localStorage.getItem("auth") || sessionStorage.getItem("auth")) {
+      window.location.replace("/");
+    }
+  }, []);
   return (
     <div>
       <section className="bg-gray-50 ">
@@ -90,6 +98,7 @@ const Login = () => {
                         aria-describedby="remember"
                         type="checkbox"
                         className="focus:ring-3 focus:ring-primary-300 h-4 w-4 rounded border border-gray-300 bg-gray-50 "
+                        onChange={() => setRememberMe(!rememberMe)}
                       />
                     </div>
                     <div className="ml-3 text-sm">
