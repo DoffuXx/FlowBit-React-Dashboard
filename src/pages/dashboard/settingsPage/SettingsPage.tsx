@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const SettingsPage = () => {
-  const auth = localStorage.getItem("auth");
+  const auth = localStorage.getItem("auth") || sessionStorage.getItem("auth");
   const user = JSON.parse(auth!);
   return (
     <div className="mt-4">

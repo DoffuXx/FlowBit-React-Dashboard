@@ -30,7 +30,7 @@ const Header: React.FC = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, [isMenuOpen]);
 
-  const auth = localStorage.getItem("auth");
+  const auth = localStorage.getItem("auth") || sessionStorage.getItem("auth");
   const user = JSON.parse(auth!);
   return (
     <nav className="fixed top-0 z-50 w-full border-b  border-gray-200 bg-white hover:bg-[#F7F7F7] ">
