@@ -113,7 +113,7 @@ const ListMediatheque = () => {
               <tr key={media.id}>
                 <td className="whitespace-nowrap px-6 py-4">
                   <div className="flex items-center">
-                    <div className="flex flex-col gap-2 md:flex-row">
+                    <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
                       {media.mediaType === "Image"
                         ? media.files.map((file) => (
                             <img
