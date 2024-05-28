@@ -9,10 +9,11 @@ import {
   TitlePage,
   Button,
   Pagination,
+  FilterComponent,
 } from "@components/common";
 import { htmlToText } from "html-to-text";
 import { Discours, PageInfo } from "@/api/types";
-import { formatDate } from "@/helper/utils";
+import { formatDate, formatDateforApi } from "@/helper/utils";
 import { ProgressContext } from "@/provider/ProgressProvider";
 
 const ListDiscours = () => {
@@ -21,6 +22,8 @@ const ListDiscours = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [beforeDate, setBeforeDate] = useState<string>("");
+  const [afterDate, setAfterDate] = useState<string>("");
   const handleDeleteButton = async (id: string) => {
     await handleDelete(id, setLoading, setSuccess, setError, setDiscours);
   };
@@ -32,45 +35,79 @@ const ListDiscours = () => {
     prevPage: null,
   });
 
+  const fetch = async (
+    currentPage: number = pageInfo.currentPage,
+    search?: string,
+  ) => {
+    fetchDiscours(
+      setDiscours,
+      setLoading,
+      setError,
+      currentPage,
+      setPageInfo,
+      beforeDate,
+      afterDate,
+      search,
+    );
+  };
+
+  const handleSearch = async (
+    e: React.MouseEvent,
+    search: string,
+    setSearch: React.Dispatch<React.SetStateAction<string>>,
+  ) => {
+    e.preventDefault();
+    fetch(1, search);
+    setSearch("");
+  };
+
+  const handleChangeDateBefore = (date: Date) => {
+    const formatedDate = formatDateforApi(date);
+    if (afterDate && formatedDate < afterDate) {
+      setError("La date avant doit être supérieure à la date après");
+    } else {
+      setBeforeDate(formatedDate);
+    }
+  };
+  const handleChangeDateAfter = (date: Date) => {
+    const formatedDate = formatDateforApi(date);
+    if (beforeDate && beforeDate < formatedDate) {
+      setError("La date avant doit être supérieure à la date après");
+    } else {
+      setAfterDate(formatedDate);
+    }
+  };
+
+  const handleDeleteFilter = () => {
+    setBeforeDate("");
+    setAfterDate("");
+    setPageInfo({
+      currentPage: 1,
+      totalItems: 0,
+      nextPage: null,
+      prevPage: null,
+    });
+    fetch();
+  };
+
   useEffect(() => {
     setProgress(100);
-    const fetchDiscoursData = async () => {
-      fetchDiscours(
-        setDiscours,
-        setLoading,
-        setError,
-        pageInfo.currentPage,
-        setPageInfo,
-      );
-    };
-    fetchDiscoursData();
+    fetch();
 
     return () => {
       setProgress(0);
     };
-  }, []);
+  }, [setProgress, pageInfo.currentPage, afterDate, beforeDate]);
 
   const nextPage = async () => {
     if (pageInfo.nextPage) {
-      fetchDiscours(
-        setDiscours,
-        setLoading,
-        setError,
-        pageInfo.currentPage + 1,
-        setPageInfo,
-      );
+      fetch(pageInfo.currentPage + 1);
     }
   };
 
   const prevPage = async () => {
     if (pageInfo.prevPage) {
-      fetchDiscours(
-        setDiscours,
-        setLoading,
-        setError,
-        pageInfo.currentPage - 1,
-        setPageInfo,
-      );
+      fetch(pageInfo.currentPage - 1);
     }
   };
 
@@ -92,7 +129,16 @@ const ListDiscours = () => {
       </div>
 
       <TitlePage title="Accueil Discours" />
-      <div className="flex justify-end">
+
+      <FilterComponent
+        handleSearch={handleSearch}
+        beforeDate={beforeDate}
+        afterDate={afterDate}
+        handleChangeDateBefore={handleChangeDateBefore}
+        handleChangeDateAfter={handleChangeDateAfter}
+        handleDeleteFilter={handleDeleteFilter}
+      />
+      <div className="mt-4 flex justify-end">
         <Link to="/discours/create">
           <Button
             Text="
@@ -128,7 +174,7 @@ Ajouter un discours
             </tr>
           </thead>
           <tbody>
-            {!discours ? (
+            {discours.length === 0 ? (
               <tr>
                 <td colSpan={6} className="py-4 text-center ">
                   Aucune donnée disponible

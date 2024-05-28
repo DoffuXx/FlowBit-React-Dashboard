@@ -10,9 +10,11 @@ import {
   TitlePage,
   Pagination,
   Error,
+  FilterComponent,
 } from "@components/common";
 import { Media, PageInfo } from "@/api/types";
 import { ProgressContext } from "@/provider/ProgressProvider";
+import { formatDateforApi } from "@/helper/utils";
 
 const ListMediatheque = () => {
   const { setProgress } = useContext(ProgressContext);
@@ -20,6 +22,8 @@ const ListMediatheque = () => {
   const [loading, setLoading] = useState(false);
   const [medias, setMedias] = useState<Media[]>([]);
   const [success, setSuccess] = useState("");
+  const [beforeDate, setBeforeDate] = useState<string>("");
+  const [afterDate, setAfterDate] = useState<string>("");
   const [error, setError] = useState("");
   const [pageInfo, setPageInfo] = useState<PageInfo>({
     currentPage: 1,
@@ -27,44 +31,83 @@ const ListMediatheque = () => {
     nextPage: null,
     prevPage: null,
   });
-  useEffect(() => {
-    setProgress(100);
+
+  const fetch = async (
+    currentPage: number = pageInfo.currentPage,
+    search?: string,
+  ) => {
     fetchMediatheques(
       setMedias,
       setLoading,
-      setSuccess,
-      pageInfo.currentPage,
+      setError,
+      currentPage,
       setPageInfo,
+      beforeDate,
+      afterDate,
+      search,
     );
+  };
+
+  const handleChangeDateBefore = (date: Date) => {
+    const formatedDate = formatDateforApi(date);
+    if (afterDate && formatedDate < afterDate) {
+      setError("La date avant doit être supérieure à la date après");
+    } else {
+      setBeforeDate(formatedDate);
+    }
+  };
+  const handleChangeDateAfter = (date: Date) => {
+    const formatedDate = formatDateforApi(date);
+    if (beforeDate && beforeDate < formatedDate) {
+      setError("La date avant doit être supérieure à la date après");
+    } else {
+      setAfterDate(formatedDate);
+    }
+  };
+
+  const handleDeleteFilter = () => {
+    setBeforeDate("");
+    setAfterDate("");
+    setPageInfo({
+      currentPage: 1,
+      totalItems: 0,
+      nextPage: null,
+      prevPage: null,
+    });
+    fetch();
+  };
+
+  useEffect(() => {
+    setProgress(100);
+    fetch();
     return () => {
       setProgress(0);
     };
-  }, [setProgress, pageInfo.currentPage]);
+  }, [setProgress, pageInfo.currentPage, afterDate, beforeDate]);
+
   const handleDelete = async (id: string) => {
     await deleteMediatheque(id, setSuccess, setLoading, setMedias);
   };
   const nextPage = async () => {
     if (pageInfo.nextPage) {
-      fetchMediatheques(
-        setMedias,
-        setLoading,
-        setError,
-        pageInfo.currentPage + 1,
-        setPageInfo,
-      );
+      fetch(pageInfo.currentPage + 1);
     }
   };
 
   const prevPage = async () => {
     if (pageInfo.prevPage) {
-      fetchMediatheques(
-        setMedias,
-        setLoading,
-        setError,
-        pageInfo.currentPage - 1,
-        setPageInfo,
-      );
+      fetch(pageInfo.currentPage - 1);
     }
+  };
+
+  const handleSearch = async (
+    e: React.MouseEvent,
+    search: string,
+    setSearch: React.Dispatch<React.SetStateAction<string>>,
+  ) => {
+    e.preventDefault();
+    fetch(1, search);
+    setSearch("");
   };
 
   return (
@@ -85,7 +128,17 @@ const ListMediatheque = () => {
       </div>
 
       <TitlePage title="Accueil des Médiathèque" />
-      <div className="flex justify-end">
+
+      <FilterComponent
+        handleSearch={handleSearch}
+        beforeDate={beforeDate}
+        afterDate={afterDate}
+        handleChangeDateBefore={handleChangeDateBefore}
+        handleChangeDateAfter={handleChangeDateAfter}
+        handleDeleteFilter={handleDeleteFilter}
+      />
+
+      <div className="mt-4 flex justify-end">
         <Link to="/mediatheque/create">
           <Button Text="             Ajouter un Médiathèque"></Button>
         </Link>
@@ -109,6 +162,13 @@ const ListMediatheque = () => {
             </tr>
           </thead>
           <tbody>
+            {medias.length === 0 && (
+              <tr>
+                <td colSpan={4} className="py-4 text-center">
+                  Aucun média trouvé
+                </td>
+              </tr>
+            )}
             {medias.map((media: Media) => (
               <tr key={media.id}>
                 <td className="whitespace-nowrap px-6 py-4">

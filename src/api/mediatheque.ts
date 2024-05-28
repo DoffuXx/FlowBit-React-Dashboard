@@ -43,12 +43,35 @@ export const fetchMediatheques = async (
     nextPage,
     prevPage,
   }: PageInfo) => void,
+  beforeDate: string,
+  afterDate: string,
+  search?: string,
 ) => {
   try {
     setLoading(true);
-    const response = await axios.get(
-      `${BASE_URL}/media?page=${pageInfoCurrent}`,
-    );
+    let url = `${BASE_URL}/media?page=${pageInfoCurrent}`;
+    if (beforeDate.length > 0) {
+      url = `${BASE_URL}/media?createdAt[before]=${beforeDate}&page=${pageInfoCurrent}`;
+    }
+    if (afterDate.length > 0) {
+      url = `${BASE_URL}/media?createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
+    }
+    if (beforeDate.length > 0 && afterDate.length > 0) {
+      url = `${BASE_URL}/media?createdAt[before]=${beforeDate}&createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
+    }
+    if (search) {
+      url = `${BASE_URL}/media?name=${search}&page=${pageInfoCurrent}`;
+    }
+    if (search && beforeDate.length > 0) {
+      url = `${BASE_URL}/media?name=${search}&createdAt[before]=${beforeDate}&page=${pageInfoCurrent}`;
+    }
+    if (search && afterDate.length > 0) {
+      url = `${BASE_URL}/media?name=${search}&createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
+    }
+    if (search && beforeDate.length > 0 && afterDate.length > 0) {
+      url = `${BASE_URL}/media?name=${search}&createdAt[before]=${beforeDate}&createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
+    }
+    const response = await axios.get(url);
     const medias = response.data["hydra:member"];
     setMedias(medias);
     setPageInfo({

@@ -16,12 +16,35 @@ export const fetchDiscours = async (
     nextPage,
     prevPage,
   }: PageInfo) => void,
+  beforeDate: string,
+  afterDate: string,
+  search?: string,
 ) => {
   try {
     setLoading(true);
-    const response = await axios.get(
-      `${BASE_URL}/discours?page=${pageInfoCurrent}`,
-    );
+    let url = `${BASE_URL}/discours?page=${pageInfoCurrent}`;
+    if (beforeDate.length > 0) {
+      url = `${BASE_URL}/discours?createdAt[before]=${beforeDate}&page=${pageInfoCurrent}`;
+    }
+    if (afterDate.length > 0) {
+      url = `${BASE_URL}/discours?createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
+    }
+    if (beforeDate.length > 0 && afterDate.length > 0) {
+      url = `${BASE_URL}/discours?createdAt[before]=${beforeDate}&createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
+    }
+    if (search) {
+      url = `${BASE_URL}/discours?title=${search}&page=${pageInfoCurrent}`;
+    }
+    if (search && beforeDate.length > 0) {
+      url = `${BASE_URL}/discours?title=${search}&createdAt[before]=${beforeDate}&page=${pageInfoCurrent}`;
+    }
+    if (search && afterDate.length > 0) {
+      url = `${BASE_URL}/discours?title=${search}&createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
+    }
+    if (search && beforeDate.length > 0 && afterDate.length > 0) {
+      url = `${BASE_URL}/discours?title=${search}&createdAt[before]=${beforeDate}&createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
+    }
+    const response = await axios.get(url);
     const discours = response.data["hydra:member"];
     setDiscours(discours);
     setPageInfo({

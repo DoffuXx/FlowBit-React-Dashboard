@@ -2,7 +2,11 @@ import { Datepicker } from "flowbite-react";
 import { Button, Line, Search } from ".";
 
 interface FilterComponentProps {
-  handleSearch: (e: React.MouseEvent, search: string) => void;
+  handleSearch: (
+    e: React.MouseEvent,
+    search: string,
+    setSearch: React.Dispatch<React.SetStateAction<string>>,
+  ) => void;
   beforeDate: string;
   afterDate: string;
   handleChangeDateBefore: (date: Date) => void;

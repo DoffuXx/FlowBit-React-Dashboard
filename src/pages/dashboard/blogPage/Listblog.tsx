@@ -24,7 +24,6 @@ const ListBlog = () => {
   const [beforeDate, setBeforeDate] = useState<string>("");
   const [afterDate, setAfterDate] = useState<string>("");
   const [error, setError] = useState("");
-  const [isTimepickerToggle, setIsTimepickerToggle] = useState(false);
   const fetch = async (
     currentPage: number = pageInfo.currentPage,
     search?: string,
@@ -46,7 +45,6 @@ const ListBlog = () => {
       setError("La date avant doit être supérieure à la date après");
     } else {
       setBeforeDate(formatedDate);
-      setIsTimepickerToggle(true);
     }
   };
   const handleChangeDateAfter = (date: Date) => {
@@ -55,7 +53,6 @@ const ListBlog = () => {
       setError("La date avant doit être supérieure à la date après");
     } else {
       setAfterDate(formatedDate);
-      setIsTimepickerToggle(true);
     }
   };
   const handleDelete = async (id: number) => {
@@ -171,7 +168,7 @@ const ListBlog = () => {
             </tr>
           </thead>
           <tbody>
-            {!articles ? (
+            {articles.length === 0 ? (
               <tr>
                 <td colSpan={6} className="py-4 text-center ">
                   Aucun article trouvé
