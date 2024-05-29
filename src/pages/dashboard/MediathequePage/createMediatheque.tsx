@@ -2,7 +2,7 @@ import { useState } from "react";
 import { handleSubmit } from "@/api/mediatheque";
 import { BreadCrumb, Label, Button, Success, Error } from "@components/common";
 import { useNavigate } from "react-router-dom";
-import { ChangeEvent, MouseEvent } from "@/helper/types";
+import { ChangeEvent } from "@/helper/types";
 
 const CreateMediatheque = () => {
   const navigate = useNavigate();
@@ -11,7 +11,9 @@ const CreateMediatheque = () => {
   const [Files, setFiles] = useState([] as File[]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const handleSubmitForm = async (e: MouseEvent) => {
+  const handleSubmitForm = async (
+    e: React.MouseEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>,
+  ) => {
     e.preventDefault();
     const form = new FormData();
     form.append("title", Mediatitle);

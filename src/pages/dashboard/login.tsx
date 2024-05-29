@@ -35,7 +35,7 @@ const Login = () => {
     if (localStorage.getItem("auth") || sessionStorage.getItem("auth")) {
       window.location.replace("/");
     }
-  }, []);
+  });
   return (
     <div>
       <section className="bg-gray-50 ">

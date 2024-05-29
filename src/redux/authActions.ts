@@ -28,6 +28,7 @@ export const login = createAsyncThunk(
         config,
       );
       localStorage.setItem("token", data.token);
+      localStorage.setItem("id", data.id);
       console.log(data.token);
       return data;
     } catch (error: any) {

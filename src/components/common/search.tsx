@@ -6,9 +6,16 @@ interface SearchProps {
     search: string,
     setSearch: React.Dispatch<React.SetStateAction<string>>,
   ) => void;
+  optionalPlaceHolder?: string;
 }
-const Search: React.FC<SearchProps> = ({ handleSearch }) => {
+const Search: React.FC<SearchProps> = ({
+  handleSearch,
+  optionalPlaceHolder,
+}) => {
   const [search, setSearch] = React.useState("");
+  const placeholder = optionalPlaceHolder
+    ? optionalPlaceHolder
+    : "Rechercher par Titre";
 
   return (
     <form className="">
@@ -34,7 +41,7 @@ const Search: React.FC<SearchProps> = ({ handleSearch }) => {
           type="search"
           id="default-search"
           className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 "
-          placeholder="Recherche Par Titre..."
+          placeholder={placeholder}
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);

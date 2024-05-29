@@ -14,3 +14,31 @@ export const login = async (username: string, password: string) => {
     console.error(error);
   }
 };
+
+export const changeCredentials = async (
+  username: string,
+  password: string,
+  oldpassword: string,
+  user: { username: string; password: string; id: string },
+  setSuccess: (value: string) => void,
+  setError: (value: string) => void,
+  setLoading: (value: boolean) => void,
+) => {
+  try {
+    setLoading(true);
+    setSuccess("");
+    setError("");
+    await axios.put(`${BASE_URL}/changecredentials/${user.id}`, {
+      username,
+      password,
+      oldpassword,
+    });
+    setSuccess(" Credentials changed successfully");
+    setLoading(false);
+  } catch (error) {
+    console.error(error);
+    setLoading(false);
+    setSuccess("");
+    setError("Error changing credentials");
+  }
+};

@@ -10,18 +10,78 @@ import {
   Success,
   Error,
   Pagination,
+  TitlePage,
+  FilterComponent,
 } from "@components/common";
 import { fetchMessages } from "@/api/boite";
 import { Contact, PageInfo } from "@/api/types";
 import { ProgressContext } from "@/provider/ProgressProvider";
+import { formatDateforApi } from "@/helper/utils";
 const ListBoite = () => {
   const { setProgress } = useContext(ProgressContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [beforeDate, setBeforeDate] = useState<string>("");
+  const [afterDate, setAfterDate] = useState<string>("");
   const [contacts, setContacts] = useState([]);
   const deleteContact = async (id: string) => {
     await deleteMessage(id, setLoading, setError, setSuccess, setContacts);
+  };
+
+  const fetch = async (
+    currentPage: number = pageInfo.currentPage,
+    search?: string,
+  ) => {
+    fetchMessages(
+      setContacts,
+      setLoading,
+      setError,
+      currentPage,
+      setPageInfo,
+      beforeDate,
+      afterDate,
+      search,
+    );
+  };
+
+  const handleSearch = async (
+    e: React.MouseEvent,
+    search: string,
+    setSearch: React.Dispatch<React.SetStateAction<string>>,
+  ) => {
+    e.preventDefault();
+    fetch(1, search);
+    setSearch("");
+  };
+
+  const handleChangeDateBefore = (date: Date) => {
+    const formatedDate = formatDateforApi(date);
+    if (afterDate && formatedDate < afterDate) {
+      setError("La date avant doit être supérieure à la date après");
+    } else {
+      setBeforeDate(formatedDate);
+    }
+  };
+  const handleChangeDateAfter = (date: Date) => {
+    const formatedDate = formatDateforApi(date);
+    if (beforeDate && beforeDate < formatedDate) {
+      setError("La date avant doit être supérieure à la date après");
+    } else {
+      setAfterDate(formatedDate);
+    }
+  };
+
+  const handleDeleteFilter = () => {
+    setBeforeDate("");
+    setAfterDate("");
+    setPageInfo({
+      currentPage: 1,
+      totalItems: 0,
+      nextPage: null,
+      prevPage: null,
+    });
+    fetch();
   };
 
   const [pageInfo, setPageInfo] = useState<PageInfo>({
@@ -32,39 +92,21 @@ const ListBoite = () => {
   });
   useEffect(() => {
     setProgress(100);
-    fetchMessages(
-      setContacts,
-      setLoading,
-      setError,
-      pageInfo.currentPage,
-      setPageInfo,
-    );
+    fetch();
     return () => {
       setProgress(0);
     };
-  }, []);
+  }, [setProgress, pageInfo.currentPage, afterDate, beforeDate]);
 
   const nextPage = async () => {
     if (pageInfo.nextPage) {
-      fetchMessages(
-        setContacts,
-        setLoading,
-        setError,
-        pageInfo.currentPage + 1,
-        setPageInfo,
-      );
+      fetch(pageInfo.currentPage + 1);
     }
   };
 
   const prevPage = async () => {
     if (pageInfo.prevPage) {
-      fetchMessages(
-        setContacts,
-        setLoading,
-        setError,
-        pageInfo.currentPage - 1,
-        setPageInfo,
-      );
+      fetch(pageInfo.currentPage - 1);
     }
   };
 
@@ -85,7 +127,19 @@ const ListBoite = () => {
         )}
       </div>
 
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <TitlePage title="Messages" />
+
+      <FilterComponent
+        handleSearch={handleSearch}
+        beforeDate={beforeDate}
+        afterDate={afterDate}
+        handleChangeDateBefore={handleChangeDateBefore}
+        handleChangeDateAfter={handleChangeDateAfter}
+        handleDeleteFilter={handleDeleteFilter}
+        optionalPlaceHolder="Recherche Par Email..."
+      />
+
+      <div className="relative mt-4 overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-left text-sm text-gray-500 rtl:text-right ">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 ">
             <tr>
@@ -130,7 +184,7 @@ const ListBoite = () => {
                     {contact.telephone}
                   </td>
                   <td className="whitespace-nowrap px-6 py-4">
-                    {contact.message}
+                    {contact.message.substring(0, 30) + "..."}
                   </td>
                   <td className="whitespace-nowrap px-6 py-4">
                     <Link to={`${contact.id}`}>

@@ -1,7 +1,7 @@
 import { Dropdown } from "flowbite-react";
 import { authService } from "@/redux/authService";
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { navLinks } from "./menu";
 
@@ -153,7 +153,9 @@ const Header: React.FC = () => {
                 <Dropdown.Header>
                   {" "}
                   <div>{user && user.user.username}</div>
-                  <div class="truncate font-medium">akwacommunication.ma</div>
+                  <div className="truncate font-medium">
+                    akwacommunication.ma
+                  </div>
                 </Dropdown.Header>
                 <Dropdown.Item
                   onClick={() => {

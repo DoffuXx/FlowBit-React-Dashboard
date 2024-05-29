@@ -12,6 +12,7 @@ interface FilterComponentProps {
   handleChangeDateBefore: (date: Date) => void;
   handleChangeDateAfter: (date: Date) => void;
   handleDeleteFilter: () => void;
+  optionalPlaceHolder?: string;
 }
 
 const FilterComponent: React.FC<FilterComponentProps> = ({
@@ -21,11 +22,16 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   handleChangeDateBefore,
   handleChangeDateAfter,
   handleDeleteFilter,
+  optionalPlaceHolder,
 }) => {
+  console.log(optionalPlaceHolder);
   return (
     <div className="block  rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100">
       <div className="mb-2">
-        <Search handleSearch={handleSearch} />
+        <Search
+          handleSearch={handleSearch}
+          optionalPlaceHolder={optionalPlaceHolder}
+        />
       </div>
       <Line variant="default" />
       <div className="mb-4 grid grid-cols-2 gap-5">
