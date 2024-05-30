@@ -9,7 +9,6 @@ import {
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { changeCredentials } from "@/api/auth";
-import { FormEvent } from "@/helper/types";
 
 const SettingsPage = () => {
   const [username, setUsername] = useState("");

@@ -1,18 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { handleSubmit } from "../../../api/blog";
+import { handleSubmit } from "@/api/blog";
+import { formatDateIso } from "@/helper/utils";
 
 import { useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { BreadCrumb, Button, Success, Error } from "../../../components/common";
+import { Datepicker } from "flowbite-react";
 const CreateBlog = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [coverImage, setCoverImage] = useState(null);
+  const [created_at, setCreatedAt] = useState<Date>();
   const [titreArabe, setTitreArabe] = useState("");
   const [contenuArabe, setContenuArabe] = useState("");
   const [loading, setLoading] = useState({ status: false, progress: 0 });
@@ -49,6 +52,9 @@ const CreateBlog = () => {
     form.append("content", content);
     form.append("titreArabe", titreArabe);
     form.append("contenuArabe", contenuArabe);
+    if (created_at !== undefined) {
+      form.append("created_at", formatDateIso(created_at));
+    }
     if (coverImage !== null) {
       form.append("coverImage", coverImage);
     }
@@ -224,6 +230,18 @@ const CreateBlog = () => {
                         />
                       </label>
                     </div>
+                  </div>
+                </div>
+                <div>
+                  <label className="text-xl text-gray-600">
+                    Date de publication
+                  </label>
+                  <div className="mt-4">
+                    <Datepicker
+                      onSelectedDateChanged={(date: Date) => {
+                        setCreatedAt(date);
+                      }}
+                    />
                   </div>
                 </div>
               </div>

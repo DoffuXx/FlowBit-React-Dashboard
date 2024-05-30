@@ -48,7 +48,7 @@ const Header: React.FC = () => {
               >
                 <span className="sr-only">Open sidebar</span>
                 <svg
-                  className="h-6 w-6"
+                  className="h-10 w-10"
                   aria-hidden="true"
                   fill="currentColor"
                   viewBox="0 0 20 20"
@@ -129,12 +129,12 @@ const Header: React.FC = () => {
                 alt="Rounded avatar"
               />
             </div>
-            <button className="transition duration-300  hover:scale-110 hover:ease-out">
+            <button className="transition duration-300  hover:scale-125 hover:ease-out">
               <Dropdown
                 label=""
                 renderTrigger={() => (
                   <svg
-                    className="me-2.5 h-3 w-3"
+                    className="me-2.5 h-4 w-4"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
