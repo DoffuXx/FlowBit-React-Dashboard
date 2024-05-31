@@ -17,6 +17,8 @@ import {
 import { handleUpdate, fetchArticle } from "@/api/blog";
 import { Article } from "@/api/types";
 import { ProgressContext } from "@/provider/ProgressProvider";
+import { Datepicker } from "flowbite-react";
+import { formatDateIso } from "@/helper/utils";
 const UpdateBlog = () => {
   const { setProgress } = useContext(ProgressContext);
   const idParm = useParams();
@@ -33,7 +35,9 @@ const UpdateBlog = () => {
           content: data.content,
           titreArabe: data.titreArabe,
           contentArabe: data.contenuArabe,
+          createdAt: data.createdAt,
         });
+        console.log("article", article);
         setLoading(false);
         setProgress(100);
       } catch (error) {
@@ -83,7 +87,7 @@ const UpdateBlog = () => {
       setSuccess("Article modifié avec succès");
       setLoading(false);
       setTimeout(() => {
-        navigate("/dashboard/articles");
+        navigate("/articles");
       }, 500);
     } catch (error) {
       console.error("Error:", error);
@@ -185,7 +189,25 @@ const UpdateBlog = () => {
                   />
                 </div>
 
-                <div className="flex space-x-5 p-1">
+                <div>
+                  <label className="text-xl text-gray-600">
+                    Date de publication
+                  </label>
+                  <div className="mt-4">
+                    <Datepicker
+                      className="absolute"
+                      value={article.createdAt?.toString()}
+                      onSelectedDateChanged={(date: Date) => {
+                        setArticle({
+                          ...article,
+                          createdAt: formatDateIso(date),
+                        });
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-16 flex space-x-5 p-1">
                   <Button
                     Text="Modifier"
                     variant="secondary"

@@ -7,7 +7,7 @@ export interface Article {
   titreArabe: string;
   contenuArabe: string;
   coverImage: string;
-  createdAt: Date;
+  createdAt: string;
 }
 
 export interface PageInfo {
@@ -24,7 +24,7 @@ export interface Discours {
   titreArabe: string;
   contenuArabe: string;
   coverImage: string;
-  createdAt: Date;
+  createdAt: string;
 }
 export interface Articles extends Array<Article> {}
 

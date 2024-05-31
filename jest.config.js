@@ -4,4 +4,5 @@ export default {
     "^.+\\.tsx?$": "ts-jest",
   },
   setupFilesAfterEnv: ["<rootDir>/src/jest.setup.ts"],
+  setupFiles: ["<rootDir>/.jest/setEnvVars.js"],
 };

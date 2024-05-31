@@ -144,6 +144,7 @@ export const handleUpdate = async (id: string, article: Article) => {
         content: article.content,
         titreArabe: article.titreArabe,
         contenuArabe: article.contenuArabe,
+        created_at: article.createdAt,
       },
       {
         headers: {
@@ -151,7 +152,6 @@ export const handleUpdate = async (id: string, article: Article) => {
         },
       },
     );
-    console.log(response);
     return response.data;
   } catch (error: unknown) {
     if (error instanceof AxiosError && error.response) {

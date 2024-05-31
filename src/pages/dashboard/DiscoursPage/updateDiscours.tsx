@@ -17,6 +17,8 @@ import {
   Error,
 } from "../../../components/common";
 import { Discours } from "../../../api/types";
+import { Datepicker } from "flowbite-react";
+import { formatDateIso } from "@/helper/utils";
 const UpdateDiscours = () => {
   const idParm = useParams();
   const id = idParm.id;
@@ -34,6 +36,7 @@ const UpdateDiscours = () => {
           titreArabe: data.titreArabe || "",
           contenuArabe: data.contenuArabe || "",
           content: data.content || "",
+          createdAt: data.createdAt || "",
         });
         setContenuArabeCopy(data.contenuArabe);
         setContenuCopy(data.content);
@@ -74,11 +77,11 @@ const UpdateDiscours = () => {
     setError("");
     setSuccess("");
     try {
-      setSuccess("Discours modifié avec succès");
       setLoading(false);
       await handleUpdate(id as string, discours);
+      setSuccess("Discours modifié avec succès");
       setTimeout(() => {
-        navigate("/dashboard/discours");
+        navigate("/discours");
       }, 500);
     } catch (error) {
       console.error("Error:", error);
@@ -178,7 +181,25 @@ const UpdateDiscours = () => {
                     onChange={handleInputChangeContentArabe}
                   />
                 </div>
-                <div className="flex space-x-5 p-1">
+
+                <div>
+                  <label className="text-xl text-gray-600">
+                    Date de publication
+                  </label>
+                  <div className="mt-4">
+                    <Datepicker
+                      className="absolute"
+                      value={discours.createdAt?.toString()}
+                      onSelectedDateChanged={(date: Date) => {
+                        setDiscours({
+                          ...discours,
+                          createdAt: formatDateIso(date),
+                        });
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="mt-16 flex space-x-5 p-1">
                   <Button
                     Text="Modifier"
                     variant="secondary"

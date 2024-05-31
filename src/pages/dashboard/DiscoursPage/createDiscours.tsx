@@ -8,6 +8,8 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { BreadCrumb, Button, Success, Error } from "../../../components/common";
+import { Datepicker } from "flowbite-react";
+import { formatDateIso } from "@/helper/utils";
 
 const CreateDiscours = () => {
   const navigate = useNavigate();
@@ -15,6 +17,7 @@ const CreateDiscours = () => {
   const [content, setContent] = useState("");
   const [coverImage, setCoverImage] = useState(null);
   const [titreArabe, setTitreArabe] = useState("");
+  const [created_at, setCreatedAt] = useState<Date>();
   const [contenuArabe, setContenuArabe] = useState("");
   const [loading, setLoading] = useState({ status: false, progress: 0 });
   const [error, setError] = useState("");
@@ -50,6 +53,11 @@ const CreateDiscours = () => {
     form.append("content", content);
     form.append("titreArabe", titreArabe);
     form.append("contenuArabe", contenuArabe);
+
+    if (created_at !== undefined) {
+      console.log("created_at", created_at);
+      form.append("created_at", formatDateIso(created_at));
+    }
     if (coverImage !== null) {
       form.append("coverImage", coverImage);
     }
@@ -214,6 +222,19 @@ const CreateDiscours = () => {
                         />
                       </label>
                     </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-xl text-gray-600">
+                    Date de publication
+                  </label>
+                  <div className="mt-4">
+                    <Datepicker
+                      onSelectedDateChanged={(date: Date) => {
+                        setCreatedAt(date);
+                      }}
+                    />
                   </div>
                 </div>
               </div>

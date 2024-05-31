@@ -115,6 +115,7 @@ export const handleUpdate = async (id: string, discours: Discours) => {
         content: discours.content,
         titreArabe: discours.titreArabe,
         contenuArabe: discours.contenuArabe,
+        created_at: discours.createdAt,
       },
       {
         headers: {
