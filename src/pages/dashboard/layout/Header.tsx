@@ -115,7 +115,8 @@ const Header: React.FC = () => {
             <a href="/" className="ms-2 flex md:me-24">
               <img
                 src="https://ccpmfiguig.ma/assets/A-PRIM-qdR7wAJ4.png"
-                className="me-3 h-8"
+                className="me-3 h-8                  transition duration-500 ease-out hover:scale-125 
+"
                 alt="PRIM"
               />
             </a>
