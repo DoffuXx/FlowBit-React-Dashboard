@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
-const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
+const BASE_URL = process.env.VITE_REACT_APP_API_URL;
 import { AxiosError } from "axios";
 import { Media, PageInfo } from "./types";
 const DURATION = 2000;

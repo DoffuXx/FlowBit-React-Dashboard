@@ -1,11 +1,5 @@
 import axios from "axios";
-import { fetchMediatheques } from "../src/api/mediatheque";
-
-jest.mock("../src/constants", () => ({
-  ENVIRONMENT: "development",
-  API_URL: "http://localhost:8000/api",
-  API_HOME: "http://localhost:8000",
-}));
+import { deleteMediatheque, fetchMediatheques } from "../src/api/mediatheque";
 
 jest.mock("axios");
 
@@ -91,5 +85,35 @@ describe("fetchMediatheque", () => {
 
     expect(setErrorMock).toHaveBeenCalledTimes(1);
     expect(setErrorMock).toHaveBeenCalledWith("Quelque chose s'est mal passé");
+  });
+});
+
+describe("deleteMedia", () => {
+  const setSuccess = jest.fn();
+  const setLoading = jest.fn();
+  const setMedias = jest.fn();
+  const mockMedias = {
+    "hydra:member": [
+      /* mock media data */
+    ],
+    "hydra:totalItems": 100,
+    "hydra:view": {
+      "hydra:next": "/media?page=2",
+      "hydra:previous": null,
+    },
+  };
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it("should delete media correctly", async () => {
+    const mediaId = "1";
+    (axios.delete as jest.Mock).mockResolvedValueOnce({ data: mockMedias });
+    await deleteMediatheque(mediaId, setSuccess, setLoading, setMedias);
+    expect(setLoading).toHaveBeenCalledTimes(2);
+    expect(setLoading).toHaveBeenCalledWith(true);
+    expect(setLoading).toHaveBeenCalledWith(false);
+    expect(setMedias).toHaveBeenCalledTimes(1);
+    expect(setSuccess).toHaveBeenCalledTimes(1);
+    expect(setSuccess).toHaveBeenCalledWith("Votre média a bien été supprimé");
   });
 });
