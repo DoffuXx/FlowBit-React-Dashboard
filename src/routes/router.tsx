@@ -3,7 +3,7 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
-import Home from "@/pages/dashboard/Home";
+import Home from "@/pages/dashboard/home";
 import ListBlog from "@/pages/dashboard/blogPage/Listblog";
 import CreateBlog from "@/pages/dashboard/blogPage/createBlog";
 import { ShowBlog } from "@/pages/dashboard/blogPage/showBlog";

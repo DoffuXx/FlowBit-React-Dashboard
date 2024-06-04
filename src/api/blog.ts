@@ -3,6 +3,8 @@
 import axios from "axios";
 import { AxiosError } from "axios";
 const BASE_URL = process.env.VITE_REACT_APP_API_URL;
+const auth = localStorage.getItem("auth") || sessionStorage.getItem("auth");
+const user = JSON.parse(auth!);
 
 import { Article, Articles, PageInfo } from "./types";
 
@@ -17,7 +19,11 @@ export const deleteArticle = async (
   setError("");
   setSuccess("");
   try {
-    await axios.delete(`${BASE_URL}/post/${id}`);
+    await axios.delete(`${BASE_URL}/post/${id}`, {
+      headers: {
+        Authorization: user.user.token,
+      },
+    });
     setSuccess("Article supprimé avec succès");
     setLoading(false);
     setArticles((articles: Articles) =>

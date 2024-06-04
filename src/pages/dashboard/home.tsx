@@ -1,5 +1,5 @@
 import NumberTicker from "@/components/animation/number-ticker";
-import { Loading, TitlePage, Error, BreadCrumb } from "@/components/common";
+import { Loading, Error, BreadCrumb } from "@/components/common";
 import ResizableBox from "@/components/home/ResizableBox";
 import axios from "axios";
 import React from "react";
@@ -18,6 +18,10 @@ interface Series {
 }
 
 const Home = () => {
+
+  const auth = localStorage.getItem("auth") || sessionStorage.getItem("auth");
+  const user = JSON.parse(auth!);
+
   const [chartDataPosts, setChartDataPosts] = useState<Series[]>([
     {
       label: "Posts per Month",
@@ -49,7 +53,13 @@ const Home = () => {
     const fetchStatistics = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${BASE_URL}/statistics`);
+        const response = await axios.get(`${BASE_URL}/statistics`,
+          {
+            headers: {
+              'Authorization' : user.user.token
+            }
+          }
+        );
         const data = response.data;
 
         const countsPosts = data.totalPosts;
