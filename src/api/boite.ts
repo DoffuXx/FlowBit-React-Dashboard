@@ -46,31 +46,10 @@ export const fetchMessages = async (
 ) => {
   try {
     setLoading(true);
-    let url = `${BASE_URL}/contacts?page=${pageInfoCurrent}`;
-    if (beforeDate.length > 0) {
-      url = `${BASE_URL}/contacts?createdAt[before]=${beforeDate}&page=${pageInfoCurrent}`;
-    }
-    if (afterDate.length > 0) {
-      url = `${BASE_URL}/contacts?createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
-    }
-    if (beforeDate.length > 0 && afterDate.length > 0) {
-      url = `${BASE_URL}/contacts?createdAt[before]=${beforeDate}&createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
-    }
-    if (search) {
-      url = `${BASE_URL}/contacts?email=${search}&page=${pageInfoCurrent}`;
-    }
-    if (search && beforeDate.length > 0) {
-      url = `${BASE_URL}/contacts?email=${search}&createdAt[before]=${beforeDate}&page=${pageInfoCurrent}`;
-    }
-    if (search && afterDate.length > 0) {
-      url = `${BASE_URL}/contacts?email=${search}&createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
-    }
-    if (search && beforeDate.length > 0 && afterDate.length > 0) {
-      url = `${BASE_URL}/contacts?email=${search}&createdAt[before]=${beforeDate}&createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
-    }
+    const url = `${BASE_URL}/contacts`;
     const response = await axios.get(url);
 
-    setContacts(response.data["hydra:member"]);
+    setContacts(response.data);
     setPageInfo({
       currentPage: pageInfoCurrent,
       totalItems: response.data["hydra:totalItems"],

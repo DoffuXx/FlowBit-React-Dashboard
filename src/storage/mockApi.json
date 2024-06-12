@@ -1,0 +1,133 @@
+{
+  "uuid": "ffd72c9d-7975-4e42-940f-da6f4891520d",
+  "lastMigration": 32,
+  "name": "MockApi",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3001,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "5cc89817-2aa8-4c63-9569-68437810dc8d",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "",
+      "responses": [
+        {
+          "uuid": "919af2ac-280d-4813-a026-dea6e22c74f1",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "f0017aa6-8a48-48b5-bff4-1958d02d2dbd",
+      "type": "crud",
+      "documentation": "",
+      "method": "",
+      "endpoint": "api/posts",
+      "responses": [
+        {
+          "uuid": "76313559-a083-47b2-9cb9-df3b0af94e87",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "DATABUCKET",
+          "filePath": "",
+          "databucketID": "jfkf",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "5cc89817-2aa8-4c63-9569-68437810dc8d"
+    },
+    {
+      "type": "route",
+      "uuid": "f0017aa6-8a48-48b5-bff4-1958d02d2dbd"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "4ce6d7fc-30b8-4fcb-b90e-220fba343944",
+      "id": "jfkf",
+      "name": "posts",
+      "documentation": "",
+      "value": "{\n  \"hydra:member\": [\n    {\n      \"id\": 1,\n      \"title\": \"Sample Article 1\",\n      \"content\": \"Content of sample article 1\",\n      \"titreArabe\": \"عنوان المقالة 1\",\n      \"contenuArabe\": \"محتوى المقالة 1\",\n      \"createdAt\": \"2024-01-01\"\n    },\n    {\n      \"id\": 2,\n      \"title\": \"Sample Article 2\",\n      \"content\": \"Content of sample article 2\",\n      \"titreArabe\": \"عنوان المقالة 2\",\n      \"contenuArabe\": \"محتوى المقالة 2\",\n      \"createdAt\": \"2024-01-02\"\n    }\n  ],\n  \"hydra:totalItems\": 2,\n  \"hydra:view\": {\n    \"hydra:next\": null,\n    \"hydra:previous\": null\n  }\n}\n"
+    }
+  ],
+  "callbacks": []
+}

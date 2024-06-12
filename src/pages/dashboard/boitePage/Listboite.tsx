@@ -144,16 +144,16 @@ const ListBoite = () => {
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 ">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Prenom
+                First name
               </th>
               <th scope="col" className="px-6 py-3">
-                Nom
+                Name
               </th>
               <th scope="col" className="px-6 py-3">
                 Email
               </th>
               <th scope="col" className="px-6 py-3">
-                Telephone
+                Phone
               </th>
               <th scope="col" className="px-6 py-3">
                 Message

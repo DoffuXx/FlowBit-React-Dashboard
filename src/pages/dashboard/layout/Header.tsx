@@ -112,24 +112,23 @@ const Header: React.FC = () => {
                 </motion.ul>
               )}
             </nav>
-            <a href="/" className="ms-2 flex md:me-24">
+
+            <a
+              href="https://flowbite.com"
+              className="flex items-center justify-center"
+            >
               <img
-                src="https://ccpmfiguig.ma/assets/A-PRIM-qdR7wAJ4.png"
-                className="me-3 h-8                  transition duration-500 ease-out hover:scale-125 
-"
-                alt="PRIM"
+                src="https://flowbite.com/docs/images/logo.svg"
+                className="mr-3 h-12 sm:h-9"
+                alt="Flowbite Logo"
               />
+              <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+                Flowbite
+              </span>
             </a>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="transition duration-300 hover:-translate-y-1 hover:scale-110 hover:ease-out">
-              <img
-                className="h-10 w-20 rounded-full"
-                src="https://www.akwacommunication.ma/img/logo.PNG"
-                alt="Rounded avatar"
-              />
-            </div>
             <button className="transition duration-300  hover:scale-125 hover:ease-out">
               <Dropdown
                 label=""
@@ -155,7 +154,7 @@ const Header: React.FC = () => {
                   {" "}
                   <div>{user && user.user.username}</div>
                   <div className="truncate font-medium">
-                    akwacommunication.ma
+                    FlowBit@email
                   </div>
                 </Dropdown.Header>
                 <Dropdown.Item
@@ -163,18 +162,18 @@ const Header: React.FC = () => {
                     navigate("/");
                   }}
                 >
-                  Tableau de bord
+                  Dashboard
                 </Dropdown.Item>
                 <Dropdown.Item
                   onClick={() => {
                     navigate("/settings");
                   }}
                 >
-                  Paramètres
+                  Settings
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={handleLogOut}>
-                  Se Déconnecter
+                  Sign out
                 </Dropdown.Item>
               </Dropdown>
             </button>

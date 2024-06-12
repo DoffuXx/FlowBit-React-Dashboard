@@ -91,7 +91,7 @@ const CreateBlog = () => {
           )}
         </div>
         <p className="mt-4 max-w-lg text-3xl font-semibold leading-loose text-gray-900 ">
-          Ajouter un nouvel article
+          Add a new article
         </p>
         <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
           <div className="border-b border-gray-200 bg-white p-6">
@@ -100,7 +100,7 @@ const CreateBlog = () => {
               <div className="col-span-2">
                 <div className="bg-slate-50 rounded-3xl   p-4">
                   <label className="text-xl text-gray-600">
-                    Titre <span className="text-red-500">*</span>
+                    Title <span className="text-red-500">*</span>
                   </label>
                   <br />
                   <input
@@ -114,25 +114,10 @@ const CreateBlog = () => {
                   />
                 </div>
 
-                <div dir="rtl" className="bg-slate-50 rounded-3xl    p-4">
-                  <label className="rtl text-xl  text-gray-600">
-                    عنوان <span className="text-red-500">*</span>
-                  </label>
-                  <br />
-                  <input
-                    type="text"
-                    className="w-full border-2 border-gray-300 p-2"
-                    name="title"
-                    id="title"
-                    value={titreArabe}
-                    onChange={(e) => setTitreArabe(e.target.value)}
-                    required
-                  />
-                </div>
                 {/* Contenu */}
                 <div className="bg-slate-50 rounded-3xl   p-4">
                   <label className="text-xl text-gray-600">
-                    Contenu <span className="text-red-500">*</span>
+                    Content <span className="text-red-500">*</span>
                   </label>
                   <CKEditor
                     editor={ClassicEditor}
@@ -140,21 +125,6 @@ const CreateBlog = () => {
                     onChange={(event, editor) => {
                       const data = editor.getData();
                       setContent(data);
-                      console.log({ event, editor, data });
-                    }}
-                  />
-                </div>
-
-                <div dir="rtl" className="bg-slate-50 rounded-3xl   p-4">
-                  <label className="text-xl text-gray-600">
-                    محتوى <span className="text-red-500">*</span>
-                  </label>
-                  <CKEditor
-                    editor={ClassicEditor}
-                    data={contenuArabe}
-                    onChange={(event, editor) => {
-                      const data = editor.getData();
-                      setContenuArabe(data);
                       console.log({ event, editor, data });
                     }}
                   />
@@ -234,7 +204,7 @@ const CreateBlog = () => {
                 </div>
                 <div>
                   <label className="text-xl text-gray-600">
-                    Date de publication
+                    Publication date
                   </label>
                   <div className="mt-4">
                     <Datepicker
@@ -250,13 +220,13 @@ const CreateBlog = () => {
                 <div className="flex p-1">
                   <Button
                     variant="secondary"
-                    Text="Ajouter"
+                    Text="Add"
                     role="submit"
                     onClick={handleSubmitForm}
                   ></Button>
 
                   <Link to="/articles">
-                    <Button Text="Annuler" role="submit"></Button>
+                    <Button Text="Cancel" role="submit"></Button>
                   </Link>
                 </div>
               </div>

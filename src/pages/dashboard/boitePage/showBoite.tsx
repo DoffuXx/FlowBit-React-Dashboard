@@ -2,13 +2,14 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Contact } from "@/api/types";
 
+const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 import { BreadCrumb, Button, Loading } from "@components/common";
 const ShowBoite = () => {
   const { id } = useParams();
   const [contact, setContact] = useState({} as Contact);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/contact/" + id)
+    fetch(`${BASE_URL}/contacts/` + id)
       .then((response) => response.json())
       .then((data) => {
         setContact(data);

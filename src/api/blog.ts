@@ -24,13 +24,13 @@ export const deleteArticle = async (
         Authorization: user.user.token,
       },
     });
-    setSuccess("Article supprimé avec succès");
+    setSuccess("Article successfully deleted");
     setLoading(false);
     setArticles((articles: Articles) =>
       articles.filter((article) => article.id !== id),
     );
   } catch (error) {
-    setError("Echec de la suppression de l'article");
+    setError("Failed to delete article");
     setLoading(false);
     setSuccess("");
   }
@@ -53,30 +53,9 @@ export const fetchArticles = async (
 ) => {
   try {
     setLoading(true);
-    let url = `${BASE_URL}/posts?page=${pageInfoCurrent}`;
-    if (beforeDate.length > 0) {
-      url = `${BASE_URL}/posts?createdAt[before]=${beforeDate}&page=${pageInfoCurrent}`;
-    }
-    if (afterDate.length > 0) {
-      url = `${BASE_URL}/posts?createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
-    }
-    if (beforeDate.length > 0 && afterDate.length > 0) {
-      url = `${BASE_URL}/posts?createdAt[before]=${beforeDate}&createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
-    }
-    if (search) {
-      url = `${BASE_URL}/posts?title=${search}&page=${pageInfoCurrent}`;
-    }
-    if (search && beforeDate.length > 0) {
-      url = `${BASE_URL}/posts?title=${search}&createdAt[before]=${beforeDate}&page=${pageInfoCurrent}`;
-    }
-    if (search && afterDate.length > 0) {
-      url = `${BASE_URL}/posts?title=${search}&createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
-    }
-    if (search && beforeDate.length > 0 && afterDate.length > 0) {
-      url = `${BASE_URL}/posts?title=${search}&createdAt[before]=${beforeDate}&createdAt[after]=${afterDate}&page=${pageInfoCurrent}`;
-    }
+    const url = `${BASE_URL}/posts`;
     const response = await axios.get(url);
-    const articles = response.data["hydra:member"];
+    const articles = response.data;
     setArticles(articles);
     setPageInfo({
       currentPage: pageInfoCurrent,
@@ -89,7 +68,7 @@ export const fetchArticles = async (
   } catch (error) {
     console.error(error);
     setLoading(false);
-    setError("Une erreur s'est produite");
+    setError("An error has occurred");
   }
 };
 
@@ -100,20 +79,12 @@ export const handleSubmit = async (
   setSuccess: (value: string) => void,
   setTitle: (value: string) => void,
   setContent: (value: string) => void,
-  setTitreArabe: (value: string) => void,
-  setContentArabe: (value: string) => void,
   setCoverImage: (value: any) => void,
   navigate: (value: string) => void,
 ) => {
   e.preventDefault();
-  if (
-    !form.get("title") ||
-    !form.get("content") ||
-    !form.get("coverImage") ||
-    !form.get("titreArabe") ||
-    !form.get("contenuArabe")
-  ) {
-    setError("Veuillez remplir tous les champs");
+  if (!form.get("title") || !form.get("content") || !form.get("coverImage")) {
+    setError("please complete all fields");
     return;
   }
   setError("");
@@ -124,7 +95,7 @@ export const handleSubmit = async (
         "Content-Type": "multipart/form-data",
       },
     });
-    setSuccess("Article ajouté avec succès");
+    setSuccess("Article added successfully");
     setError("");
     setTitle("");
     setTitreArabe("");
@@ -136,7 +107,7 @@ export const handleSubmit = async (
     }, 500);
   } catch (error) {
     console.error(error);
-    setError("Echec de l'ajout de l'article");
+    setError("Failed to add item");
     setSuccess("");
   }
 };
@@ -144,12 +115,10 @@ export const handleSubmit = async (
 export const handleUpdate = async (id: string, article: Article) => {
   try {
     const response = await axios.put(
-      `${BASE_URL}/post/${id}`,
+      `${BASE_URL}/posts/${id}`,
       {
         title: article.title,
         content: article.content,
-        titreArabe: article.titreArabe,
-        contenuArabe: article.contenuArabe,
         created_at: article.createdAt,
       },
       {
@@ -162,23 +131,19 @@ export const handleUpdate = async (id: string, article: Article) => {
   } catch (error: unknown) {
     if (error instanceof AxiosError && error.response) {
       console.error(error);
-      throw new Error(
-        error.response.data.message || "Quelque chose s'est mal passé !",
-      );
+      throw new Error(error.response.data.message || "Something went wrong !");
     }
   }
 };
 
 export const fetchArticle = async (id: string) => {
   try {
-    const response = await axios.get(`${BASE_URL}/post/${id}`);
+    const response = await axios.get(`${BASE_URL}/posts/${id}`);
     return response.data;
   } catch (error: unknown) {
     if (error instanceof AxiosError && error.response) {
       console.error(error);
-      throw new Error(
-        error.response.data.message || "Quelque chose s'est mal passé !",
-      );
+      throw new Error(error.response.data.message || "Something went wrong !");
     }
   }
 };

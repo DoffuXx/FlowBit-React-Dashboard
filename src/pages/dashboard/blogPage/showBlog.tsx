@@ -42,7 +42,7 @@ export const ShowBlog = () => {
           <div className="w-full overflow-hidden rounded-lg">
             <img
               className="h-80 w-full object-cover"
-              src={`${REACT_APP_API_HOME}/images/blogs/${post.coverImage}`}
+              src={`${post.coverImage}`}
               alt=""
             />
           </div>
@@ -50,28 +50,10 @@ export const ShowBlog = () => {
           <h5 className="text-xl ">
             Titre : <span className="font-bold">{post.title}</span>
           </h5>
-
-          <h5 dir="rtl" className="text-xl ">
-            عنوان : <span className="font-bold">{post.titreArabe}</span>
-          </h5>
           <div className="mt-8">
             <CKEditor
               editor={ClassicEditor}
               data={post.content}
-              disabled={true}
-            />
-          </div>
-
-          <div className="mt-8">
-            <CKEditor
-              editor={ClassicEditor}
-              data={post.contenuArabe}
-              config={{
-                language: {
-                  ui: "ar",
-                  content: "ar",
-                },
-              }}
               disabled={true}
             />
           </div>

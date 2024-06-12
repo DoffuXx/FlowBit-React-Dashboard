@@ -36,14 +36,14 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
       <Line variant="default" />
       <div className="mb-4 grid grid-cols-2 gap-5">
         <div>
-          <h3>Date Avant :</h3>
+          <h3>Date Before:</h3>
           <Datepicker
             value={beforeDate}
             onSelectedDateChanged={handleChangeDateBefore}
           />
         </div>
         <div>
-          <h3>Date Après :</h3>
+          <h3>Date After:</h3>
           <Datepicker
             value={afterDate}
             onSelectedDateChanged={handleChangeDateAfter}
@@ -51,7 +51,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
         </div>
         <div></div>
         <div className="flex justify-end">
-          <Button onClick={handleDeleteFilter} Text="Annuler" />
+          <Button onClick={handleDeleteFilter} Text="Cancel" />
         </div>
       </div>
     </div>

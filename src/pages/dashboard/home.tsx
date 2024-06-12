@@ -56,7 +56,7 @@ const Home = () => {
         const response = await axios.get(`${BASE_URL}/statistics`,
           {
             headers: {
-              'Authorization' : user.user.token
+              'Authorization': user.user.token
             }
           }
         );
@@ -118,7 +118,7 @@ const Home = () => {
         setLoading(false);
       } catch (error) {
         console.error("Error fetching the statistics:", error);
-        setError("Quelque chose s'est mal passé. Veuillez réessayer.");
+        setError("Something went wrong. Try Again.");
         setLoading(false);
       }
     };
@@ -181,7 +181,7 @@ const Home = () => {
   return (
     <div className="">
       <div className="">
-        <BreadCrumb layer1="Table de Bord" isHome={true} />
+        <BreadCrumb layer1="Dashboard" isHome={true} />
       </div>
       <div className="mt-8">
         {loading && <Loading />}
@@ -200,19 +200,7 @@ const Home = () => {
           <div className="text-4xl font-bold text-gray-800">
             <NumberTicker value={counts.posts} />
           </div>
-          <div className="text-gray-600">Publications</div>
-        </div>
-        <div>
-          <div className="text-4xl font-bold text-gray-800">
-            <NumberTicker value={counts.discours} />
-          </div>
-          <div className="text-gray-600">Discours</div>
-        </div>
-        <div>
-          <div className="text-4xl font-bold text-gray-800">
-            <NumberTicker value={counts.medias} />
-          </div>
-          <div className="text-gray-600">Médias</div>
+          <div className="text-gray-600">Articles</div>
         </div>
         <div>
           <div className="text-4xl font-bold text-gray-800">
@@ -223,7 +211,7 @@ const Home = () => {
       </div>
       <div className="h-64">
         <div className="mb-6 text-xl text-gray-600">
-          Publications des 12 derniers mois{" "}
+          Articles from the last 12 months{" "}
         </div>
         <ResizableBox>
           <Chart
@@ -237,35 +225,6 @@ const Home = () => {
         </ResizableBox>
       </div>
 
-      <div className="mt-32 h-64">
-        <div className="mb-6 text-xl text-gray-600">
-          Discours des 12 derniers mois{" "}
-        </div>
-        <ResizableBox>
-          <Chart
-            options={{
-              data: chartDataDiscours,
-              primaryAxis: primaryAxisDiscours,
-              secondaryAxes: secondaryAxesDiscours,
-              defaultColors: ["#1f2241"],
-            }}
-          />
-        </ResizableBox>
-      </div>
-
-      <div className="mt-32 h-64">
-        <div className="mb-6 text-xl text-gray-600">Média par Type </div>
-        <ResizableBox>
-          <Chart
-            options={{
-              data: chartMedia,
-              primaryAxis: primaryAxisMedia,
-              secondaryAxes: secondaryAxesMedia,
-              defaultColors: ["#1f2241"],
-            }}
-          />
-        </ResizableBox>
-      </div>
     </div>
   );
 };

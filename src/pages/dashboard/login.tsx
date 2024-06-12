@@ -42,11 +42,18 @@ const Login = () => {
         <div className="b z-10 mx-auto flex  flex-col  items-center justify-center bg-gradient-to-bl  from-blue-900 via-blue-700  to-blue-400 px-6 py-8  md:h-screen lg:py-0">
           <div className="drop-shadow-x w-full rounded-lg bg-white  shadow hover:drop-shadow-xl sm:max-w-md md:mt-0 xl:p-0 ">
             <div className="space-y-4 p-6 sm:p-8  md:space-y-6">
-              <a href="/" className="flex justify-center ">
+              <a
+                href="https://flowbite.com"
+                className="flex items-center justify-center"
+              >
                 <img
-                  src="https://ccpmfiguig.ma/assets/A-PRIM-qdR7wAJ4.png"
-                  alt="PRIM"
+                  src="https://flowbite.com/docs/images/logo.svg"
+                  className="mr-3 h-12 sm:h-9"
+                  alt="Flowbite Logo"
                 />
+                <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+                  Flowbite
+                </span>
               </a>
 
               <div className="mt-4">
@@ -60,12 +67,12 @@ const Login = () => {
                 )}
               </div>
               <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
-                Se Connecter
+                Login into your account
               </h1>
               <form className="space-y-4 md:space-y-6" action="#">
                 <div>
                   <label className="mb-2 block text-sm font-medium text-gray-900 ">
-                    votre username
+                    Your Username
                   </label>
                   <input
                     type="text"
@@ -79,13 +86,13 @@ const Login = () => {
                     htmlFor="password"
                     className="mb-2 block text-sm font-medium text-gray-900 "
                   >
-                    votre mot de passe
+                    Your Password
                   </label>
                   <input
                     type="password"
                     name="password"
                     id="password"
-                    placeholder="••••••••"
+                    placeholder="admin"
                     className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm "
                     onChange={(e) => setPassword(e.target.value)}
                   />
@@ -103,7 +110,7 @@ const Login = () => {
                     </div>
                     <div className="ml-3 text-sm">
                       <label htmlFor="remember" className="text-gray-500 ">
-                        souviens-toi de moi
+                        Remember me
                       </label>
                     </div>
                   </div>
@@ -117,7 +124,7 @@ const Login = () => {
                 <div className="text-center">
                   <Button
                     type="submit"
-                    Text="se Connecter"
+                    Text="Login"
                     onClick={handleSubmit}
                   ></Button>
                 </div>

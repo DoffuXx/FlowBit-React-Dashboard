@@ -63,7 +63,7 @@ const SettingsPage = () => {
         <div>
           <img
             className="h-36 w-48 rounded"
-            src="https://www.akwacommunication.ma/img/logo.PNG"
+            src="https://xsgames.co/randomusers/avatar.php?g=pixel"
             alt="Extra large avatar"
           />
         </div>
@@ -92,7 +92,7 @@ const SettingsPage = () => {
               type="text"
               id="first_name"
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-              placeholder="akwacommunication"
+              placeholder="admin"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -102,7 +102,7 @@ const SettingsPage = () => {
 
         <div className="mb-6">
           <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-            Ancien mot de passe
+            Old Password
           </label>
           <input
             type="password"
@@ -116,7 +116,7 @@ const SettingsPage = () => {
         </div>
         <div className="mb-6">
           <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-            Mot de passe
+            Password
           </label>
           <input
             type="password"
@@ -130,7 +130,7 @@ const SettingsPage = () => {
         </div>
         <div className="mb-6">
           <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-            Confirmer le mot de passe
+            Confirm password
           </label>
           <input
             type="password"
@@ -146,7 +146,7 @@ const SettingsPage = () => {
           onClick={handleUpdate}
           type="submit"
           variant="secondary"
-          Text="Modifier"
+          Text="Update"
         ></Button>
 
         <Link to="/">

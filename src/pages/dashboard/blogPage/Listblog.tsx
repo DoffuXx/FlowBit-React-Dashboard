@@ -123,7 +123,7 @@ const ListBlog = () => {
         )}
       </div>
 
-      <TitlePage title="Accueil des Blogs" />
+      <TitlePage title="Blog Home" />
 
       <FilterComponent
         handleSearch={handleSearch}
@@ -136,7 +136,7 @@ const ListBlog = () => {
       <div className="mt-4 flex justify-end">
         <Link to="/articles/create">
           <Button
-            Text="Ajouter un Article
+            Text="Add an Article
 "
           ></Button>
         </Link>
@@ -146,21 +146,15 @@ const ListBlog = () => {
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 ">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Titre
+                Title
               </th>
 
               <th scope="col" className="px-6 py-3">
-                Titre en arabe
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Contenu
+                Content
               </th>
 
               <th scope="col" className="px-6 py-3">
-                Contenu en arabe
-              </th>
-              <th scope="col" className="px-6 py-3">
-                CRÉÉ À
+                CREATED AT
               </th>
               <th scope="col" className="px-6 py-3">
                 Action
@@ -181,27 +175,21 @@ const ListBlog = () => {
                     {article.title.substring(0, 50)}
                   </td>
                   <td className="whitespace-nowrap px-6 py-4">
-                    {article.titreArabe.substring(0, 50)}
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-4">
                     {htmlToText(article.content?.substring(0, 50))}
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-4">
-                    {htmlToText(article.contenuArabe?.substring(0, 50))}
                   </td>
                   <td className="whitespace-nowrap px-6 py-4">
                     {formatDate(article.createdAt)}
                   </td>
                   <td className="whitespace-nowrap px-6 py-4">
                     <Link to={`${article.id}`}>
-                      <Button Text="Voir" variant="primary"></Button>
+                      <Button Text="See" variant="primary"></Button>
                     </Link>
 
                     <Link to={`${article.id}/edit`}>
-                      <Button variant="secondary" Text="Modifier"></Button>
+                      <Button variant="secondary" Text="Update"></Button>
                     </Link>
                     <Button
-                      Text="Supprimer"
+                      Text="DELETE"
                       variant="danger"
                       onClick={() => handleDelete(article.id)}
                     ></Button>

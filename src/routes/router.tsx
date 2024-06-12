@@ -15,10 +15,6 @@ import ListMediatheque from "@/pages/dashboard/MediathequePage/ListMediatheque";
 import CreateMediatheque from "@/pages/dashboard/MediathequePage/createMediatheque";
 import ShowMediatheque from "@/pages/dashboard/MediathequePage/ShowMediatheque";
 import UpdateMediatheque from "@/pages/dashboard/MediathequePage/UpdateMediatheque";
-import ListDiscours from "@/pages/dashboard/DiscoursPage/ListDiscours";
-import ShowDiscours from "@/pages/dashboard/DiscoursPage/showDiscours";
-import CreateDiscours from "@/pages/dashboard/DiscoursPage/createDiscours";
-import UpdateDiscours from "@/pages/dashboard/DiscoursPage/updateDiscours";
 import SettingsPage from "@/pages/dashboard/settingsPage/SettingsPage";
 import Login from "@/pages/dashboard/login";
 import NotFoundPage from "@/pages/NotFoundPage";
@@ -42,20 +38,8 @@ const router = createBrowserRouter(
             <Route index element={<ListBoite />} />
             <Route path=":id" element={<ShowBoite />} />
           </Route>
-          <Route path="coordonnées">
+          <Route path="contact">
             <Route index element={<ContactDetailes />} />
-          </Route>
-          <Route path="mediatheque">
-            <Route index element={<ListMediatheque />} />
-            <Route path="create" element={<CreateMediatheque />} />
-            <Route path=":id" element={<ShowMediatheque />} />
-            <Route path=":id/edit" element={<UpdateMediatheque />} />
-          </Route>
-          <Route path="discours">
-            <Route index element={<ListDiscours />} />
-            <Route path="create" element={<CreateDiscours />} />
-            <Route path=":id" element={<ShowDiscours />} />
-            <Route path=":id/edit" element={<UpdateDiscours />} />
           </Route>
           {/* Settings Page */}
           <Route path="settings" element={<SettingsPage />} />
