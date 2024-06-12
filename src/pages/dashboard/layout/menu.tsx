@@ -1,6 +1,4 @@
 import { FaAddressBook, FaBlog, FaHome, FaInbox } from "react-icons/fa";
-import { MdPermMedia } from "react-icons/md";
-
 export const navLinks = [
   { path: "/", icon: FaHome, text: "Dashboard" },
   { path: "/articles", icon: FaBlog, text: "Articles" },

@@ -11,79 +11,62 @@ import {
   Error,
   Pagination,
   TitlePage,
-  FilterComponent,
 } from "@components/common";
 import { fetchMessages } from "@/api/boite";
 import { Contact, PageInfo } from "@/api/types";
 import { ProgressContext } from "@/provider/ProgressProvider";
-import { formatDateforApi } from "@/helper/utils";
 const ListBoite = () => {
   const { setProgress } = useContext(ProgressContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [beforeDate, setBeforeDate] = useState<string>("");
-  const [afterDate, setAfterDate] = useState<string>("");
   const [contacts, setContacts] = useState([]);
   const deleteContact = async (id: string) => {
     await deleteMessage(id, setLoading, setError, setSuccess, setContacts);
   };
 
-  const fetch = async (
-    currentPage: number = pageInfo.currentPage,
-    search?: string,
-  ) => {
-    fetchMessages(
-      setContacts,
-      setLoading,
-      setError,
-      currentPage,
-      setPageInfo,
-      beforeDate,
-      afterDate,
-      search,
-    );
+  const fetch = async (currentPage: number = pageInfo.currentPage) => {
+    fetchMessages(setContacts, setLoading, setError, currentPage, setPageInfo);
   };
 
-  const handleSearch = async (
-    e: React.MouseEvent,
-    search: string,
-    setSearch: React.Dispatch<React.SetStateAction<string>>,
-  ) => {
-    e.preventDefault();
-    fetch(1, search);
-    setSearch("");
-  };
-
-  const handleChangeDateBefore = (date: Date) => {
-    const formatedDate = formatDateforApi(date);
-    if (afterDate && formatedDate < afterDate) {
-      setError("La date avant doit être supérieure à la date après");
-    } else {
-      setBeforeDate(formatedDate);
-    }
-  };
-  const handleChangeDateAfter = (date: Date) => {
-    const formatedDate = formatDateforApi(date);
-    if (beforeDate && beforeDate < formatedDate) {
-      setError("La date avant doit être supérieure à la date après");
-    } else {
-      setAfterDate(formatedDate);
-    }
-  };
-
-  const handleDeleteFilter = () => {
-    setBeforeDate("");
-    setAfterDate("");
-    setPageInfo({
-      currentPage: 1,
-      totalItems: 0,
-      nextPage: null,
-      prevPage: null,
-    });
-    fetch();
-  };
-
+  // const handleSearch = async (
+  //   e: React.MouseEvent,
+  //   setSearch: React.Dispatch<React.SetStateAction<string>>,
+  // ) => {
+  //   e.preventDefault();
+  //   fetch(1);
+  //   setSearch("");
+  // };
+  //
+  // const handleChangeDateBefore = (date: Date) => {
+  //   const formatedDate = formatDateforApi(date);
+  //   if (afterDate && formatedDate < afterDate) {
+  //     setError("La date avant doit être supérieure à la date après");
+  //   } else {
+  //     setBeforeDate(formatedDate);
+  //   }
+  // };
+  // const handleChangeDateAfter = (date: Date) => {
+  //   const formatedDate = formatDateforApi(date);
+  //   if (beforeDate && beforeDate < formatedDate) {
+  //     setError("La date avant doit être supérieure à la date après");
+  //   } else {
+  //     setAfterDate(formatedDate);
+  //   }
+  // };
+  //
+  // const handleDeleteFilter = () => {
+  //   setBeforeDate("");
+  //   setAfterDate("");
+  //   setPageInfo({
+  //     currentPage: 1,
+  //     totalItems: 0,
+  //     nextPage: null,
+  //     prevPage: null,
+  //   });
+  //   fetch();
+  // };
+  //
   const [pageInfo, setPageInfo] = useState<PageInfo>({
     currentPage: 1,
     totalItems: 0,
@@ -96,7 +79,7 @@ const ListBoite = () => {
     return () => {
       setProgress(0);
     };
-  }, [setProgress, pageInfo.currentPage, afterDate, beforeDate]);
+  }, [setProgress, pageInfo.currentPage]);
 
   const nextPage = async () => {
     if (pageInfo.nextPage) {
@@ -129,15 +112,15 @@ const ListBoite = () => {
 
       <TitlePage title="Messages" />
 
-      <FilterComponent
-        handleSearch={handleSearch}
-        beforeDate={beforeDate}
-        afterDate={afterDate}
-        handleChangeDateBefore={handleChangeDateBefore}
-        handleChangeDateAfter={handleChangeDateAfter}
-        handleDeleteFilter={handleDeleteFilter}
-        optionalPlaceHolder="Recherche Par Email..."
-      />
+      {/* <FilterComponent */}
+      {/*   handleSearch={handleSearch} */}
+      {/*   beforeDate={beforeDate} */}
+      {/*   afterDate={afterDate} */}
+      {/*   handleChangeDateBefore={handleChangeDateBefore} */}
+      {/*   handleChangeDateAfter={handleChangeDateAfter} */}
+      {/*   handleDeleteFilter={handleDeleteFilter} */}
+      {/*   optionalPlaceHolder="Recherche Par Email..." */}
+      {/* /> */}
 
       <div className="relative mt-4 overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-left text-sm text-gray-500 rtl:text-right ">

@@ -40,9 +40,6 @@ export const fetchMessages = async (
     nextPage,
     prevPage,
   }: PageInfo) => void,
-  beforeDate: string,
-  afterDate: string,
-  search?: string,
 ) => {
   try {
     setLoading(true);

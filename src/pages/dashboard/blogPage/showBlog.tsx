@@ -9,7 +9,6 @@ import { Article } from "../../../api/types";
 import { ProgressContext } from "@/provider/ProgressProvider";
 export const ShowBlog = () => {
   const { setProgress } = useContext(ProgressContext);
-  const REACT_APP_API_HOME = import.meta.env.VITE_REACT_APP_API_HOME;
   const { id } = useParams();
   const [post, setPost] = useState({} as Article);
   useEffect(() => {

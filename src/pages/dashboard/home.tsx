@@ -18,25 +18,12 @@ interface Series {
 }
 
 const Home = () => {
-
   const auth = localStorage.getItem("auth") || sessionStorage.getItem("auth");
   const user = JSON.parse(auth!);
 
   const [chartDataPosts, setChartDataPosts] = useState<Series[]>([
     {
       label: "Posts per Month",
-      data: [] as DataPoint[],
-    },
-  ]);
-  const [chartDataDiscours, setChartDataDiscours] = useState<Series[]>([
-    {
-      label: "Discours per Month",
-      data: [] as DataPoint[],
-    },
-  ]);
-  const [chartMedia, setChartMedia] = useState<Series[]>([
-    {
-      label: "Media per Type",
       data: [] as DataPoint[],
     },
   ]);
@@ -53,13 +40,11 @@ const Home = () => {
     const fetchStatistics = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${BASE_URL}/statistics`,
-          {
-            headers: {
-              'Authorization': user.user.token
-            }
-          }
-        );
+        const response = await axios.get(`${BASE_URL}/statistics`, {
+          headers: {
+            Authorization: user.user.token,
+          },
+        });
         const data = response.data;
 
         const countsPosts = data.totalPosts;
@@ -77,42 +62,30 @@ const Home = () => {
         const monthsPosts = Object.keys(data.postsPerMonth);
         const posts = Object.values(data.postsPerMonth);
 
-        const monthsDiscours = Object.keys(data.discoursPerMonth);
-        const discours = Object.values(data.discoursPerMonth);
-
-        const typesMedia = Object.keys(data.mediasPerType);
-        const media = Object.values(data.mediasPerType);
+        // const monthsDiscours = Object.keys(data.discoursPerMonth);
+        // const discours = Object.values(data.discoursPerMonth);
+        //
+        // const typesMedia = Object.keys(data.mediasPerType);
+        // const media = Object.values(data.mediasPerType);
 
         const formattedData = monthsPosts.map((month, index) => ({
           primary: month,
           secondary: posts[index] as number,
         }));
-        const formattedDataDiscours = monthsDiscours.map((month, index) => ({
-          primary: month,
-          secondary: discours[index] as number,
-        }));
-
-        const formattedDataMedia = typesMedia.map((type, index) => ({
-          primary: type,
-          secondary: media[index] as number,
-        }));
+        // const formattedDataDiscours = monthsDiscours.map((month, index) => ({
+        //   primary: month,
+        //   secondary: discours[index] as number,
+        // }));
+        //
+        // const formattedDataMedia = typesMedia.map((type, index) => ({
+        //   primary: type,
+        //   secondary: media[index] as number,
+        // }));
 
         setChartDataPosts([
           {
             label: "Posts per Month",
             data: formattedData,
-          },
-        ]);
-        setChartDataDiscours([
-          {
-            label: "Discours per Month",
-            data: formattedDataDiscours,
-          },
-        ]);
-        setChartMedia([
-          {
-            label: "Media per Type",
-            data: formattedDataMedia,
           },
         ]);
         setLoading(false);
@@ -143,41 +116,41 @@ const Home = () => {
     ],
     [],
   );
-  const primaryAxisDiscours = React.useMemo<AxisOptions<DataPoint>>(
-    () => ({
-      getValue: (datum) => datum.primary,
-      scaleType: "band",
-    }),
-    [],
-  );
-  const secondaryAxesDiscours = React.useMemo<AxisOptions<DataPoint>[]>(
-    () => [
-      {
-        getValue: (datum) => datum.secondary,
-        scaleType: "linear",
-      },
-    ],
-    [],
-  );
-
-  const primaryAxisMedia = React.useMemo<AxisOptions<DataPoint>>(
-    () => ({
-      getValue: (datum) => datum.primary,
-      scaleType: "band",
-    }),
-    [],
-  );
-  const secondaryAxesMedia = React.useMemo<AxisOptions<DataPoint>[]>(
-    () => [
-      {
-        getValue: (datum) => datum.secondary,
-        scaleType: "linear",
-        min: 0,
-      },
-    ],
-    [],
-  );
-
+  // const primaryAxisDiscours = React.useMemo<AxisOptions<DataPoint>>(
+  //   () => ({
+  //     getValue: (datum) => datum.primary,
+  //     scaleType: "band",
+  //   }),
+  //   [],
+  // );
+  // const secondaryAxesDiscours = React.useMemo<AxisOptions<DataPoint>[]>(
+  //   () => [
+  //     {
+  //       getValue: (datum) => datum.secondary,
+  //       scaleType: "linear",
+  //     },
+  //   ],
+  //   [],
+  // );
+  //
+  // const primaryAxisMedia = React.useMemo<AxisOptions<DataPoint>>(
+  //   () => ({
+  //     getValue: (datum) => datum.primary,
+  //     scaleType: "band",
+  //   }),
+  //   [],
+  // );
+  // const secondaryAxesMedia = React.useMemo<AxisOptions<DataPoint>[]>(
+  //   () => [
+  //     {
+  //       getValue: (datum) => datum.secondary,
+  //       scaleType: "linear",
+  //       min: 0,
+  //     },
+  //   ],
+  //   [],
+  // );
+  //
   return (
     <div className="">
       <div className="">
@@ -224,7 +197,6 @@ const Home = () => {
           />
         </ResizableBox>
       </div>
-
     </div>
   );
 };

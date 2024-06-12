@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { handleSubmit } from "@/api/blog";
 import { formatDateIso } from "@/helper/utils";
 
@@ -11,7 +11,6 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { BreadCrumb, Button, Success, Error } from "../../../components/common";
 import { Datepicker } from "flowbite-react";
 const CreateBlog = () => {
-  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [coverImage, setCoverImage] = useState(null);
@@ -68,8 +67,6 @@ const CreateBlog = () => {
       setContent,
       setTitreArabe,
       setContenuArabe,
-      setCoverImage,
-      navigate,
     );
   };
 

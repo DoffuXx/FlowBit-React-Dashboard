@@ -47,9 +47,9 @@ export const fetchArticles = async (
     nextPage,
     prevPage,
   }: PageInfo) => void,
-  beforeDate: string,
-  afterDate: string,
-  search?: string,
+  _beforeDate: string,
+  _afterDate: string,
+  _search?: string,
 ) => {
   try {
     setLoading(true);
@@ -98,8 +98,6 @@ export const handleSubmit = async (
     setSuccess("Article added successfully");
     setError("");
     setTitle("");
-    setTitreArabe("");
-    setContentArabe("");
     setContent("");
     setCoverImage(null);
     setTimeout(() => {
