@@ -1,30 +1,37 @@
-# React + TypeScript + Vite
+# FlowBit Dashboard - README
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<!--toc:start-->
 
-Currently, two official plugins are available:
+- [FlowBit Dashboard - README](#flowbit-dashboard-readme)
+  - [Context](#context)
+    - [about the project](#about-the-project)
+  - [Progress](#progress)
+  - [Technologies Used](#technologies-used)
+  <!--toc:end-->
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Context
 
-## Expanding the ESLint configuration
+Projects is still on Progress, if you want to run it locally just clone it and install the dependencies and run the server.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+this project is open source and free to use, if you want to contribute to the project you can fork it and make a pull request.
 
-- Configure the top-level `parserOptions` property like this:
+### about the project
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+This project is a dashboard Admin that is built with React and TailwindCSS, it's a simple dashboard that has some components that are built with TailwindCSS and some are built with Framer-Motion.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Progress
+
+- [x] Refactoring The home Page so The graphs will be working.
+- [x] adding new Pages with more Flowbit Components.
+
+## Technologies Used
+
+- React
+- Redux
+- Tailwind FlowBit of course
+- Framer-Motion
+- React-chartJS
+- React-router-dom
+- ckEditor 5
+- html-to-text
+- axios
