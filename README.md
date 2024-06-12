@@ -21,8 +21,8 @@ This project is a dashboard Admin that is built with React and TailwindCSS, it's
 
 ## Progress
 
-- [] Refactoring The home Page so The graphs will be working.
-- [] adding new Pages with more Flowbit Components.
+- [ ] Refactoring The home Page so The graphs will be working.
+- [ ] adding new Pages with more Flowbit Components.
 
 ## Technologies Used
 
