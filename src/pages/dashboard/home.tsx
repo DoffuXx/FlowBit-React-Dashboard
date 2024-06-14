@@ -23,7 +23,7 @@ const Home = () => {
   });
   const [pieChart, setPieChart] = useState({
     options: {
-      lables: ["A", "B", "C", "D", "E"],
+      labels: ["A", "B", "C", "D", "E"],
     },
     series: [45, 52, 38, 24, 33],
   });
