@@ -17,12 +17,16 @@ this project is open source and free to use, if you want to contribute to the pr
 
 ### about the project
 
-This project is a dashboard Admin that is built with React and TailwindCSS, it's a simple dashboard that has some components that are built with TailwindCSS and some are built with Framer-Motion.
+This project is a dashboard Admin that is built with React and TailwindCSS.
 
 ## Progress
 
-- [ ] Refactoring The home Page so The graphs will be working.
-- [ ] adding new Pages with more Flowbit Components.
+- [x] Refactoring The home Page so The graphs will be working.
+- [ ] Change graphs to look like flowbit graphs.
+- [ ] Refactoring Code Base by removing the unused code.
+- [ ] Adding new Pages with more Flowbit Components.
+- [ ] Adding more components to the dashboard.
+- [ ] Adding a new theme to the dashboard.
 
 ## Technologies Used
 

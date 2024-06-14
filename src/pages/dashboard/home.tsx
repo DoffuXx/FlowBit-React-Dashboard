@@ -1,201 +1,247 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import NumberTicker from "@/components/animation/number-ticker";
-import { Loading, Error, BreadCrumb } from "@/components/common";
-import ResizableBox from "@/components/home/ResizableBox";
-import axios from "axios";
-import React from "react";
-import { useState, useEffect } from "react";
-const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
-import { AxisOptions, Chart } from "react-charts";
-
-interface DataPoint {
-  primary: string;
-  secondary: number;
-}
-
-interface Series {
-  label: string;
-  data: DataPoint[];
-}
+import { BreadCrumb, Line, CardBackground } from "@/components/common";
+import Chart from "react-apexcharts";
+import { useState } from "react";
 
 const Home = () => {
-  const auth = localStorage.getItem("auth") || sessionStorage.getItem("auth");
-  const user = JSON.parse(auth!);
-
-  const [chartDataPosts, setChartDataPosts] = useState<Series[]>([
-    {
-      label: "Posts per Month",
-      data: [] as DataPoint[],
+  const [barChart, setBarChart] = useState({
+    options: {
+      chart: {
+        id: "basic-bar",
+      },
+      xaxis: {
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      },
     },
-  ]);
-  const [counts, setCounts] = useState({
-    posts: 0,
-    discours: 0,
-    medias: 0,
-    messages: 0,
-  });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const fetchStatistics = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`${BASE_URL}/statistics`, {
-          headers: {
-            Authorization: user.user.token,
-          },
-        });
-        const data = response.data;
-
-        const countsPosts = data.totalPosts;
-        const countsDiscours = data.totalDiscours;
-        const countsMedias = data.totalMedias;
-        const countsMessages = data.totalContacts;
-
-        setCounts({
-          posts: countsPosts,
-          discours: countsDiscours,
-          medias: countsMedias,
-          messages: countsMessages,
-        });
-
-        const monthsPosts = Object.keys(data.postsPerMonth);
-        const posts = Object.values(data.postsPerMonth);
-
-        // const monthsDiscours = Object.keys(data.discoursPerMonth);
-        // const discours = Object.values(data.discoursPerMonth);
-        //
-        // const typesMedia = Object.keys(data.mediasPerType);
-        // const media = Object.values(data.mediasPerType);
-
-        const formattedData = monthsPosts.map((month, index) => ({
-          primary: month,
-          secondary: posts[index] as number,
-        }));
-        // const formattedDataDiscours = monthsDiscours.map((month, index) => ({
-        //   primary: month,
-        //   secondary: discours[index] as number,
-        // }));
-        //
-        // const formattedDataMedia = typesMedia.map((type, index) => ({
-        //   primary: type,
-        //   secondary: media[index] as number,
-        // }));
-
-        setChartDataPosts([
-          {
-            label: "Posts per Month",
-            data: formattedData,
-          },
-        ]);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching the statistics:", error);
-        setError("Something went wrong. Try Again.");
-        setLoading(false);
-      }
-    };
-
-    fetchStatistics();
-  }, []);
-
-  const primaryAxis = React.useMemo<AxisOptions<DataPoint>>(
-    () => ({
-      getValue: (datum) => datum.primary,
-      scaleType: "band",
-    }),
-    [],
-  );
-
-  const secondaryAxes = React.useMemo<AxisOptions<DataPoint>[]>(
-    () => [
+    series: [
       {
-        getValue: (datum) => datum.secondary,
-        scaleType: "linear",
+        name: "Series 1",
+        data: [30, 40, 45, 50, 49, 60, 70],
       },
     ],
-    [],
-  );
-  // const primaryAxisDiscours = React.useMemo<AxisOptions<DataPoint>>(
-  //   () => ({
-  //     getValue: (datum) => datum.primary,
-  //     scaleType: "band",
-  //   }),
-  //   [],
-  // );
-  // const secondaryAxesDiscours = React.useMemo<AxisOptions<DataPoint>[]>(
-  //   () => [
-  //     {
-  //       getValue: (datum) => datum.secondary,
-  //       scaleType: "linear",
-  //     },
-  //   ],
-  //   [],
-  // );
-  //
-  // const primaryAxisMedia = React.useMemo<AxisOptions<DataPoint>>(
-  //   () => ({
-  //     getValue: (datum) => datum.primary,
-  //     scaleType: "band",
-  //   }),
-  //   [],
-  // );
-  // const secondaryAxesMedia = React.useMemo<AxisOptions<DataPoint>[]>(
-  //   () => [
-  //     {
-  //       getValue: (datum) => datum.secondary,
-  //       scaleType: "linear",
-  //       min: 0,
-  //     },
-  //   ],
-  //   [],
-  // );
-  //
+  });
+  const [pieChart, setPieChart] = useState({
+    options: {
+      lables: ["A", "B", "C", "D", "E"],
+    },
+    series: [45, 52, 38, 24, 33],
+  });
+
+  const [lineChart, setLineChart] = useState({
+    options: {
+      chart: {
+        id: "basic-line",
+      },
+      xaxis: {
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      },
+    },
+    series: [
+      {
+        name: "series-1",
+        data: [30, 40, 45, 50, 49, 60, 70],
+      },
+    ],
+  });
+  const [areaChart, setAreaChart] = useState({
+    options: {
+      chart: {
+        id: "basic-area",
+      },
+      xaxis: {
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      },
+    },
+    series: [
+      {
+        name: "series-1",
+        data: [30, 40, 45, 50, 49, 60, 70],
+      },
+    ],
+  });
+
+  const [donutChart, setDonutChart] = useState({
+    options: {
+      labels: [
+        "Category A",
+        "Category B",
+        "Category C",
+        "Category D",
+        "Category E",
+      ],
+    },
+    series: [45, 52, 38, 24, 33],
+  });
+  const [scatterChart, setScatterChart] = useState({
+    options: {
+      chart: {
+        id: "basic-scatter",
+      },
+      xaxis: {
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      },
+    },
+    series: [
+      {
+        name: "series-1",
+        data: [
+          [30, 40],
+          [45, 50],
+          [49, 60],
+          [70, 91],
+        ],
+      },
+    ],
+  });
+  const [bubbleChart, setBubbleChart] = useState({
+    options: {
+      chart: {
+        id: "basic-bubble",
+      },
+      xaxis: {
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      },
+    },
+    series: [
+      {
+        name: "series-1",
+        data: [
+          [30, 40, 35],
+          [45, 50, 40],
+          [49, 60, 50],
+          [70, 91, 70],
+        ],
+      },
+    ],
+  });
+
   return (
     <div className="">
       <div className="">
         <BreadCrumb layer1="Dashboard" isHome={true} />
-      </div>
-      <div className="mt-8">
-        {loading && <Loading />}
-        {error && (
-          <Error
-            error={{
-              error: error,
-            }}
-          />
-        )}
       </div>
 
       {/* counter */}
       <div className="mb-12 flex flex-col justify-between md:flex-row">
         <div>
           <div className="text-4xl font-bold text-gray-800">
-            <NumberTicker value={counts.posts} />
+            <NumberTicker className="text-red-400" value={15} />
           </div>
           <div className="text-gray-600">Articles</div>
         </div>
         <div>
           <div className="text-4xl font-bold text-gray-800">
-            <NumberTicker value={counts.messages} />
+            <NumberTicker className="text-blue-400" value={15} />
           </div>
           <div className="text-gray-600">Messages</div>
         </div>
-      </div>
-      <div className="h-64">
-        <div className="mb-6 text-xl text-gray-600">
-          Articles from the last 12 months{" "}
+        <div>
+          <div className="text-4xl font-bold text-gray-800">
+            <NumberTicker className="text-green-400" value={15} />
+          </div>
+          <div className="text-gray-600">Earning</div>
         </div>
-        <ResizableBox>
-          <Chart
-            options={{
-              data: chartDataPosts,
-              primaryAxis,
-              secondaryAxes,
-              defaultColors: ["#1f2241"],
-            }}
-          />
-        </ResizableBox>
+      </div>
+      <Line variant="default" />
+      <div className="grid flex-grow grid-cols-1 gap-4  md:grid-cols-2">
+        <div className="">
+          <CardBackground>
+            <div className=" flex justify-between ">
+              <div className="">
+                <h5 className=" pb-2 text-3xl font-bold leading-none text-gray-900 dark:text-white">
+                  <span className="text-blue-400">
+                    <NumberTicker value={32} className="text-blue-400" />k
+                  </span>
+                </h5>
+                <p className="text-base font-normal text-gray-500 dark:text-gray-400">
+                  Users this week
+                </p>
+              </div>
+              <div className="flex items-center px-2.5 py-0.5 text-center text-base font-semibold text-green-500 dark:text-green-500">
+                12%
+                <svg
+                  className="ms-1 h-3 w-3"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 10 14"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13V1m0 0L1 5m4-4 4 4"
+                  />
+                </svg>
+              </div>
+            </div>
+            <Chart
+              options={barChart.options}
+              series={barChart.series}
+              type="bar"
+            />
+          </CardBackground>
+        </div>
+
+        <div className="">
+          <CardBackground>
+            <Chart
+              options={pieChart.options}
+              series={pieChart.series}
+              type="pie"
+            />
+          </CardBackground>
+        </div>
+        <div className="col-span-2 ">
+          <CardBackground width="fit-content">
+            <div className="w-full">
+              <Chart
+                series={lineChart.series}
+                options={lineChart.options}
+                type="line"
+                style={{ width: "60em" }}
+              />
+            </div>
+          </CardBackground>
+        </div>
+        <div className="row-start-3">
+          <CardBackground>
+            <Chart
+              series={areaChart.series}
+              options={areaChart.options}
+              type="area"
+            />
+          </CardBackground>
+        </div>
+        <div className="row-start-3">
+          <CardBackground>
+            <Chart
+              series={donutChart.series}
+              options={donutChart.options}
+              type="donut"
+            />
+          </CardBackground>
+        </div>
+        <div>
+          <CardBackground>
+            <Chart
+              series={scatterChart.series}
+              options={scatterChart.options}
+              type="scatter"
+            />
+          </CardBackground>
+        </div>
+        <div>
+          <CardBackground>
+            <Chart
+              series={bubbleChart.series}
+              options={bubbleChart.options}
+              type="bubble"
+            />
+          </CardBackground>
+        </div>
       </div>
     </div>
   );
