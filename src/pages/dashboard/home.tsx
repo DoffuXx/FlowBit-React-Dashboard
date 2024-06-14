@@ -5,7 +5,7 @@ import Chart from "react-apexcharts";
 import { useState } from "react";
 
 const Home = () => {
-  const [barChart, setBarChart] = useState({
+  const [barChart, _setBarChart] = useState({
     options: {
       chart: {
         id: "basic-bar",
@@ -21,14 +21,14 @@ const Home = () => {
       },
     ],
   });
-  const [pieChart, setPieChart] = useState({
+  const [pieChart, _setPieChart] = useState({
     options: {
       labels: ["A", "B", "C", "D", "E"],
     },
     series: [45, 52, 38, 24, 33],
   });
 
-  const [lineChart, setLineChart] = useState({
+  const [lineChart, _setLineChart] = useState({
     options: {
       chart: {
         id: "basic-line",
@@ -44,7 +44,7 @@ const Home = () => {
       },
     ],
   });
-  const [areaChart, setAreaChart] = useState({
+  const [areaChart, _setAreaChart] = useState({
     options: {
       chart: {
         id: "basic-area",
@@ -61,7 +61,7 @@ const Home = () => {
     ],
   });
 
-  const [donutChart, setDonutChart] = useState({
+  const [donutChart, _setDonutChart] = useState({
     options: {
       labels: [
         "Category A",
@@ -73,7 +73,7 @@ const Home = () => {
     },
     series: [45, 52, 38, 24, 33],
   });
-  const [scatterChart, setScatterChart] = useState({
+  const [scatterChart, _setScatterChart] = useState({
     options: {
       chart: {
         id: "basic-scatter",
@@ -94,7 +94,7 @@ const Home = () => {
       },
     ],
   });
-  const [bubbleChart, setBubbleChart] = useState({
+  const [bubbleChart, _setBubbleChart] = useState({
     options: {
       chart: {
         id: "basic-bubble",
